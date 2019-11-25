@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="New product"
+        android:icon="@drawable/ic_new_product"/>
+    <item android:title="Most rated"
+        android:icon="@drawable/ic_most_rated"/>
+    <item android:title="Most visited"
+        android:icon="@drawable/ic_most_view"/>
+
+</menu>
