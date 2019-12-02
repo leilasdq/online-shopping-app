@@ -1,5 +1,6 @@
 package com.example.maktabproj.Network;
 
+import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Model.Response;
 
 import java.io.IOException;
@@ -39,4 +40,9 @@ public class FetchItems {
         return call.execute().body();
     }
 
+    public List<CategoriesItem> getCategories() throws IOException {
+        Call<List<CategoriesItem>> call = mApiInterfaces.getProductCategory(mQueries);
+
+        return call.execute().body();
+    }
 }

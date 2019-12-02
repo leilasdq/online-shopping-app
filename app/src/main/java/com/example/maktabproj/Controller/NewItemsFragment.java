@@ -15,13 +15,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
@@ -39,7 +40,9 @@ import java.util.List;
 public class NewItemsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
+    private RecyclerView mCategoryRecyclerView;
     private List<Response> items;
+    private List<CategoriesItem> categories;
     private FetchItems fetchItems;
     private SliderLayout sliderLayout;
 
@@ -77,7 +80,9 @@ public class NewItemsFragment extends Fragment {
         sliderLayout = view.findViewById(R.id.slider);
         sliderSetup();
         mRecyclerView = view.findViewById(R.id.recycle);
+        mCategoryRecyclerView = view.findViewById(R.id.category_recycle);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        mCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
         setupAdapter();
 
         return view;
@@ -102,8 +107,13 @@ public class NewItemsFragment extends Fragment {
     private void setupAdapter() {
         if (isAdded()) {
             ProductAdapter adapter = new ProductAdapter();
-            adapter.setResponseList(items);
+            CategoryAdapter categoryAdapter = new CategoryAdapter();
+
+            adapter.setList(items);
+            categoryAdapter.setList(categories);
+
             mRecyclerView.setAdapter(adapter);
+            mCategoryRecyclerView.setAdapter(categoryAdapter);
         }
     }
 
@@ -129,7 +139,7 @@ public class NewItemsFragment extends Fragment {
 
         private List<Response> mResponseList;
 
-        public void setResponseList(List<Response> responseList) {
+        public void setList(List responseList) {
             mResponseList = responseList;
         }
 
@@ -151,13 +161,55 @@ public class NewItemsFragment extends Fragment {
         }
     }
 
+    private class CategoryViewHolder extends RecyclerView.ViewHolder {
+
+        Button categoryBtn;
+
+        public CategoryViewHolder(@NonNull View itemView) {
+            super(itemView);
+            categoryBtn = itemView.findViewById(R.id.category_btn);
+        }
+
+        public void bind(CategoriesItem categoriesItem){
+            categoryBtn.setText(categoriesItem.getName());
+        }
+    }
+
+    private class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder>{
+
+        private List<CategoriesItem> mCategoriesItems;
+
+        public void setList(List categoriesItems) {
+            mCategoriesItems = categoriesItems;
+        }
+
+        @NonNull
+        @Override
+        public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.category_list_items, parent, false);
+            return new CategoryViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
+            holder.bind(mCategoriesItems.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mCategoriesItems.size();
+        }
+    }
+
     private class ProductsAsync extends AsyncTask<Void, Void, List<Response>>{
 
         @Override
         protected List<Response> doInBackground(Void... voids) {
             items = new ArrayList<>();
+            categories = new ArrayList<>();
             try {
                 items = fetchItems.getAllProducts();
+                categories = fetchItems.getCategories();
             } catch (IOException e) {
                 e.printStackTrace();
             }
