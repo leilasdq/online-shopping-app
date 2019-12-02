@@ -5,8 +5,8 @@
     android:id="@+id/nav_draw"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:openDrawer="start"
+    android:layout_height="match_parent"    tools:openDrawer="start"
+
     android:fitsSystemWindows="true">
 
     <include layout="@layout/activity_main"/>
