@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 tools:text="Test text"
                 android:maxWidth="150dp"
+                android:maxLines="1"
                 android:layout_gravity="center"/>
 
         </LinearLayout>

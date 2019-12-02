@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mToolbar;
     DrawerLayout mDrawerLayout;
     BottomNavigationView bottomNavigationView;
-    SliderLayout sliderLayout;
+//    SliderLayout sliderLayout;
 
     NewItemsFragment newItemsFragment;
     MostRatedFragment ratedFragment;
@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.nav_layout);
 
         initViews();
-        sliderSetup();
         toolbarSetup();
         initListeners();
     }
@@ -72,24 +71,7 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
     }
 
-    private void sliderSetup() {
-        HashMap<String, Integer> pics = new HashMap<>();
-        pics.put("First Pic", R.drawable.one);
-        pics.put("Second Pic", R.drawable.two);
-        pics.put("Third Pic", R.drawable.three);
-        pics.put("Fourth Pic", R.drawable.four);
-        for (String name :
-                pics.keySet()) {
-            TextSliderView textSliderView = new TextSliderView(this);
-            textSliderView.description(name)
-                    .image(pics.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.CenterCrop);
-            sliderLayout.addSlider(textSliderView);
-        }
-    }
-
     private void initViews() {
-        sliderLayout = findViewById(R.id.slider);
         mToolbar = findViewById(R.id.toolbar);
         mDrawerLayout = findViewById(R.id.nav_draw);
         bottomNavigationView = findViewById(R.id.bottom_nav_view);

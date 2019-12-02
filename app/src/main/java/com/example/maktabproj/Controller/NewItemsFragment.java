@@ -19,6 +19,9 @@ import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
@@ -27,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -37,6 +41,7 @@ public class NewItemsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private List<Response> items;
     private FetchItems fetchItems;
+    private SliderLayout sliderLayout;
 
     private static final String TAG = "NewItemsFragment";
 
@@ -69,11 +74,29 @@ public class NewItemsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_item, container, false);
 
+        sliderLayout = view.findViewById(R.id.slider);
+        sliderSetup();
         mRecyclerView = view.findViewById(R.id.recycle);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
         setupAdapter();
 
         return view;
+    }
+
+    private void sliderSetup() {
+        HashMap<String, Integer> pics = new HashMap<>();
+        pics.put("First Pic", R.drawable.one);
+        pics.put("Second Pic", R.drawable.two);
+        pics.put("Third Pic", R.drawable.three);
+        pics.put("Fourth Pic", R.drawable.four);
+        for (String name :
+                pics.keySet()) {
+            TextSliderView textSliderView = new TextSliderView(getContext());
+            textSliderView.description(name)
+                    .image(pics.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.CenterCrop);
+            sliderLayout.addSlider(textSliderView);
+        }
     }
 
     private void setupAdapter() {

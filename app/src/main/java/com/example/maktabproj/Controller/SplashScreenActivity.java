@@ -1,37 +1,41 @@
 package com.example.maktabproj.Controller;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Handler;
+import android.widget.ProgressBar;
 
 import com.example.maktabproj.R;
 
-import gr.net.maroulis.library.EasySplashScreen;
-
 public class SplashScreenActivity extends AppCompatActivity {
+    private static int SPLASH_TIME_OUT = 4000;
+
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.splash_layout);
 
-        EasySplashScreen config = new EasySplashScreen(SplashScreenActivity.this)
-                .withFullScreen()
-                .withTargetActivity(MainActivity.class)
-                .withSplashTimeOut(4000)
-                .withBackgroundResource(R.color.colorPrimary)
-                .withHeaderText("Shop here")
-                .withFooterText("Copyright 2016")
-                .withAfterLogoText("My cool boutique")
-                .withLogo(R.drawable.online_shop);
+        initView();
+        mProgressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE,  PorterDuff.Mode.SRC_IN);
 
-        config.getHeaderTextView().setTextColor(Color.BLACK);
-        config.getFooterTextView().setTextColor(Color.BLACK);
-        config.getAfterLogoTextView().setTextColor(Color.BLACK);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, SPLASH_TIME_OUT);
+    }
 
-        View easySplashScreenView = config.create();
-        setContentView(easySplashScreenView);
-
+    private void initView() {
+        mProgressBar = findViewById(R.id.progress_bar);
     }
 }
