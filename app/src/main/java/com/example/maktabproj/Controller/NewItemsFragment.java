@@ -54,6 +54,16 @@ public class NewItemsFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        fetchItems = new FetchItems();
+
+        ProductsAsync async = new ProductsAsync();
+        async.execute();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
