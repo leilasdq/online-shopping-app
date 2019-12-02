@@ -1,5 +1,7 @@
 package com.example.maktabproj.Network;
 
+import android.content.Context;
+
 import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Model.Response;
 
@@ -21,7 +23,16 @@ public class FetchItems {
     private ApiInterfaces mApiInterfaces;
     private Map<String, String> mQueries;
 
-    public FetchItems() {
+    private static FetchItems ourInstance = null;
+
+    public static FetchItems getInstance() {
+        if (ourInstance == null){
+            ourInstance = new FetchItems();
+        }
+        return ourInstance;
+    }
+
+    private FetchItems() {
         mQueries = new HashMap<>();
         mQueries.put("consumer_key", CONSUMER_KEY_VALUE);
         mQueries.put("consumer_secret", CONSUMER_SECRET_VALUE);

@@ -12,17 +12,17 @@
 
     </item>
 
-    <item android:title="category">
-        <menu>
-            <item android:title="T_Shirt"
-                android:icon="@drawable/ic_tshirt"/>
-            <item android:title="Hoodie"
-                android:icon="@drawable/ic_hoodie"/>
-            <item android:title="Hat"
-                android:icon="@drawable/ic_cap"/>
-            <item android:title="accessory"
-                android:icon="@drawable/ic_accessory"/>
-        </menu>
-    </item>
+<!--    <item android:title="category">-->
+<!--        <menu>-->
+<!--            <item android:title="T_Shirt"-->
+<!--                android:icon="@drawable/ic_tshirt"/>-->
+<!--            <item android:title="Hoodie"-->
+<!--                android:icon="@drawable/ic_hoodie"/>-->
+<!--            <item android:title="Hat"-->
+<!--                android:icon="@drawable/ic_cap"/>-->
+<!--            <item android:title="accessory"-->
+<!--                android:icon="@drawable/ic_accessory"/>-->
+<!--        </menu>-->
+<!--    </item>-->
 
 </menu>

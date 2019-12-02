@@ -41,12 +41,15 @@ public class NewItemsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView mCategoryRecyclerView;
+    private TextView newText;
     private List<Response> items;
     private List<CategoriesItem> categories;
+
     private FetchItems fetchItems;
     private SliderLayout sliderLayout;
 
     private static final String TAG = "NewItemsFragment";
+    private MainActivity activity;
 
     public NewItemsFragment() {
         // Required empty public constructor
@@ -65,8 +68,7 @@ public class NewItemsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        fetchItems = new FetchItems();
-
+        activity = (MainActivity) getActivity();
         ProductsAsync async = new ProductsAsync();
         async.execute();
     }
@@ -77,15 +79,24 @@ public class NewItemsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_item, container, false);
 
-        sliderLayout = view.findViewById(R.id.slider);
+        initViews(view);
         sliderSetup();
-        mRecyclerView = view.findViewById(R.id.recycle);
-        mCategoryRecyclerView = view.findViewById(R.id.category_recycle);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-        mCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        setUpRecycles();
         setupAdapter();
 
         return view;
+    }
+
+    private void setUpRecycles() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        mCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+    }
+
+    private void initViews(View view) {
+        newText = view.findViewById(R.id.new_product_text);
+        sliderLayout = view.findViewById(R.id.slider);
+        mRecyclerView = view.findViewById(R.id.recycle);
+        mCategoryRecyclerView = view.findViewById(R.id.category_recycle);
     }
 
     private void sliderSetup() {
@@ -205,6 +216,7 @@ public class NewItemsFragment extends Fragment {
 
         @Override
         protected List<Response> doInBackground(Void... voids) {
+            fetchItems = FetchItems.getInstance();
             items = new ArrayList<>();
             categories = new ArrayList<>();
             try {
@@ -219,7 +231,9 @@ public class NewItemsFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Response> responses) {
             super.onPostExecute(responses);
+            newText.setVisibility(View.VISIBLE);
             setupAdapter();
+            activity.setCategories(categories);
             Log.e(TAG, "onPostExecute: items size" + items.size());
         }
     }
