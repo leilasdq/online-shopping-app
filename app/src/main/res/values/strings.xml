@@ -9,4 +9,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="new_products_list_text">New products</string>
+    <string name="popular_products_list_text">Popular products</string>
+    <string name="rating_products_list_text">Most rated products</string>
 </resources>
