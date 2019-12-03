@@ -41,6 +41,42 @@
             android:layout_margin="2dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/popular_product_text"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Popular products"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_margin="4dp"
+            android:drawableLeft="@android:drawable/star_on"
+            android:gravity="center"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/popular_recycle"
+            android:layout_margin="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/most_rate_product_text"
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Most rated products"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_margin="4dp"
+            android:drawableLeft="@android:drawable/star_on"
+            android:gravity="center"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rate_recycle"
+            android:layout_margin="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

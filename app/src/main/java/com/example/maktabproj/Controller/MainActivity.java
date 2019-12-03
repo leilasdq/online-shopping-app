@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mNavigationView.invalidate();
             }
-        }, 6000);
+        }, 20000);
     }
 
     private void initListeners() {

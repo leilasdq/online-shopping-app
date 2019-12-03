@@ -1,6 +1,7 @@
 package com.example.maktabproj.Controller;
 
 
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,8 +42,14 @@ public class NewItemsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView mCategoryRecyclerView;
+    private RecyclerView mPopularRecyclerView;
+    private RecyclerView mRatingRecyclerView;
     private TextView newText;
+    private TextView popularText;
+    private TextView ratingText;
     private List<Response> items;
+    private List<Response> popularList;
+    private List<Response> ratedList;
     private List<CategoriesItem> categories;
 
     private FetchItems fetchItems;
@@ -89,14 +96,22 @@ public class NewItemsFragment extends Fragment {
 
     private void setUpRecycles() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        mPopularRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        mRatingRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+
         mCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
     }
 
     private void initViews(View view) {
         newText = view.findViewById(R.id.new_product_text);
+        popularText = view.findViewById(R.id.popular_product_text);
+        ratingText = view.findViewById(R.id.most_rate_product_text);
+
         sliderLayout = view.findViewById(R.id.slider);
         mRecyclerView = view.findViewById(R.id.recycle);
         mCategoryRecyclerView = view.findViewById(R.id.category_recycle);
+        mPopularRecyclerView = view.findViewById(R.id.popular_recycle);
+        mRatingRecyclerView = view.findViewById(R.id.rate_recycle);
     }
 
     private void sliderSetup() {
@@ -118,13 +133,20 @@ public class NewItemsFragment extends Fragment {
     private void setupAdapter() {
         if (isAdded()) {
             ProductAdapter adapter = new ProductAdapter();
-            CategoryAdapter categoryAdapter = new CategoryAdapter();
-
             adapter.setList(items);
-            categoryAdapter.setList(categories);
-
             mRecyclerView.setAdapter(adapter);
+
+            CategoryAdapter categoryAdapter = new CategoryAdapter();
+            categoryAdapter.setList(categories);
             mCategoryRecyclerView.setAdapter(categoryAdapter);
+
+            ProductAdapter popular = new ProductAdapter();
+            popular.setList(popularList);
+            mPopularRecyclerView.setAdapter(popular);
+
+            ProductAdapter rated = new ProductAdapter();
+            rated.setList(ratedList);
+            mRatingRecyclerView.setAdapter(rated);
         }
     }
 
@@ -132,15 +154,29 @@ public class NewItemsFragment extends Fragment {
 
         ImageView productImage;
         TextView productName;
+        TextView originalPrice;
+        TextView salePrice;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             productImage = itemView.findViewById(R.id.pro_img);
             productName = itemView.findViewById(R.id.pro_name);
+            originalPrice = itemView.findViewById(R.id.original_price);
+            salePrice = itemView.findViewById(R.id.sale_price);
         }
 
         public void bind(Response response){
             productName.setText(response.getName());
+            String original = response.getRegularPrice();
+            String sale = response.getSalePrice();
+            originalPrice.setText(original);
+            if (!sale.equalsIgnoreCase("")){
+                salePrice.setText(sale);
+                originalPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                originalPrice.setPaintFlags( originalPrice.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                salePrice.setText("");
+            }
             ImagesItem src = response.getImages().get(0);
             Picasso.with(getContext()).load(Uri.parse(src.getSrc())).placeholder(R.drawable.image_loading).error(R.drawable.image_error).into(productImage);
         }
@@ -219,11 +255,15 @@ public class NewItemsFragment extends Fragment {
             fetchItems = FetchItems.getInstance();
             items = new ArrayList<>();
             categories = new ArrayList<>();
+            popularList = new ArrayList<>();
+            ratedList = new ArrayList<>();
             try {
                 items = fetchItems.getAllProducts();
                 categories = fetchItems.getCategories();
+               popularList = fetchItems.getPopularProducts();
+               ratedList = fetchItems.getRatedProducts();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(TAG, "doInBackground: " + e.getMessage() );
             }
             return items;
         }
@@ -232,9 +272,12 @@ public class NewItemsFragment extends Fragment {
         protected void onPostExecute(List<Response> responses) {
             super.onPostExecute(responses);
             newText.setVisibility(View.VISIBLE);
+            popularText.setVisibility(View.VISIBLE);
+            ratingText.setVisibility(View.VISIBLE);
             setupAdapter();
             activity.setCategories(categories);
             Log.e(TAG, "onPostExecute: items size" + items.size());
+            Log.e(TAG, "onPostExecute: categories size" + categories.size());
         }
     }
 

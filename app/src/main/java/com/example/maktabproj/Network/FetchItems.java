@@ -56,4 +56,16 @@ public class FetchItems {
 
         return call.execute().body();
     }
+
+    public List<Response> getPopularProducts() throws IOException {
+        Call<List<Response>> call = mApiInterfaces.getOrderedProducts("popularity");
+
+        return call.execute().body();
+    }
+
+    public List<Response> getRatedProducts() throws IOException {
+        Call<List<Response>> call = mApiInterfaces.getOrderedProducts("rating");
+
+        return call.execute().body();
+    }
 }
