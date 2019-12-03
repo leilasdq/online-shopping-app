@@ -19,27 +19,12 @@
             android:background="@color/colorPrimary"
             app:titleTextColor="@android:color/black" />
 
-<!--        <com.daimajia.slider.library.SliderLayout-->
-<!--            android:id="@+id/slider"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="200dp"-->
-<!--            android:scrollIndicators="left"-->
-<!--            app:indicator_visibility="visible" />-->
-
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
             />
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_nav_view"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="bottom|end"
-            android:background="?android:attr/windowBackground"
-            app:menu="@menu/bottom_nav_menu" />
 
     </LinearLayout>
 

@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         initViews();
         toolbarSetup();
-        initListeners();
+        //initListeners();
         createDrawerMenu();
 
     }
@@ -105,10 +105,11 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         mToolbar = findViewById(R.id.toolbar);
         mDrawerLayout = findViewById(R.id.nav_draw);
-        bottomNavigationView = findViewById(R.id.bottom_nav_view);
+//        bottomNavigationView = findViewById(R.id.bottom_nav_view);
         mNavigationView = findViewById(R.id.nav_view);
 
         newItemsFragment = NewItemsFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, newItemsFragment).commit();
         ratedFragment = MostRatedFragment.newInstance();
         visitedFragment = MostVisitedFragment.newInstance();
 

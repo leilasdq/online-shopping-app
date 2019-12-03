@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -175,7 +176,8 @@ public class NewItemsFragment extends Fragment {
                 originalPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
                 originalPrice.setPaintFlags( originalPrice.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
-                salePrice.setText("");
+                salePrice.setVisibility(View.INVISIBLE);
+                originalPrice.setGravity(Gravity.CENTER_VERTICAL);
             }
             ImagesItem src = response.getImages().get(0);
             Picasso.with(getContext()).load(Uri.parse(src.getSrc())).placeholder(R.drawable.image_loading).error(R.drawable.image_error).into(productImage);
