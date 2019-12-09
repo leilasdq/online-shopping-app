@@ -58,13 +58,22 @@ public class FetchItems {
     }
 
     public List<Response> getPopularProducts() throws IOException {
-        Call<List<Response>> call = mApiInterfaces.getOrderedProducts("popularity");
+        mQueries.put("orderby", "popularity");
+        Call<List<Response>> call = mApiInterfaces.getOrderedProducts(mQueries);
 
         return call.execute().body();
     }
 
     public List<Response> getRatedProducts() throws IOException {
-        Call<List<Response>> call = mApiInterfaces.getOrderedProducts("rating");
+        mQueries.put("orderby", "rating");
+        Call<List<Response>> call = mApiInterfaces.getOrderedProducts(mQueries);
+
+        return call.execute().body();
+    }
+
+    public List<Response> getSpecificProduct(int id) throws IOException {
+        mQueries.put("id", String.valueOf(id));
+        Call<List<Response>> call = mApiInterfaces.getSpecificProduct(mQueries);
 
         return call.execute().body();
     }

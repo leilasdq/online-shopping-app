@@ -19,6 +19,12 @@ public interface ApiInterfaces {
     @GET("products/categories")
     Call<List<CategoriesItem>> getProductCategory(@QueryMap Map<String, String> queries);
 
-    @GET("products/?")
-    Call<List<Response>> getOrderedProducts(@Query("orderby") String orderType);
+//    @GET("products/?")
+//    Call<List<Response>> getOrderedProducts(@Query("orderby") String orderType);
+
+    @GET("products")
+    Call<List<Response>> getOrderedProducts(@QueryMap Map<String, String> queries);
+
+    @GET("products")
+    Call<List<Response>> getSpecificProduct(@QueryMap Map<String, String> queries);
 }

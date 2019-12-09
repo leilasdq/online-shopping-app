@@ -18,7 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SingleFragmentActivity {
     Toolbar mToolbar;
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
@@ -26,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
     NewItemsFragment newItemsFragment;
     private Fragment selectedFragment;
     private List<CategoriesItem> categories;
+
+    @Override
+    public Fragment createFragment() {
+        return NewItemsFragment.newInstance();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +73,10 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = findViewById(R.id.nav_draw);
         mNavigationView = findViewById(R.id.nav_view);
 
-        newItemsFragment = NewItemsFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, newItemsFragment).commit();
+//        newItemsFragment = NewItemsFragment.newInstance();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, newItemsFragment).commit();
 
         categories = new ArrayList<>();
-
-        selectedFragment = newItemsFragment;
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
     }
 
     @Override

@@ -153,6 +153,7 @@ public class NewItemsFragment extends Fragment {
 
     private class ProductViewHolder extends RecyclerView.ViewHolder {
 
+        Response mResponse;
         ImageView productImage;
         TextView productName;
         TextView originalPrice;
@@ -164,9 +165,21 @@ public class NewItemsFragment extends Fragment {
             productName = itemView.findViewById(R.id.pro_name);
             originalPrice = itemView.findViewById(R.id.original_price);
             salePrice = itemView.findViewById(R.id.sale_price);
+
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    try {
+//                        fetchItems.getSpecificProduct(mResponse.getId());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
         }
 
         public void bind(Response response){
+            mResponse = response;
             productName.setText(response.getName());
             String original = response.getRegularPrice();
             String sale = response.getSalePrice();
