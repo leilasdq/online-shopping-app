@@ -1,90 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="#DFDCDC"
     tools:context=".Controller.ShowItemsFragment">
 
     <androidx.viewpager.widget.ViewPager
-        android:layout_margin="8dp"
+        android:id="@+id/product_images"
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:scaleType="centerCrop"
-        android:id="@+id/product_images"
         android:layout_alignParentTop="true"
-        tools:src="@drawable/one"/>
+        style="@style/AndroidImageSlider_Magnifier_Oval_Black"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/one" />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/product_images"
+        android:layout_margin="2dp"
         android:background="@color/background"
-        app:cardCornerRadius="5dp"
         android:elevation="10dp"
-        app:cardElevation="10dp"
-        android:layout_margin="2dp">
+        app:cardCornerRadius="5dp"
+        app:cardElevation="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-    <TextView
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/product_name"
-        tools:text="SAMPLE NAME"
-        android:layout_alignParentTop="true"
-        android:textSize="20sp"
-        android:textStyle="bold|italic"
-        android:textColor="#000"/>
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_margin="8dp"
+                android:paddingRight="16dp"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                tools:text="SAMPLE NAME"
+                style="?android:listSeparatorTextViewStyle"
+                />
 
-    <TextView
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/product_detail"
-        tools:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi."
-        android:layout_below="@id/product_name"
-        android:layout_above="@id/add_to_cart_btn"/>
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/product_name">-->
 
-    <TextView
-        android:layout_margin="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/product_real_price"
-        tools:text="278500"
-        android:layout_above="@id/add_to_cart_btn"
-        android:layout_alignParentLeft="true"
-        android:textSize="18sp"
-        android:textColor="@android:color/holo_red_dark"/>
+<!--            <TableRow-->
+<!--                android:id="@+id/hr"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="#444"-->
+<!--                android:layout_marginLeft="2dp"-->
+<!--                />-->
 
-    <TextView
-        android:layout_margin="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/product_sale_price"
-        tools:text="278500"
-        android:layout_above="@id/add_to_cart_btn"
-        android:layout_toRightOf="@id/product_real_price"
-        android:textSize="20sp"
-        android:textColor="@color/categoryButtonColor"/>
+<!--                <TableRow-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_height="1dp"-->
+<!--                    android:background="@android:color/transparent"/>-->
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_margin="8dp"
-        android:id="@+id/add_to_cart_btn"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:layout_alignParentBottom="true"
-        android:textAllCaps="false"
-        app:cornerRadius="8dp"
-        android:text="@string/add_to_cart_txt"
-        android:textSize="20sp"
-        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-        app:icon="@drawable/ic_add_to_cart"
-        app:iconGravity="textStart" />
+<!--            </LinearLayout>-->
+
+            <TextView
+                android:id="@+id/product_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/add_to_cart_btn"
+                android:layout_below="@id/product_name"
+                android:layout_margin="8dp"
+                tools:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi." />
+
+            <TextView
+                android:id="@+id/product_real_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/add_to_cart_btn"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="8dp"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="18sp"
+                tools:text="278500" />
+
+            <TextView
+                android:id="@+id/product_sale_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/add_to_cart_btn"
+                android:layout_margin="8dp"
+                android:layout_toRightOf="@id/product_real_price"
+                android:textColor="@color/categoryButtonColor"
+                android:textSize="20sp"
+                tools:text="278500" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/add_to_cart_btn"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="8dp"
+                android:text="@string/add_to_cart_txt"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                app:cornerRadius="8dp"
+                app:icon="@drawable/ic_add_to_cart"
+                app:iconGravity="textStart" />
 
         </RelativeLayout>
 
