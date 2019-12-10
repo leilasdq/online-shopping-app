@@ -50,6 +50,9 @@ public class NewItemsFragment extends Fragment {
     private TextView newText;
     private TextView popularText;
     private TextView ratingText;
+    private ImageView newIcon;
+    private ImageView popularIcon;
+    private ImageView ratedIcon;
     private List<Response> items;
     private List<Response> popularList;
     private List<Response> ratedList;
@@ -109,6 +112,10 @@ public class NewItemsFragment extends Fragment {
         newText = view.findViewById(R.id.new_product_text);
         popularText = view.findViewById(R.id.popular_product_text);
         ratingText = view.findViewById(R.id.most_rate_product_text);
+
+        newIcon = view.findViewById(R.id.new_icon);
+        popularIcon = view.findViewById(R.id.popular_icon);
+        ratedIcon = view.findViewById(R.id.rated_icon);
 
         sliderLayout = view.findViewById(R.id.slider);
         mRecyclerView = view.findViewById(R.id.recycle);
@@ -289,8 +296,13 @@ public class NewItemsFragment extends Fragment {
             newText.setVisibility(View.VISIBLE);
             popularText.setVisibility(View.VISIBLE);
             ratingText.setVisibility(View.VISIBLE);
+            newIcon.setVisibility(View.VISIBLE);
+            popularIcon.setVisibility(View.VISIBLE);
+            ratedIcon.setVisibility(View.VISIBLE);
+
             setupAdapter();
             activity.setCategories(categories);
+
             Log.e(TAG, "onPostExecute: items size" + items.size());
             Log.e(TAG, "onPostExecute: categories size" + categories.size());
         }
