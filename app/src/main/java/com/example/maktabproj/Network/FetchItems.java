@@ -18,6 +18,7 @@ public class FetchItems {
     public static final String CONSUMER_KEY_VALUE = "ck_7276cad9e036d1139227ac59adff235d4215fd2f";
     public static final String CONSUMER_SECRET_VALUE = "cs_7c867db7cd424fe32614b92804eb4ffbe5c9c05f";
     public static final String BASE_URL = "https://woocommerce.maktabsharif.ir/wp-json/wc/v3/";
+    public static final String ORDERBY = "orderby";
 
     private Retrofit mRetrofit;
     private ApiInterfaces mApiInterfaces;
@@ -58,22 +59,22 @@ public class FetchItems {
     }
 
     public List<Response> getPopularProducts() throws IOException {
-        mQueries.put("orderby", "popularity");
+        mQueries.put(ORDERBY, "popularity");
         Call<List<Response>> call = mApiInterfaces.getOrderedProducts(mQueries);
 
         return call.execute().body();
     }
 
     public List<Response> getRatedProducts() throws IOException {
-        mQueries.put("orderby", "rating");
+        mQueries.put(ORDERBY, "rating");
         Call<List<Response>> call = mApiInterfaces.getOrderedProducts(mQueries);
 
         return call.execute().body();
     }
 
-    public List<Response> getSpecificProduct(int id) throws IOException {
-        mQueries.put("id", String.valueOf(id));
-        Call<List<Response>> call = mApiInterfaces.getSpecificProduct(mQueries);
+    public Response getSpecificProduct(int id) throws IOException {
+        mQueries.remove(ORDERBY);
+        Call<Response> call = mApiInterfaces.getSpecificProduct(String.valueOf(id), mQueries);
 
         return call.execute().body();
     }

@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.SingleFragmentActivity"></activity>
+        <activity android:name=".Controller.ShowItemsActivity"></activity>
+        <activity android:name=".Controller.SingleFragmentActivity" />
         <activity android:name=".Controller.MainActivity" />
         <activity android:name=".Controller.SplashScreenActivity">
             <intent-filter>

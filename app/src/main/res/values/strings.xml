@@ -12,4 +12,5 @@
     <string name="new_products_list_text">New products</string>
     <string name="popular_products_list_text">Popular products</string>
     <string name="rating_products_list_text">Most rated products</string>
+    <string name="add_to_cart_txt">Add to cart</string>
 </resources>

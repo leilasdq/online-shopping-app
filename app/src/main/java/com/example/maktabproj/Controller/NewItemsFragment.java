@@ -1,6 +1,7 @@
 package com.example.maktabproj.Controller;
 
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -41,6 +42,7 @@ import java.util.List;
  */
 public class NewItemsFragment extends Fragment {
 
+    public static final String RESPONSE_ID_EXTRA = "com.example.maktabproj.response id extra";
     private RecyclerView mRecyclerView;
     private RecyclerView mCategoryRecyclerView;
     private RecyclerView mPopularRecyclerView;
@@ -166,16 +168,14 @@ public class NewItemsFragment extends Fragment {
             originalPrice = itemView.findViewById(R.id.original_price);
             salePrice = itemView.findViewById(R.id.sale_price);
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    try {
-//                        fetchItems.getSpecificProduct(mResponse.getId());
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), ShowItemsActivity.class);
+                    intent.putExtra(RESPONSE_ID_EXTRA, mResponse.getId());
+                    startActivity(intent);
+                }
+            });
         }
 
         public void bind(Response response){

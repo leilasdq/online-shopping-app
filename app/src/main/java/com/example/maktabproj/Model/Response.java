@@ -1,5 +1,6 @@
 package com.example.maktabproj.Model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.example.maktabproj.Model.AttributesItem;
@@ -9,7 +10,7 @@ import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Links;
 import com.google.gson.annotations.SerializedName;
 
-public class Response{
+public class Response {
 
 	@SerializedName("upsell_ids")
 	private List<Object> upsellIds;
