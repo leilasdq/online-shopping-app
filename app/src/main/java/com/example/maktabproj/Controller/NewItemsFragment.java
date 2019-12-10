@@ -82,8 +82,27 @@ public class NewItemsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         activity = (MainActivity) getActivity();
-        ProductsAsync async = new ProductsAsync();
+        callAsyncs();
+    }
+
+    private void callAsyncs() {
+        fetchItems = FetchItems.getInstance();
+        items = new ArrayList<>();
+        popularList = new ArrayList<>();
+        ratedList = new ArrayList<>();
+        categories = new ArrayList<>();
+
+        CategoriesAsync categoriesAsync = new CategoriesAsync();
+        categoriesAsync.execute();
+
+        NewProductsAsync async = new NewProductsAsync();
         async.execute();
+
+        PopularAsync popularAsync = new PopularAsync();
+        popularAsync.execute();
+
+        RatedAsync ratedAsync = new RatedAsync();
+        ratedAsync.execute();
     }
 
     @Override
@@ -270,20 +289,12 @@ public class NewItemsFragment extends Fragment {
         }
     }
 
-    private class ProductsAsync extends AsyncTask<Void, Void, List<Response>>{
+    private class NewProductsAsync extends AsyncTask<Void, Void, List<Response>>{
 
         @Override
         protected List<Response> doInBackground(Void... voids) {
-            fetchItems = FetchItems.getInstance();
-            items = new ArrayList<>();
-            categories = new ArrayList<>();
-            popularList = new ArrayList<>();
-            ratedList = new ArrayList<>();
             try {
                 items = fetchItems.getAllProducts();
-                categories = fetchItems.getCategories();
-               popularList = fetchItems.getPopularProducts();
-               ratedList = fetchItems.getRatedProducts();
             } catch (IOException e) {
                 Log.e(TAG, "doInBackground: " + e.getMessage() );
             }
@@ -294,16 +305,71 @@ public class NewItemsFragment extends Fragment {
         protected void onPostExecute(List<Response> responses) {
             super.onPostExecute(responses);
             newText.setVisibility(View.VISIBLE);
-            popularText.setVisibility(View.VISIBLE);
-            ratingText.setVisibility(View.VISIBLE);
             newIcon.setVisibility(View.VISIBLE);
-            popularIcon.setVisibility(View.VISIBLE);
-            ratedIcon.setVisibility(View.VISIBLE);
-
             setupAdapter();
-            activity.setCategories(categories);
-
             Log.e(TAG, "onPostExecute: items size" + items.size());
+        }
+    }
+
+    private class PopularAsync extends AsyncTask<Void, Void, List<Response>>{
+
+        @Override
+        protected List<Response> doInBackground(Void... voids) {
+            try {
+                popularList = fetchItems.getPopularProducts();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return popularList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Response> responses) {
+            super.onPostExecute(responses);
+            popularText.setVisibility(View.VISIBLE);
+            popularIcon.setVisibility(View.VISIBLE);
+            setupAdapter();
+        }
+    }
+
+    private class RatedAsync extends AsyncTask<Void, Void, List<Response>>{
+
+        @Override
+        protected List<Response> doInBackground(Void... voids) {
+            try {
+                ratedList = fetchItems.getRatedProducts();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return ratedList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Response> responses) {
+            super.onPostExecute(responses);
+            ratingText.setVisibility(View.VISIBLE);
+            ratedIcon.setVisibility(View.VISIBLE);
+            setupAdapter();
+        }
+    }
+
+    private class CategoriesAsync extends AsyncTask<Void, Void, List<CategoriesItem>>{
+
+        @Override
+        protected List<CategoriesItem> doInBackground(Void... voids) {
+            try {
+                categories = fetchItems.getCategories();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return categories;
+        }
+
+        @Override
+        protected void onPostExecute(List<CategoriesItem> items) {
+            super.onPostExecute(items);
+            activity.setCategories(categories);
+            setupAdapter();
             Log.e(TAG, "onPostExecute: categories size" + categories.size());
         }
     }
