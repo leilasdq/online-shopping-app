@@ -19,11 +19,11 @@
             android:scrollIndicators="left"
             app:indicator_visibility="visible" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/category_recycle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="2dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/category_recycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -31,12 +31,12 @@
 
             <ImageView
                 android:id="@+id/new_icon"
-                android:visibility="invisible"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginLeft="4dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_new_product" />
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/ic_new_product"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/new_product_text"
@@ -52,11 +52,23 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycle"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="2dp" />
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/new_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -64,12 +76,12 @@
 
             <ImageView
                 android:id="@+id/popular_icon"
-                android:visibility="invisible"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginLeft="4dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_most_rated" />
+                android:layout_marginLeft="4dp"
+                android:src="@drawable/ic_most_rated"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/popular_product_text"
@@ -85,11 +97,23 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/popular_recycle"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="2dp" />
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/popular_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/popular_recycle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -97,12 +121,12 @@
 
             <ImageView
                 android:id="@+id/rated_icon"
-                android:visibility="invisible"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="4dp"
                 android:src="@drawable/ic_most_view"
-                android:layout_marginLeft="4dp" />
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/most_rate_product_text"
@@ -118,11 +142,23 @@
 
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/rated_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rate_recycle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="2dp" />
+
+        </RelativeLayout>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.SliderLayout;
@@ -53,6 +54,10 @@ public class NewItemsFragment extends Fragment {
     private ImageView newIcon;
     private ImageView popularIcon;
     private ImageView ratedIcon;
+    private ProgressBar newProgress;
+    private ProgressBar popularProgress;
+    private ProgressBar ratedProgress;
+
     private List<Response> items;
     private List<Response> popularList;
     private List<Response> ratedList;
@@ -135,6 +140,10 @@ public class NewItemsFragment extends Fragment {
         newIcon = view.findViewById(R.id.new_icon);
         popularIcon = view.findViewById(R.id.popular_icon);
         ratedIcon = view.findViewById(R.id.rated_icon);
+
+        newProgress = view.findViewById(R.id.new_progress);
+        popularProgress = view.findViewById(R.id.popular_progress);
+        ratedProgress = view.findViewById(R.id.rated_progress);
 
         sliderLayout = view.findViewById(R.id.slider);
         mRecyclerView = view.findViewById(R.id.recycle);
@@ -306,6 +315,7 @@ public class NewItemsFragment extends Fragment {
             super.onPostExecute(responses);
             newText.setVisibility(View.VISIBLE);
             newIcon.setVisibility(View.VISIBLE);
+            newProgress.setVisibility(View.GONE);
             setupAdapter();
             Log.e(TAG, "onPostExecute: items size" + items.size());
         }
@@ -328,6 +338,7 @@ public class NewItemsFragment extends Fragment {
             super.onPostExecute(responses);
             popularText.setVisibility(View.VISIBLE);
             popularIcon.setVisibility(View.VISIBLE);
+            popularProgress.setVisibility(View.GONE);
             setupAdapter();
         }
     }
@@ -349,6 +360,7 @@ public class NewItemsFragment extends Fragment {
             super.onPostExecute(responses);
             ratingText.setVisibility(View.VISIBLE);
             ratedIcon.setVisibility(View.VISIBLE);
+            ratedProgress.setVisibility(View.GONE);
             setupAdapter();
         }
     }
