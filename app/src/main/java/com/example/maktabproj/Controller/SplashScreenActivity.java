@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import com.example.maktabproj.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    private static int SPLASH_TIME_OUT = 4000;
+    private static int SPLASH_TIME_OUT = 6000;
 
     private ProgressBar mProgressBar;
 
@@ -21,8 +21,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_layout);
 
-        initView();
-        mProgressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE,  PorterDuff.Mode.SRC_IN);
+        //initView();
+//        mProgressBar.getIndeterminateDrawable().setColorFilter(Color.WHITE,  PorterDuff.Mode.SRC_IN);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -34,7 +34,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         }, SPLASH_TIME_OUT);
     }
 
-    private void initView() {
-        mProgressBar = findViewById(R.id.progress_bar);
-    }
+//    private void initView() {
+//        mProgressBar = findViewById(R.id.progress_bar);
+//    }
 }

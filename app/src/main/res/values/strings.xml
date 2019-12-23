@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Boutique</string>
+    <string name="app_name">Mobi Shop</string>
 
     <string name="start_drawer">start</string>
     <string name="end_drawer">end</string>
@@ -13,4 +13,9 @@
     <string name="popular_products_list_text">Popular products</string>
     <string name="rating_products_list_text">Most rated products</string>
     <string name="add_to_cart_txt">Add to cart</string>
+
+    <string-array name="text">
+        <item>Mobi Shop</item>
+        <item>Best of everything</item>
+    </string-array>
 </resources>

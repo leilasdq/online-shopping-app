@@ -33,6 +33,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.3.2'
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.daimajia.slider:library:1.1.5@aar'
+    implementation 'com.tomer:fadingtextview:2.5'
 
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.google.code.gson:gson:2.8.6'
@@ -40,4 +41,6 @@ dependencies {
 
     implementation 'gr.pantrif:easy-android-splash-screen:0.0.1'
     implementation 'com.squareup.picasso:picasso:2.5.2'
+
+    implementation "com.airbnb.android:lottie:3.3.1"
 }
