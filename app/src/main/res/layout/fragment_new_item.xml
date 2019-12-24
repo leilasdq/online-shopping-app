@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:layoutDirection="rtl"
     tools:context=".Controller.NewItemsFragment">
 
     <LinearLayout
@@ -23,18 +24,21 @@
                 android:id="@+id/category_recycle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="2dp" />
+                android:layout_margin="2dp"
+                />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right">
 
             <ImageView
                 android:id="@+id/new_icon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:src="@drawable/ic_new_product"
                 android:visibility="invisible" />
 
@@ -42,7 +46,7 @@
                 android:id="@+id/new_product_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/new_products_list_text"
@@ -72,14 +76,16 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_gravity="right">
 
             <ImageView
                 android:id="@+id/popular_icon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:src="@drawable/ic_most_rated"
                 android:visibility="invisible" />
 
@@ -87,7 +93,7 @@
                 android:id="@+id/popular_product_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/popular_products_list_text"
@@ -117,14 +123,16 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right">
 
             <ImageView
                 android:id="@+id/rated_icon"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:src="@drawable/ic_most_view"
                 android:visibility="invisible" />
 
@@ -132,7 +140,7 @@
                 android:id="@+id/most_rate_product_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/rating_products_list_text"

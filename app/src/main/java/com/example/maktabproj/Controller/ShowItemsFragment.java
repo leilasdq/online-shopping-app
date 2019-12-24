@@ -130,9 +130,9 @@ public class ShowItemsFragment extends Fragment {
 
             String original = product.getRegularPrice();
             String sale = product.getSalePrice();
-            realPrice.setText(original);
+            realPrice.setText(original.concat(getString(R.string.Tooman)));
             if (!sale.equalsIgnoreCase("")){
-                salePrice.setText(sale);
+                salePrice.setText(sale.concat(getString(R.string.Tooman)));
                 realPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
                 realPrice.setPaintFlags( realPrice.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));

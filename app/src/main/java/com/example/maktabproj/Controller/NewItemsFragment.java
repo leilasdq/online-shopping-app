@@ -161,11 +161,15 @@ public class NewItemsFragment extends Fragment {
         for (String name :
                 pics.keySet()) {
             TextSliderView textSliderView = new TextSliderView(getContext());
-            textSliderView.description(name)
+            textSliderView
+                    .description(name)
                     .image(pics.get(name))
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop);
             sliderLayout.addSlider(textSliderView);
         }
+        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        sliderLayout.setDuration(5000);
     }
 
     private void setupAdapter() {
@@ -218,9 +222,9 @@ public class NewItemsFragment extends Fragment {
             productName.setText(response.getName());
             String original = response.getRegularPrice();
             String sale = response.getSalePrice();
-            originalPrice.setText(original);
+            originalPrice.setText(original.concat(getString(R.string.Tooman)));
             if (!sale.equalsIgnoreCase("")){
-                salePrice.setText(sale);
+                salePrice.setText(sale.concat(getString(R.string.Tooman)));
                 originalPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
                 originalPrice.setPaintFlags( originalPrice.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
