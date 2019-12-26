@@ -46,7 +46,7 @@ public class MainActivity extends SingleFragmentActivity {
     private void createDrawerMenu() {
 
         final Menu menu = mNavigationView.getMenu();
-        final Menu submenu = menu.addSubMenu("Category");
+        final Menu submenu = menu.addSubMenu("دسته بندی محصولات");
 
         new Handler().postDelayed(new Runnable() {
             @Override

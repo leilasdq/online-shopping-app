@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.maktabproj.Controller.viewPagerAdapter.ImageViewAdapter;
@@ -45,6 +47,8 @@ public class ShowItemsFragment extends Fragment {
     private TextView realPrice;
     private TextView salePrice;
     private Button addToCard;
+    private ProgressBar mShowItemsProgress;
+    private Toolbar mToolbar;
 
     public ShowItemsFragment() {
         // Required empty public constructor
@@ -100,6 +104,8 @@ public class ShowItemsFragment extends Fragment {
         realPrice = view.findViewById(R.id.product_real_price);
         salePrice = view.findViewById(R.id.product_sale_price);
         addToCard = view.findViewById(R.id.add_to_cart_btn);
+        mShowItemsProgress = view.findViewById(R.id.show_product_progress);
+        mToolbar = view.findViewById(R.id.show_product_toolbar);
     }
 
     private class GetProductAsync extends AsyncTask<Void, Void, Void>{
@@ -117,6 +123,10 @@ public class ShowItemsFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            addToCard.setVisibility(View.VISIBLE);
+            mShowItemsProgress.setVisibility(View.INVISIBLE);
+
+            mToolbar.setTitle(product.getName());
             proName.setText(product.getName());
             proDetail.setText(product.getDescription());
 

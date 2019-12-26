@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".Controller.SplashScreenActivity"
     android:orientation="vertical"
-    android:background="@android:color/holo_red_light">
+    android:background="@color/colorPrimary">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie"
@@ -27,7 +27,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:textSize="30sp"
-        android:fontFamily="casual"
+        android:fontFamily="cursive"
         android:gravity="center"
         app:texts="@array/text"
         android:textStyle="bold"
