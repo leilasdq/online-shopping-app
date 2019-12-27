@@ -16,6 +16,10 @@
     <string name="Tooman">تومان</string>
     <string name="all_lists">مشاهده همه</string>
 
+    <string name="all_products">محصولات اخیر</string>
+    <string name="all_popular">محبوب ترین محصولات</string>
+    <string name="all_rated">پرامتیازترین محصولات</string>
+
     <string-array name="text">
         <item>Mobi Shop</item>
         <item>Best of everything</item>

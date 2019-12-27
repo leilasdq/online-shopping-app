@@ -45,6 +45,7 @@ import java.util.List;
 public class NewItemsFragment extends Fragment {
 
     public static final String RESPONSE_ID_EXTRA = "com.example.maktabproj.response id extra";
+    public static final String EXTRA_SEND_PRODUCT_TYPE = "send type";
     private RecyclerView mRecyclerView;
     private RecyclerView mCategoryRecyclerView;
     private RecyclerView mPopularRecyclerView;
@@ -124,15 +125,37 @@ public class NewItemsFragment extends Fragment {
         sliderSetup();
         setUpRecycles();
         setupAdapter();
+        initListeners();
 
+        return view;
+    }
+
+    private void initListeners() {
         newAllLists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "ALL LIST CLICKED", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ListAllProductActivity.class);
+                intent.putExtra(EXTRA_SEND_PRODUCT_TYPE, "date");
+                startActivity(intent);
+            }
+        });
+        popularAllLists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ListAllProductActivity.class);
+                intent.putExtra(EXTRA_SEND_PRODUCT_TYPE, "popular");
+                startActivity(intent);
+            }
+        });
+        ratedAllLists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ListAllProductActivity.class);
+                intent.putExtra(EXTRA_SEND_PRODUCT_TYPE, "rated");
+                startActivity(intent);
             }
         });
 
-        return view;
     }
 
     private void setUpRecycles() {
