@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -54,6 +55,9 @@ public class NewItemsFragment extends Fragment {
     private ImageView newIcon;
     private ImageView popularIcon;
     private ImageView ratedIcon;
+    private TextView newAllLists;
+    private TextView popularAllLists;
+    private TextView ratedAllLists;
     private ProgressBar newProgress;
     private ProgressBar popularProgress;
     private ProgressBar ratedProgress;
@@ -121,6 +125,13 @@ public class NewItemsFragment extends Fragment {
         setUpRecycles();
         setupAdapter();
 
+        newAllLists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "ALL LIST CLICKED", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
@@ -144,6 +155,10 @@ public class NewItemsFragment extends Fragment {
         newProgress = view.findViewById(R.id.new_progress);
         popularProgress = view.findViewById(R.id.popular_progress);
         ratedProgress = view.findViewById(R.id.rated_progress);
+
+        newAllLists = view.findViewById(R.id.new_product_all_lists);
+        popularAllLists = view.findViewById(R.id.popular_product_all_lists);
+        ratedAllLists = view.findViewById(R.id.rated_product_all_lists);
 
         sliderLayout = view.findViewById(R.id.slider);
         mRecyclerView = view.findViewById(R.id.recycle);
@@ -319,6 +334,7 @@ public class NewItemsFragment extends Fragment {
             super.onPostExecute(responses);
             newText.setVisibility(View.VISIBLE);
             newIcon.setVisibility(View.VISIBLE);
+            newAllLists.setVisibility(View.VISIBLE);
             newProgress.setVisibility(View.GONE);
             setupAdapter();
             Log.e(TAG, "onPostExecute: items size" + items.size());
@@ -342,6 +358,7 @@ public class NewItemsFragment extends Fragment {
             super.onPostExecute(responses);
             popularText.setVisibility(View.VISIBLE);
             popularIcon.setVisibility(View.VISIBLE);
+            popularAllLists.setVisibility(View.VISIBLE);
             popularProgress.setVisibility(View.GONE);
             setupAdapter();
         }
@@ -364,6 +381,7 @@ public class NewItemsFragment extends Fragment {
             super.onPostExecute(responses);
             ratingText.setVisibility(View.VISIBLE);
             ratedIcon.setVisibility(View.VISIBLE);
+            ratedAllLists.setVisibility(View.VISIBLE);
             ratedProgress.setVisibility(View.GONE);
             setupAdapter();
         }

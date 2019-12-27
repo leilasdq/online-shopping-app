@@ -8,4 +8,6 @@
 
     <color name="lineBackground">#D1D0D0</color>
     <color name="background">#F0EEEE</color>
+
+    <color name="all_lists_text_color">#0881EB</color>
 </resources>
