@@ -11,7 +11,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:layout_margin="8dp"
+        android:layout_margin="4dp"
         app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,22 +34,24 @@
                 android:layout_margin="4dp"
                 android:layout_width="0dp"
                 app:layout_constraintHorizontal_weight="2"
+                android:ellipsize="end"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:maxLines="1"
                 android:paddingTop="16dp"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 app:layout_constraintRight_toLeftOf="@id/all_list_product_image"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="نام کالا نام کالا نام کالا نام کالا نام کالا نام کالا نام کالا نام کالا " />
+                tools:text="نام کالا نام کالا نام کالا نام کالا نام کالا نام کالا نام کالا نام کالا "
+                android:singleLine="true" />
 
             <TextView
                 android:id="@+id/all_list_product_short_des"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
+                android:ellipsize="end"
                 android:paddingTop="4dp"
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"

@@ -40,10 +40,16 @@ public class ListAllProductFragment extends Fragment {
 
     public static final String GET_PRODUCT_TYPE_ARGS = "get product type";
     private String type;
+    private int pageNumber = 1;
+
+    private EndlessRecyclerViewScrollListener scrollListener;
+    private LinearLayoutManager manager;
 
     private RecyclerView allProductsRecycle;
     private Toolbar mToolbar;
     private List<Response> mList;
+    private List<Response> getAllList = new ArrayList<>();
+    private ListAllProductAdapter adapter;
 
     public static ListAllProductFragment newInstance(String productType) {
 
@@ -78,16 +84,29 @@ public class ListAllProductFragment extends Fragment {
         initViews(view);
         setupToolbar();
 
+        scrollListener = new EndlessRecyclerViewScrollListener(manager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                pageNumber++;
+                GetAllListAsync getLists = new GetAllListAsync();
+                getLists.execute();
+
+//                scrollListener.resetState();
+            }
+        };
+        allProductsRecycle.addOnScrollListener(scrollListener);
+
         return view;
     }
 
     private void initViews(View view) {
         allProductsRecycle = view.findViewById(R.id.all_product_recycler);
+        manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mToolbar = view.findViewById(R.id.all_lists_toolbar);
-        allProductsRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
+        allProductsRecycle.setLayoutManager(manager);
     }
 
-    private class ListAllProductViewHolder extends RecyclerView.ViewHolder{
+    private class ListAllProductViewHolder extends RecyclerView.ViewHolder {
         private Response mResponse;
         private ImageView proImage;
         private TextView name;
@@ -114,7 +133,7 @@ public class ListAllProductFragment extends Fragment {
             });
         }
 
-        private void bind(Response response){
+        private void bind(Response response) {
             mResponse = response;
 
             name.setText(mResponse.getName());
@@ -122,11 +141,11 @@ public class ListAllProductFragment extends Fragment {
             String original = response.getRegularPrice();
             String sale = response.getSalePrice();
             realPrice.setText(original.concat(getString(R.string.Tooman)));
-            if (!sale.equalsIgnoreCase("")){
+            if (!sale.equalsIgnoreCase("")) {
                 salePrice.setText(sale.concat(getString(R.string.Tooman)));
                 realPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
-                realPrice.setPaintFlags( realPrice.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                realPrice.setPaintFlags(realPrice.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 salePrice.setVisibility(View.INVISIBLE);
                 realPrice.setGravity(Gravity.CENTER_VERTICAL);
             }
@@ -136,7 +155,7 @@ public class ListAllProductFragment extends Fragment {
         }
     }
 
-    private class ListAllProductAdapter extends RecyclerView.Adapter<ListAllProductViewHolder>{
+    private class ListAllProductAdapter extends RecyclerView.Adapter<ListAllProductViewHolder> {
 
         private List<Response> allProductList = new ArrayList<>();
 
@@ -164,45 +183,48 @@ public class ListAllProductFragment extends Fragment {
 
     private void setupAdapter() {
         if (isAdded()) {
-            ListAllProductAdapter adapter = new ListAllProductAdapter();
-            adapter.setAllProductList(mList);
-            allProductsRecycle.setAdapter(adapter);
+            if (adapter==null) {
+                adapter = new ListAllProductAdapter();
+                adapter.setAllProductList(getAllList);
+                allProductsRecycle.setAdapter(adapter);
+            }
+            else {
+                adapter.setAllProductList(getAllList);
+                adapter.notifyDataSetChanged();
+            }
         }
     }
 
     private void setupToolbar() {
-        if (type.equalsIgnoreCase("date")){
+        if (type.equalsIgnoreCase("date")) {
             mToolbar.setTitle(getString(R.string.all_products));
-        }
-        else if (type.equalsIgnoreCase("popular")){
+        } else if (type.equalsIgnoreCase("popular")) {
             mToolbar.setTitle(getString(R.string.all_popular));
-        }
-        else if (type.equalsIgnoreCase("rated")){
+        } else if (type.equalsIgnoreCase("rated")) {
             mToolbar.setTitle(getString(R.string.all_rated));
         }
     }
 
-    private class GetAllListAsync extends AsyncTask<Void, Void, List<Response>>{
+    private class GetAllListAsync extends AsyncTask<Void, Void, List<Response>> {
         private FetchItems mFetchItems = FetchItems.getInstance();
 
         @Override
         protected List<Response> doInBackground(Void... voids) {
 
-            mList = new ArrayList<>();
+           mList = new ArrayList<>();
             try {
-                if (type.equalsIgnoreCase("date")){
-                    mList = mFetchItems.getAllProducts();
+                if (type.equalsIgnoreCase("date")) {
+                    mList = mFetchItems.getAllProductsPerPage(pageNumber);
+                } else if (type.equalsIgnoreCase("popular")) {
+                    mList = mFetchItems.getPopularProductsPerPage(pageNumber);
+                } else if (type.equalsIgnoreCase("rated")) {
+                    mList = mFetchItems.getRatedProductsPerPage(pageNumber);
                 }
-                else if (type.equalsIgnoreCase("popular")){
-                    mList = mFetchItems.getPopularProducts();
-                }
-                else if (type.equalsIgnoreCase("rated")){
-                    mList = mFetchItems.getRatedProducts();
-                }
+                getAllList.addAll(mList);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return mList;
+            return getAllList;
         }
 
         @Override

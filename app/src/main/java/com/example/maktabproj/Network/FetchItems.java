@@ -78,4 +78,28 @@ public class FetchItems {
 
         return call.execute().body();
     }
+
+    public List<Response> getAllProductsPerPage(int pageNumber) throws IOException {
+        mQueries.remove(ORDERBY);
+        mQueries.put("page", String.valueOf(pageNumber));
+        Call<List<Response>> call = mApiInterfaces.getProducts(mQueries);
+
+        return call.execute().body();
+    }
+
+    public List<Response> getPopularProductsPerPage(int pageNumber) throws IOException {
+        mQueries.put(ORDERBY, "popularity");
+        mQueries.put("page", String.valueOf(pageNumber));
+        Call<List<Response>> call = mApiInterfaces.getOrderedProducts(mQueries);
+
+        return call.execute().body();
+    }
+
+    public List<Response> getRatedProductsPerPage(int pageNumber) throws IOException {
+        mQueries.put(ORDERBY, "rating");
+        mQueries.put("page", String.valueOf(pageNumber));
+        Call<List<Response>> call = mApiInterfaces.getOrderedProducts(mQueries);
+
+        return call.execute().body();
+    }
 }
