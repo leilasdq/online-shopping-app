@@ -13,6 +13,7 @@
     <string name="popular_products_list_text">محبوب ترین ها</string>
     <string name="rating_products_list_text">پربازدید ترین ها</string>
     <string name="add_to_cart_txt">افزودن به سبد خرید</string>
+    <string name="categories">دسته بندی محصولات</string>
     <string name="Tooman">تومان</string>
     <string name="all_lists">مشاهده همه</string>
 

@@ -143,6 +143,7 @@ public class ListAllProductFragment extends Fragment {
             realPrice.setText(original.concat(getString(R.string.Tooman)));
             if (!sale.equalsIgnoreCase("")) {
                 salePrice.setText(sale.concat(getString(R.string.Tooman)));
+                salePrice.setVisibility(View.VISIBLE);
                 realPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
                 realPrice.setPaintFlags(realPrice.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));

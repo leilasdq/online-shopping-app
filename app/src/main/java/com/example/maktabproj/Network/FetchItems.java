@@ -53,6 +53,9 @@ public class FetchItems {
     }
 
     public List<CategoriesItem> getCategories() throws IOException {
+        if (mQueries.containsKey("orderby")){
+            mQueries.remove("orderby");
+        }
         Call<List<CategoriesItem>> call = mApiInterfaces.getProductCategory(mQueries);
 
         return call.execute().body();
@@ -100,6 +103,11 @@ public class FetchItems {
         mQueries.put("page", String.valueOf(pageNumber));
         Call<List<Response>> call = mApiInterfaces.getOrderedProducts(mQueries);
 
+        return call.execute().body();
+    }
+
+    public List<CategoriesItem> getSubCategory(int id) throws IOException {
+        Call<List<CategoriesItem>> call = mApiInterfaces.getSubCategories(mQueries, String.valueOf(id));
         return call.execute().body();
     }
 }

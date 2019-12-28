@@ -303,13 +303,23 @@ public class NewItemsFragment extends Fragment {
     private class CategoryViewHolder extends RecyclerView.ViewHolder {
 
         Button categoryBtn;
+        CategoriesItem mCategoriesItem;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryBtn = itemView.findViewById(R.id.category_btn);
+
+            categoryBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = SubCategoryActivity.newIntent(getActivity(), mCategoriesItem.getId());
+                    startActivity(intent);
+                }
+            });
         }
 
         public void bind(CategoriesItem categoriesItem){
+            mCategoriesItem = categoriesItem;
             categoryBtn.setText(categoriesItem.getName());
         }
     }
