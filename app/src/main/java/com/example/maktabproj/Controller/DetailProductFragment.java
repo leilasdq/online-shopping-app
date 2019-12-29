@@ -3,7 +3,6 @@ package com.example.maktabproj.Controller;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -17,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,6 +24,8 @@ import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ShowItemsFragment extends Fragment {
+public class DetailProductFragment extends Fragment {
 
     private FetchItems mFetchItems;
     private ProductId productId;
@@ -49,15 +49,17 @@ public class ShowItemsFragment extends Fragment {
     private Button addToCard;
     private ProgressBar mShowItemsProgress;
     private Toolbar mToolbar;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private AppBarLayout mAppBarLayout;
 
-    public ShowItemsFragment() {
+    public DetailProductFragment() {
         // Required empty public constructor
     }
 
-    public static ShowItemsFragment newInstance() {
+    public static DetailProductFragment newInstance() {
         Bundle args = new Bundle();
 
-        ShowItemsFragment fragment = new ShowItemsFragment();
+        DetailProductFragment fragment = new DetailProductFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -88,7 +90,7 @@ public class ShowItemsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_show_items, container, false);
+        View view =  inflater.inflate(R.layout.fragment_detail_product, container, false);
 
         initUI(view);
         GetProductAsync async = new GetProductAsync();
@@ -106,6 +108,8 @@ public class ShowItemsFragment extends Fragment {
         addToCard = view.findViewById(R.id.add_to_cart_btn);
         mShowItemsProgress = view.findViewById(R.id.show_product_progress);
         mToolbar = view.findViewById(R.id.show_product_toolbar);
+        mCollapsingToolbarLayout = view.findViewById(R.id.collapsing);
+        mAppBarLayout = view.findViewById(R.id.app_bar);
     }
 
     private class GetProductAsync extends AsyncTask<Void, Void, Void>{
@@ -126,7 +130,28 @@ public class ShowItemsFragment extends Fragment {
             addToCard.setVisibility(View.VISIBLE);
             mShowItemsProgress.setVisibility(View.INVISIBLE);
 
-            mToolbar.setTitle(product.getName());
+//            mToolbar.setTitle(product.getName());
+//            mCollapsingToolbarLayout.setTitle(product.getName());
+
+            mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+                boolean isShow = true;
+                int scrollRange = -1;
+
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    if (scrollRange == -1) {
+                        scrollRange = appBarLayout.getTotalScrollRange();
+                    }
+                    if (scrollRange + verticalOffset == 0) {
+                        mCollapsingToolbarLayout.setTitle(product.getName());
+                        isShow = true;
+                    } else if(isShow) {
+                        mCollapsingToolbarLayout.setTitle(" ");//careful there should a space between double quote otherwise it wont work
+                        isShow = false;
+                    }
+                }
+            });
+
             proName.setText(product.getName());
             proDetail.setText(product.getDescription());
 

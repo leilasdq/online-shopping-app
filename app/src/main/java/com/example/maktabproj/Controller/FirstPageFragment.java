@@ -22,7 +22,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -42,7 +41,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewItemsFragment extends Fragment {
+public class FirstPageFragment extends Fragment {
 
     public static final String RESPONSE_ID_EXTRA = "com.example.maktabproj.response id extra";
     public static final String EXTRA_SEND_PRODUCT_TYPE = "send type";
@@ -71,18 +70,18 @@ public class NewItemsFragment extends Fragment {
     private FetchItems fetchItems;
     private SliderLayout sliderLayout;
 
-    private static final String TAG = "NewItemsFragment";
+    private static final String TAG = "FirstPageFragment";
     private MainActivity activity;
 
-    public NewItemsFragment() {
+    public FirstPageFragment() {
         // Required empty public constructor
     }
 
-    public static NewItemsFragment newInstance() {
+    public static FirstPageFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        NewItemsFragment fragment = new NewItemsFragment();
+        FirstPageFragment fragment = new FirstPageFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -248,7 +247,7 @@ public class NewItemsFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), ShowItemsActivity.class);
+                    Intent intent = new Intent(getActivity(), DetailProductActivity.class);
                     intent.putExtra(RESPONSE_ID_EXTRA, mResponse.getId());
                     startActivity(intent);
                 }

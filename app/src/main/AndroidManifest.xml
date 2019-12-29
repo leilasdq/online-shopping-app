@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Controller.SubCategoryActivity"></activity>
         <activity android:name=".Controller.ListAllProductActivity" />
-        <activity android:name=".Controller.ShowItemsActivity" />
+        <activity android:name=".Controller.DetailProductActivity" />
         <activity android:name=".Controller.SingleFragmentActivity" />
         <activity android:name=".Controller.MainActivity" />
         <activity android:name=".Controller.SplashScreenActivity">

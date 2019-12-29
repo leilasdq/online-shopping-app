@@ -10,4 +10,93 @@
     <color name="background">#F0EEEE</color>
 
     <color name="all_lists_text_color">#0881EB</color>
+
+
+
+
+    <color name="digikala_red_dark">#ffef394e</color>
+
+    <color name="digikala_red_light">#ffef394e</color>
+
+    <color name="digikala_secondaryTextColor">#ffaaaaaa</color>
+
+    <color name="gray_100">#fff5f5f5</color>
+
+    <color name="gray_100_transparent">#eef5f5f5</color>
+
+    <color name="gray_200">#ffeeeeee</color>
+
+    <color name="gray_300">#ffe0e0e0</color>
+
+    <color name="gray_400">#ffbdbdbd</color>
+
+    <color name="gray_500">#ff9e9e9e</color>
+
+    <color name="gray_600">#ff757575</color>
+
+    <color name="digikala_hover">#22ffffff</color>
+
+    <color name="digikala_adrs_title1">#ff424242</color>
+
+    <color name="digikala_adrs_title2">#ff686868</color>
+
+    <color name="digikala_adrs_title3">#ff979797</color>
+
+    <color name="digikala_black_25">#40000000</color>
+
+    <color name="digikala_black_dark">#ff3b3b3b</color>
+
+    <color name="digikala_black_dark_54">#8a3b3b3b</color>
+
+    <color name="digikala_black_light">#ff424242</color>
+
+    <color name="digikala_bluegrey_dark">#ff61747e</color>
+
+    <color name="digikala_bluegrey_light">#ff78909c</color>
+
+    <color name="digikala_dividersColor">#ffeeeeee</color>
+
+    <color name="digikala_green_dark">#ff539755</color>
+
+    <color name="digikala_green_light">#ff66bb6a</color>
+
+    <color name="digikala_hover_black">#12000000</color>
+
+    <color name="digikala_inactiveTextColor">#ffd9d9d9</color>
+
+    <color name="digikala_indigo_dark">#ff186eb9</color>
+
+    <color name="digikala_indigo_light">#ff1e88e5</color>
+
+    <color name="digikala_normalSwitchThumb">#ff8b8b8b</color>
+
+    <color name="digikala_white_grey200">#ffeeeeee</color>
+
+    <color name="digikala_white_grey300">#ffe0e0e0</color>
+
+    <color name="digikala_white_grey50">#fffafafa</color>
+
+    <color name="digikala_white_pure">#ffffffff</color>
+
+    <color name="digikala_white_pure_30">#4dffffff</color>
+
+    <color name="fake_border">#ffe4e4e4</color>
+
+    <color name="red">#ffe7254f</color>
+
+    <color name="red_400">#ffef5350</color>
+
+    <color name="red_500">#ffe51c23</color>
+
+    <color name="red_700">#ffd32f2f</color>
+
+    <color name="chart_bg_blue">#1a2196f3</color>
+
+    <color name="fake_alarm">#ffd5901f</color>
+
+    <color name="title_blue">#ff0099ff</color>
+
+    <color name="chart_blue">#ff2196f3</color>
+
+    <color name="fresh_text_color">#ff39ae00</color>
 </resources>

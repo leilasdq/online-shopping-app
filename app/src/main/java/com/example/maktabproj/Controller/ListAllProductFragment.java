@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.maktabproj.Controller.NewItemsFragment.RESPONSE_ID_EXTRA;
+import static com.example.maktabproj.Controller.FirstPageFragment.RESPONSE_ID_EXTRA;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -126,7 +126,7 @@ public class ListAllProductFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), ShowItemsActivity.class);
+                    Intent intent = new Intent(getActivity(), DetailProductActivity.class);
                     intent.putExtra(RESPONSE_ID_EXTRA, mResponse.getId());
                     startActivity(intent);
                 }

@@ -1,7 +1,6 @@
 package com.example.maktabproj.Controller;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -23,13 +22,13 @@ public class MainActivity extends SingleFragmentActivity {
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
 
-    NewItemsFragment newItemsFragment;
+    FirstPageFragment newItemsFragment;
     private Fragment selectedFragment;
     private List<CategoriesItem> categories;
 
     @Override
     public Fragment createFragment() {
-        return NewItemsFragment.newInstance();
+        return FirstPageFragment.newInstance();
     }
 
     @Override
@@ -73,7 +72,7 @@ public class MainActivity extends SingleFragmentActivity {
         mDrawerLayout = findViewById(R.id.nav_draw);
         mNavigationView = findViewById(R.id.nav_view);
 
-//        newItemsFragment = NewItemsFragment.newInstance();
+//        newItemsFragment = FirstPageFragment.newInstance();
 //        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, newItemsFragment).commit();
 
         categories = new ArrayList<>();

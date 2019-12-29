@@ -1,20 +1,19 @@
 package com.example.maktabproj.Controller;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 
 import com.example.maktabproj.R;
 
-import static com.example.maktabproj.Controller.NewItemsFragment.RESPONSE_ID_EXTRA;
+import static com.example.maktabproj.Controller.FirstPageFragment.RESPONSE_ID_EXTRA;
 
-public class ShowItemsActivity extends SingleFragmentActivity implements ShowItemsFragment.ProductId {
+public class DetailProductActivity extends SingleFragmentActivity implements DetailProductFragment.ProductId {
     int productId;
 
     @Override
     public Fragment createFragment() {
-        return ShowItemsFragment.newInstance();
+        return DetailProductFragment.newInstance();
     }
 
     @Override

@@ -21,6 +21,43 @@
     <string name="all_popular">محبوب ترین محصولات</string>
     <string name="all_rated">پرامتیازترین محصولات</string>
 
+
+
+
+    <string name="see_all">لیست کامل</string>
+
+    <string name="most_viewed_product">پربازدیدترین محصولات</string>
+
+    <string name="content_description">توضیح محتوا</string>
+
+    <string name="timer_offers_hours">03</string>
+
+    <string name="timer_offers_minute">37</string>
+
+    <string name="timer_offers_second">24</string>
+
+    <string name="seperator_timer_offers">:</string>
+
+    <string name="detail_config_product">مشخصات</string>
+
+    <string name="detail_product_user_comment">نظرات کاربران</string>
+
+    <string name="sent_fresh">ارسال سریع (سوپرمارکتی)</string>
+
+    <string name="sent_from_prefix">آماده ارسال از انبار</string>
+
+    <string name="fake_alarm">این محصول توسط تولید کننده اصلی (برند) تولید نشده است</string>
+
+    <string name="counter_saller_garanti_product_detail">1 فروشنده و گارانتی برای این کالا وجود دارد</string>
+
+    <string name="fake_title_product">غیر اصل</string>
+
+    <string name="title_warranty">گارانتی 24 ماهه  کالا</string>
+
+    <string name="tv_title_name_saller">فروش توسط دیجی کالا</string>
+
+
+
     <string-array name="text">
         <item>Mobi Shop</item>
         <item>Best of everything</item>
