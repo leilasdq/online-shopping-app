@@ -4,6 +4,7 @@ package com.example.maktabproj.Controller;
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -153,7 +155,9 @@ public class DetailProductFragment extends Fragment {
             });
 
             proName.setText(product.getName());
-            proDetail.setText(product.getDescription());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                proDetail.setText(Html.fromHtml(product.getDescription(), Html.FROM_HTML_MODE_LEGACY));
+            } else  proDetail.setText(Html.fromHtml(product.getDescription()));
 
             List<ImagesItem> images = product.getImages();
             List<String> urls = new ArrayList<>();

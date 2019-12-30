@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -137,7 +139,9 @@ public class ListAllProductFragment extends Fragment {
             mResponse = response;
 
             name.setText(mResponse.getName());
-            shortDes.setText(mResponse.getShortDescription());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                shortDes.setText(Html.fromHtml(mResponse.getShortDescription(), Html.FROM_HTML_MODE_LEGACY));
+            } else  shortDes.setText(Html.fromHtml(mResponse.getShortDescription()));
             String original = response.getRegularPrice();
             String sale = response.getSalePrice();
             realPrice.setText(original.concat(getString(R.string.Tooman)));

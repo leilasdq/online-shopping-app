@@ -236,7 +236,7 @@
                         android:id="@+id/tv_productDetails_seller_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableRight="@drawable/ic_dk_24dp"
+                        android:drawableRight="@drawable/logo"
                         android:drawablePadding="10.0dip"
                         android:gravity="right"
                         android:padding="7.0dip"
