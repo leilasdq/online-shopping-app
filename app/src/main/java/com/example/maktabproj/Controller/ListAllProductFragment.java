@@ -44,7 +44,7 @@ public class ListAllProductFragment extends Fragment {
     private String type;
     private int pageNumber = 1;
 
-    private EndlessRecyclerViewScrollListener scrollListener;
+    private EndlessRecyclerView scrollListener;
     private LinearLayoutManager manager;
 
     private RecyclerView allProductsRecycle;
@@ -86,7 +86,7 @@ public class ListAllProductFragment extends Fragment {
         initViews(view);
         setupToolbar();
 
-        scrollListener = new EndlessRecyclerViewScrollListener(manager) {
+        scrollListener = new EndlessRecyclerView(manager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 pageNumber++;

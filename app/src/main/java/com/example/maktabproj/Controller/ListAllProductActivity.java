@@ -10,7 +10,6 @@ import static com.example.maktabproj.Controller.FirstPageFragment.EXTRA_SEND_PRO
 
 public class ListAllProductActivity extends SingleFragmentActivity {
 
-    public static final String EXTRA_GET_TYPE_OF_PRODUCT = "com.example.maktabproj.get Type of product";
     String productType;
 
     @Override

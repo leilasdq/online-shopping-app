@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.example.maktabproj.R;
 
-public abstract class SingleFragmentActivity extends AppCompatActivity {
+public abstract class SingleFragmentActivity extends NetworkCheckerActivity {
 
         public abstract Fragment createFragment();
 

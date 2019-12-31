@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubCategoryActivity extends AppCompatActivity {
+public class SubCategoryActivity extends NetworkCheckerActivity {
     public static final String EXTRA_CATEGORY_ID = "com.example.maktabproj.category id";
     private Toolbar mToolbar;
     private TabLayout mTabLayout;

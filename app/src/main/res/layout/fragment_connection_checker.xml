@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".Controller.NetCheckerFragment"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_no_internet" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/check_connection"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/no_connection_btn"
+            android:layoutDirection="rtl"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="#F44444"
+            android:text="@string/reconnect"
+            android:textSize="18sp"
+            app:icon="@drawable/ic_retry_icon"
+            android:layout_gravity="center"/>
+
+        <com.victor.loading.newton.NewtonCradleLoading
+            android:id="@+id/loading"
+            android:layout_marginTop="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:scrollbarStyle="insideOverlay"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
