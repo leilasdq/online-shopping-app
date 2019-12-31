@@ -53,55 +53,65 @@ public class FetchItems {
     }
 
     public List<CategoriesItem> getCategories() throws IOException {
-        if (mQueries.containsKey("orderby")){
-            mQueries.remove("orderby");
-        }
+//        if (mQueries.containsKey("orderby")){
+//            mQueries.remove("orderby");
+//        }
         Call<List<CategoriesItem>> call = mApiInterfaces.getProductCategory(mQueries);
 
         return call.execute().body();
     }
 
     public List<Response> getPopularProducts() throws IOException {
-        mQueries.put(ORDERBY, "popularity");
-        Call<List<Response>> call = mApiInterfaces.getOrderedProducts(mQueries);
+        Map<String, String> copy = new HashMap<>();
+        copy.putAll(mQueries);
+        copy.put(ORDERBY, "popularity");
+        Call<List<Response>> call = mApiInterfaces.getOrderedProducts(copy);
 
         return call.execute().body();
     }
 
     public List<Response> getRatedProducts() throws IOException {
-        mQueries.put(ORDERBY, "rating");
-        Call<List<Response>> call = mApiInterfaces.getOrderedProducts(mQueries);
+        Map<String, String> copy = new HashMap<>();
+        copy.putAll(mQueries);
+        copy.put(ORDERBY, "rating");
+        Call<List<Response>> call = mApiInterfaces.getOrderedProducts(copy);
 
         return call.execute().body();
     }
 
     public Response getSpecificProduct(int id) throws IOException {
-        mQueries.remove(ORDERBY);
+//        mQueries.remove(ORDERBY);
         Call<Response> call = mApiInterfaces.getSpecificProduct(String.valueOf(id), mQueries);
 
         return call.execute().body();
     }
 
     public List<Response> getAllProductsPerPage(int pageNumber) throws IOException {
-        mQueries.remove(ORDERBY);
-        mQueries.put("page", String.valueOf(pageNumber));
-        Call<List<Response>> call = mApiInterfaces.getProducts(mQueries);
+//        mQueries.remove(ORDERBY);
+        Map<String, String> copy = new HashMap<>();
+        copy.putAll(mQueries);
+        copy.put("page", String.valueOf(pageNumber));
+        Call<List<Response>> call = mApiInterfaces.getProducts(copy);
 
         return call.execute().body();
     }
 
     public List<Response> getPopularProductsPerPage(int pageNumber) throws IOException {
-        mQueries.put(ORDERBY, "popularity");
-        mQueries.put("page", String.valueOf(pageNumber));
-        Call<List<Response>> call = mApiInterfaces.getOrderedProducts(mQueries);
+        Map<String, String> copy = new HashMap<>();
+        copy.putAll(mQueries);
+        copy.put(ORDERBY, "popularity");
+        copy.put("page", String.valueOf(pageNumber));
+        Call<List<Response>> call = mApiInterfaces.getOrderedProducts(copy);
 
         return call.execute().body();
     }
 
     public List<Response> getRatedProductsPerPage(int pageNumber) throws IOException {
-        mQueries.put(ORDERBY, "rating");
-        mQueries.put("page", String.valueOf(pageNumber));
-        Call<List<Response>> call = mApiInterfaces.getOrderedProducts(mQueries);
+        Map<String, String> copy = new HashMap<>();
+        copy.putAll(mQueries);
+        copy.put(ORDERBY, "rating");
+        copy.put("page", String.valueOf(pageNumber));
+        Call<List<Response>> call = mApiInterfaces.getOrderedProducts(copy);
 
         return call.execute().body();
     }
