@@ -52,11 +52,11 @@ public class FetchItems {
         return call.execute().body();
     }
 
-    public List<CategoriesItem> getCategories() throws IOException {
-//        if (mQueries.containsKey("orderby")){
-//            mQueries.remove("orderby");
-//        }
-        Call<List<CategoriesItem>> call = mApiInterfaces.getProductCategory(mQueries);
+    public List<CategoriesItem> getCategories(int pageNumber) throws IOException {
+        Map<String, String> copy = new HashMap<>();
+        copy.putAll(mQueries);
+        copy.put("page", String.valueOf(pageNumber));
+        Call<List<CategoriesItem>> call = mApiInterfaces.getProductCategory(copy);
 
         return call.execute().body();
     }
@@ -80,14 +80,12 @@ public class FetchItems {
     }
 
     public Response getSpecificProduct(int id) throws IOException {
-//        mQueries.remove(ORDERBY);
         Call<Response> call = mApiInterfaces.getSpecificProduct(String.valueOf(id), mQueries);
 
         return call.execute().body();
     }
 
     public List<Response> getAllProductsPerPage(int pageNumber) throws IOException {
-//        mQueries.remove(ORDERBY);
         Map<String, String> copy = new HashMap<>();
         copy.putAll(mQueries);
         copy.put("page", String.valueOf(pageNumber));

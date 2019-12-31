@@ -46,6 +46,10 @@ public class FirstPageFragment extends Fragment {
 
     public static final String RESPONSE_ID_EXTRA = "com.example.maktabproj.response id extra";
     public static final String EXTRA_SEND_PRODUCT_TYPE = "send type";
+
+    private EndlessRecyclerView scrollListener;
+    private int pageNumber = 1;
+
     private RecyclerView mRecyclerView;
     private RecyclerView mCategoryRecyclerView;
     private RecyclerView mPopularRecyclerView;
@@ -67,12 +71,15 @@ public class FirstPageFragment extends Fragment {
     private List<Response> popularList;
     private List<Response> ratedList;
     private List<CategoriesItem> categories;
+    private List<CategoriesItem> copyOfCategories = new ArrayList<>();
 
     private FetchItems fetchItems;
     private SliderLayout sliderLayout;
 
     private static final String TAG = "FirstPageFragment";
     private MainActivity activity;
+    private LinearLayoutManager manager;
+    private CategoryAdapter categoryAdapter;
 
     public FirstPageFragment() {
         // Required empty public constructor
@@ -100,7 +107,6 @@ public class FirstPageFragment extends Fragment {
         items = new ArrayList<>();
         popularList = new ArrayList<>();
         ratedList = new ArrayList<>();
-        categories = new ArrayList<>();
 
         CategoriesAsync categoriesAsync = new CategoriesAsync();
         categoriesAsync.execute();
@@ -122,15 +128,24 @@ public class FirstPageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_item, container, false);
 
         initViews(view);
+        initListeners();
         sliderSetup();
         setUpRecycles();
         setupAdapter();
-        initListeners();
 
         return view;
     }
 
     private void initListeners() {
+        scrollListener = new EndlessRecyclerView(manager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                pageNumber++;
+                CategoriesAsync async = new CategoriesAsync();
+                async.execute();
+            }
+        };
+
         newAllLists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,10 +178,13 @@ public class FirstPageFragment extends Fragment {
         mPopularRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
         mRatingRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
 
-        mCategoryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        mCategoryRecyclerView.setLayoutManager(manager);
+        mCategoryRecyclerView.addOnScrollListener(scrollListener);
     }
 
     private void initViews(View view) {
+        manager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
+
         newText = view.findViewById(R.id.new_product_text);
         popularText = view.findViewById(R.id.popular_product_text);
         ratingText = view.findViewById(R.id.most_rate_product_text);
@@ -216,10 +234,6 @@ public class FirstPageFragment extends Fragment {
             adapter.setList(items);
             mRecyclerView.setAdapter(adapter);
 
-            CategoryAdapter categoryAdapter = new CategoryAdapter();
-            categoryAdapter.setList(categories);
-            mCategoryRecyclerView.setAdapter(categoryAdapter);
-
             ProductAdapter popular = new ProductAdapter();
             popular.setList(popularList);
             mPopularRecyclerView.setAdapter(popular);
@@ -227,6 +241,15 @@ public class FirstPageFragment extends Fragment {
             ProductAdapter rated = new ProductAdapter();
             rated.setList(ratedList);
             mRatingRecyclerView.setAdapter(rated);
+
+            if (categoryAdapter == null) {
+                categoryAdapter = new CategoryAdapter();
+                categoryAdapter.setList(copyOfCategories);
+                mCategoryRecyclerView.setAdapter(categoryAdapter);
+            } else {
+                categoryAdapter.setList(copyOfCategories);
+                categoryAdapter.notifyDataSetChanged();
+            }
         }
     }
 
@@ -424,12 +447,14 @@ public class FirstPageFragment extends Fragment {
 
         @Override
         protected List<CategoriesItem> doInBackground(Void... voids) {
+            categories = new ArrayList<>();
             try {
-                categories = fetchItems.getCategories();
+                categories = fetchItems.getCategories(pageNumber);
+                copyOfCategories.addAll(categories);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return categories;
+            return copyOfCategories;
         }
 
         @Override

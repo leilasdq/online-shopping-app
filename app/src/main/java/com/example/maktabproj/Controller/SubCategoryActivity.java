@@ -72,7 +72,7 @@ public class SubCategoryActivity extends NetworkCheckerActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                mCategoriesItems = mFetchItems.getCategories();
+                mCategoriesItems = mFetchItems.getCategories(1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
