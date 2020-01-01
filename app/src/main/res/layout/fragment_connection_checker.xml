@@ -39,14 +39,16 @@
             app:icon="@drawable/ic_retry_icon"
             android:layout_gravity="center"/>
 
-        <com.victor.loading.newton.NewtonCradleLoading
+        <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/loading"
             android:layout_marginTop="24dp"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone"
-            android:scrollbarStyle="insideOverlay"/>
+            app:indicatorName="BallPulseIndicator"
+            app:indicatorColor="@color/red"
+            style="@style/AVLoadingIndicatorView"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
