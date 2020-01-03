@@ -56,6 +56,18 @@ public class FetchItems {
         Map<String, String> copy = new HashMap<>();
         copy.putAll(mQueries);
         copy.put("page", String.valueOf(pageNumber));
+        copy.put("display", "subcategories");
+        Call<List<CategoriesItem>> call = mApiInterfaces.getProductCategory(copy);
+
+        return call.execute().body();
+    }
+
+    public List<CategoriesItem> getParentCategories(int pageNumber) throws IOException {
+        Map<String, String> copy = new HashMap<>();
+        copy.putAll(mQueries);
+        copy.put("page", String.valueOf(pageNumber));
+        copy.put("parent", String.valueOf(0));
+        copy.put("display", "default");
         Call<List<CategoriesItem>> call = mApiInterfaces.getProductCategory(copy);
 
         return call.execute().body();
@@ -115,7 +127,12 @@ public class FetchItems {
     }
 
     public List<CategoriesItem> getSubCategory(int id) throws IOException {
-        Call<List<CategoriesItem>> call = mApiInterfaces.getSubCategories(mQueries, String.valueOf(id));
+        Map<String, String> copy = new HashMap<>();
+        copy.putAll(mQueries);
+        copy.put("display", "subcategories");
+
+        Call<List<CategoriesItem>> call = mApiInterfaces.getSubCategories(copy, String.valueOf(id));
+
         return call.execute().body();
     }
 }

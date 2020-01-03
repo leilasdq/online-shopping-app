@@ -27,7 +27,7 @@ public interface ApiInterfaces {
     Call<Response> getSpecificProduct(@Path ("id") String productId,
                                       @QueryMap Map<String, String> queries);
 
-    @GET("products/?")
+    @GET("products/categories")
     Call<List<CategoriesItem>> getSubCategories(@QueryMap Map<String, String> queries,
-                                          @Query("category") String id);
+                                          @Query("parent") String id);
 }

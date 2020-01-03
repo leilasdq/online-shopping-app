@@ -449,7 +449,7 @@ public class FirstPageFragment extends Fragment {
         protected List<CategoriesItem> doInBackground(Void... voids) {
             categories = new ArrayList<>();
             try {
-                categories = fetchItems.getCategories(pageNumber);
+                categories = fetchItems.getParentCategories(pageNumber);
                 copyOfCategories.addAll(categories);
             } catch (IOException e) {
                 e.printStackTrace();
