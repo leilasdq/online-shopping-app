@@ -95,9 +95,6 @@ public class SubCategoryFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //create another fragment to show products
-                    //don't forget to call addToBackStack before commit.
-                    //**USE CALLBACK TO SUB_CATEGORY_ACTIVITY
                     Intent intent = ProductPerCategoryActivity.newIntent(getActivity(), mCategoriesItem.getId());
                     startActivity(intent);
                     Log.e(TAG, "onClick: ");

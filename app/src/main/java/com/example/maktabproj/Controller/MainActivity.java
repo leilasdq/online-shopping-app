@@ -6,6 +6,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,13 +28,15 @@ public class MainActivity extends SingleFragmentActivity {
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
 
-    FirstPageFragment newItemsFragment;
-    private Fragment selectedFragment;
     private List<CategoriesItem> categories;
 
     @Override
     public Fragment createFragment() {
         return FirstPageFragment.newInstance();
+    }
+
+    public static Intent newIntent(Context context){
+        return new Intent(context, MainActivity.class);
     }
 
     @Override

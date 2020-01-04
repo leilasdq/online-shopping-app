@@ -128,8 +128,7 @@ public class ListAllProductFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), DetailProductActivity.class);
-                    intent.putExtra(RESPONSE_ID_EXTRA, mResponse.getId());
+                    Intent intent = DetailProductActivity.newIntent(getActivity(), mResponse.getId());
                     startActivity(intent);
                 }
             });

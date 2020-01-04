@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
@@ -26,8 +25,6 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.maktabproj.Controller.FirstPageFragment.RESPONSE_ID_EXTRA;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,7 +75,7 @@ public class ProductPerSubsFragment extends Fragment {
     private class SubCategoryViewHolder extends RecyclerView.ViewHolder{
         private ImageView categoryImage;
         private TextView categoryName;
-        Response mCategoriesItem;
+        Response mResponse;
 
         public SubCategoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,20 +86,16 @@ public class ProductPerSubsFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //create another fragment to show products
-                    //don't forget to call addToBackStack before commit.
-                    //**USE CALLBACK TO SUB_CATEGORY_ACTIVITY
-                    Intent intent = new Intent(getActivity(), DetailProductActivity.class);
-                    intent.putExtra(RESPONSE_ID_EXTRA, mCategoriesItem.getId());
+                    Intent intent = DetailProductActivity.newIntent(getActivity(), mResponse.getId());
                     startActivity(intent);
                 }
             });
         }
 
         private void bind(Response categoriesItem){
-            mCategoriesItem = categoriesItem;
-            categoryName.setText(mCategoriesItem.getName());
-            Picasso.with(getContext()).load(mCategoriesItem.getImages().get(0).getSrc()).into(categoryImage);
+            mResponse = categoriesItem;
+            categoryName.setText(mResponse.getName());
+            Picasso.with(getContext()).load(mResponse.getImages().get(0).getSrc()).into(categoryImage);
         }
     }
 

@@ -18,6 +18,10 @@ public class NetworkCheckerActivity extends AppCompatActivity {
     private IntentFilter filter;
     private String mNetworkPermision = "check.network.available";
 
+    public static Intent newIntent(Context context){
+        return new Intent(context, NetworkCheckerActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

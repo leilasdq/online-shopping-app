@@ -32,7 +32,6 @@ public class SubCategoryActivity extends NetworkCheckerActivity {
     private List<CategoriesItem> mCategoriesItems = new ArrayList<>();
     private FetchItems mFetchItems = FetchItems.getInstance();
     private CategoryViewPager mPagerAdapter;
-    private int id;
 
     public static Intent newIntent(Context context, int categoryId){
         Intent intent = new Intent(context, SubCategoryActivity.class);
@@ -48,7 +47,6 @@ public class SubCategoryActivity extends NetworkCheckerActivity {
         initUi();
         setUpToolbar();
         setUpViewPager();
-        id = getIntent().getIntExtra(EXTRA_CATEGORY_ID, 0);
 
         GetCategoryAsync async = new GetCategoryAsync();
         async.execute();

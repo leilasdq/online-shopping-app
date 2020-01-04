@@ -38,8 +38,9 @@ import java.util.List;
  */
 public class DetailProductFragment extends Fragment {
 
+    public static final String ARGS_PRODUCT_ID = "product id";
     private FetchItems mFetchItems;
-    private ProductId productId;
+    private int productId;
     private Response product;
     private ImageViewAdapter mViewAdapter;
 
@@ -58,34 +59,35 @@ public class DetailProductFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DetailProductFragment newInstance() {
+    public static DetailProductFragment newInstance(int id) {
         Bundle args = new Bundle();
+        args.putInt(ARGS_PRODUCT_ID, id);
 
         DetailProductFragment fragment = new DetailProductFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof ProductId){
-            productId = (ProductId) context;
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        productId = null;
-    }
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof ProductId){
+//            productId = (ProductId) context;
+//        }
+//    }
+//
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        productId = null;
+//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFetchItems = FetchItems.getInstance();
         product = new Response();
-//        productId = getArguments().getInt(ARGS_PRODUCT_ID);
+        productId = getArguments().getInt(ARGS_PRODUCT_ID);
     }
 
     @Override
@@ -120,7 +122,7 @@ public class DetailProductFragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                product = mFetchItems.getSpecificProduct(productId.getProductId());
+                product = mFetchItems.getSpecificProduct(productId);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -181,9 +183,9 @@ public class DetailProductFragment extends Fragment {
             }
         }
     }
-
-    public interface ProductId{
-        int getProductId();
-    }
+//
+//    public interface ProductId{
+//        int getProductId();
+//    }
 
 }

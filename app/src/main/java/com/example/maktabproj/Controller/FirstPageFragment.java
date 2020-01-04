@@ -77,7 +77,6 @@ public class FirstPageFragment extends Fragment {
     private SliderLayout sliderLayout;
 
     private static final String TAG = "FirstPageFragment";
-    private MainActivity activity;
     private LinearLayoutManager manager;
     private CategoryAdapter categoryAdapter;
 
@@ -98,7 +97,6 @@ public class FirstPageFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        activity = (MainActivity) getActivity();
         callAsyncs();
     }
 
@@ -149,24 +147,21 @@ public class FirstPageFragment extends Fragment {
         newAllLists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ListAllProductActivity.class);
-                intent.putExtra(EXTRA_SEND_PRODUCT_TYPE, "date");
+                Intent intent = ListAllProductActivity.newIntent(getActivity(), "date");
                 startActivity(intent);
             }
         });
         popularAllLists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ListAllProductActivity.class);
-                intent.putExtra(EXTRA_SEND_PRODUCT_TYPE, "popular");
+                Intent intent = ListAllProductActivity.newIntent(getActivity(), "popular");
                 startActivity(intent);
             }
         });
         ratedAllLists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ListAllProductActivity.class);
-                intent.putExtra(EXTRA_SEND_PRODUCT_TYPE, "rated");
+                Intent intent = ListAllProductActivity.newIntent(getActivity(), "rated");
                 startActivity(intent);
             }
         });
@@ -271,8 +266,7 @@ public class FirstPageFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), DetailProductActivity.class);
-                    intent.putExtra(RESPONSE_ID_EXTRA, mResponse.getId());
+                    Intent intent = DetailProductActivity.newIntent(getActivity(), mResponse.getId());
                     startActivity(intent);
                 }
             });
@@ -461,7 +455,6 @@ public class FirstPageFragment extends Fragment {
         @Override
         protected void onPostExecute(List<CategoriesItem> items) {
             super.onPostExecute(items);
-            activity.setCategories(categories);
             setupAdapter();
             Log.e(TAG, "onPostExecute: categories size" + categories.size());
         }
