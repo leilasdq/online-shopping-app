@@ -1,6 +1,7 @@
 package com.example.maktabproj.Network;
 
 import com.example.maktabproj.Model.CategoriesItem;
+import com.example.maktabproj.Model.Category;
 import com.example.maktabproj.Model.Response;
 
 import java.util.List;
@@ -28,6 +29,9 @@ public interface ApiInterfaces {
                                       @QueryMap Map<String, String> queries);
 
     @GET("products/categories")
-    Call<List<CategoriesItem>> getSubCategories(@QueryMap Map<String, String> queries,
+    Call<List<Category>> getSubCategories(@QueryMap Map<String, String> queries,
                                           @Query("parent") String id);
+
+    @GET("products/")
+    Call<List<Response>> getProductsPerCategories(@QueryMap Map<String, String> queries);
 }

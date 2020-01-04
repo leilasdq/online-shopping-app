@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.maktabproj.Model.CategoriesItem;
-import com.example.maktabproj.Model.Category;
+import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
 import com.squareup.picasso.Picasso;
@@ -28,29 +27,28 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.maktabproj.Controller.FirstPageFragment.RESPONSE_ID_EXTRA;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SubCategoryFragment extends Fragment {
-
-
+public class ProductPerSubsFragment extends Fragment {
     public static final String ARGS_CATEGORY_ID = "category id";
-    private static final String TAG = "SubCategoryFragment";
-    private int mCategoryId;
-    private List<Category> mList = new ArrayList<>();
-
     private RecyclerView mRecyclerView;
+    private int mCategoryId;
+    private List<Response> mList;
 
-    public SubCategoryFragment() {
+
+    public ProductPerSubsFragment() {
         // Required empty public constructor
     }
 
-    public static SubCategoryFragment newInstance(int categoryId) {
-        
+    public static ProductPerSubsFragment newInstance(int id) {
+
         Bundle args = new Bundle();
-        args.putInt(ARGS_CATEGORY_ID, categoryId);
-        
-        SubCategoryFragment fragment = new SubCategoryFragment();
+        args.putInt(ARGS_CATEGORY_ID, id);
+
+        ProductPerSubsFragment fragment = new ProductPerSubsFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,6 +56,7 @@ public class SubCategoryFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mCategoryId = getArguments().getInt(ARGS_CATEGORY_ID);
 
         GetSubCategories async = new GetSubCategories();
@@ -68,23 +67,18 @@ public class SubCategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_sub_category, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_per_subs, container, false);
 
-        mRecyclerView = view.findViewById(R.id.show_category_recycler);
+        mRecyclerView = view.findViewById(R.id.pro_per_category);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return view;
     }
 
-    private void setUpAdapter(){
-            SubCategoryAdapter adapter = new SubCategoryAdapter(mList);
-            mRecyclerView.setAdapter(adapter);
-    }
-
     private class SubCategoryViewHolder extends RecyclerView.ViewHolder{
         private ImageView categoryImage;
         private TextView categoryName;
-        Category mCategoriesItem;
+        Response mCategoriesItem;
 
         public SubCategoryViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -98,28 +92,28 @@ public class SubCategoryFragment extends Fragment {
                     //create another fragment to show products
                     //don't forget to call addToBackStack before commit.
                     //**USE CALLBACK TO SUB_CATEGORY_ACTIVITY
-                    Intent intent = ProductPerCategoryActivity.newIntent(getActivity(), mCategoriesItem.getId());
+                    Intent intent = new Intent(getActivity(), DetailProductActivity.class);
+                    intent.putExtra(RESPONSE_ID_EXTRA, mCategoriesItem.getId());
                     startActivity(intent);
-                    Log.e(TAG, "onClick: ");
                 }
             });
         }
 
-        private void bind(Category categoriesItem){
+        private void bind(Response categoriesItem){
             mCategoriesItem = categoriesItem;
             categoryName.setText(mCategoriesItem.getName());
-            Picasso.with(getContext()).load(mCategoriesItem.getImage().getSrc()).into(categoryImage);
+            Picasso.with(getContext()).load(mCategoriesItem.getImages().get(0).getSrc()).into(categoryImage);
         }
     }
 
     private class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryViewHolder>{
-        List<Category> mCategoriesItems = new ArrayList<>();
+        List<Response> mCategoriesItems = new ArrayList<>();
 
-        public SubCategoryAdapter(List<Category> categoriesItems) {
+        public SubCategoryAdapter(List<Response> categoriesItems) {
             mCategoriesItems = categoriesItems;
         }
 
-        public void setCategoriesItems(List<Category> categoriesItems) {
+        public void setCategoriesItems(List<Response> categoriesItems) {
             mCategoriesItems = categoriesItems;
         }
 
@@ -141,13 +135,13 @@ public class SubCategoryFragment extends Fragment {
         }
     }
 
-    private class GetSubCategories extends AsyncTask<Void, Void, Void>{
+    private class GetSubCategories extends AsyncTask<Void, Void, Void> {
         private FetchItems mFetchItems = FetchItems.getInstance();
 
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                mList = mFetchItems.getSubCategory(mCategoryId);
+                mList = mFetchItems.getProductPerCategory(mCategoryId);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -159,6 +153,11 @@ public class SubCategoryFragment extends Fragment {
             super.onPostExecute(aVoid);
             setUpAdapter();
         }
+    }
+
+    private void setUpAdapter(){
+        SubCategoryAdapter adapter = new SubCategoryAdapter(mList);
+        mRecyclerView.setAdapter(adapter);
     }
 
 }

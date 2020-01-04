@@ -3,6 +3,7 @@ package com.example.maktabproj.Network;
 import android.content.Context;
 
 import com.example.maktabproj.Model.CategoriesItem;
+import com.example.maktabproj.Model.Category;
 import com.example.maktabproj.Model.Response;
 
 import java.io.IOException;
@@ -126,12 +127,22 @@ public class FetchItems {
         return call.execute().body();
     }
 
-    public List<CategoriesItem> getSubCategory(int id) throws IOException {
+    public List<Category> getSubCategory(int id) throws IOException {
         Map<String, String> copy = new HashMap<>();
         copy.putAll(mQueries);
         copy.put("display", "subcategories");
 
-        Call<List<CategoriesItem>> call = mApiInterfaces.getSubCategories(copy, String.valueOf(id));
+        Call<List<Category>> call = mApiInterfaces.getSubCategories(copy, String.valueOf(id));
+
+        return call.execute().body();
+    }
+
+    public List<Response> getProductPerCategory(int id) throws IOException {
+        Map<String, String> copy = new HashMap<>();
+        copy.putAll(mQueries);
+        copy.put("category", String.valueOf(id));
+
+        Call<List<Response>> call = mApiInterfaces.getProductsPerCategories(copy);
 
         return call.execute().body();
     }

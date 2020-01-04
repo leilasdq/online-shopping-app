@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.NetworkCheckerActivity"></activity>
+        <activity android:name=".Controller.ProductPerCategoryActivity"></activity>
+        <activity android:name=".Controller.NetworkCheckerActivity" />
         <activity android:name=".Controller.SubCategoryActivity" />
         <activity android:name=".Controller.ListAllProductActivity" />
         <activity android:name=".Controller.DetailProductActivity" />
