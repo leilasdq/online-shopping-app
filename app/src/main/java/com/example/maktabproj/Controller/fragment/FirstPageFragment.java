@@ -1,38 +1,34 @@
-package com.example.maktabproj.Controller;
+package com.example.maktabproj.Controller.fragment;
 
 
 import android.content.Intent;
-import android.graphics.Paint;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.airbnb.lottie.network.NetworkFetcher;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.example.maktabproj.Controller.activity.ListAllProductActivity;
+import com.example.maktabproj.Controller.adapter.recycler.EndlessRecyclerView;
+import com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter.CategoryAdapter;
+import com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter.ProductAdapter;
 import com.example.maktabproj.Model.CategoriesItem;
-import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +40,6 @@ import java.util.List;
  */
 public class FirstPageFragment extends Fragment {
 
-    public static final String RESPONSE_ID_EXTRA = "com.example.maktabproj.response id extra";
     public static final String EXTRA_SEND_PRODUCT_TYPE = "send type";
 
     private EndlessRecyclerView scrollListener;
@@ -226,145 +221,25 @@ public class FirstPageFragment extends Fragment {
     private void setupAdapter() {
         if (isAdded()) {
             ProductAdapter adapter = new ProductAdapter();
-            adapter.setList(items);
+            adapter.setList(items, getContext());
             mRecyclerView.setAdapter(adapter);
 
             ProductAdapter popular = new ProductAdapter();
-            popular.setList(popularList);
+            popular.setList(popularList, getContext());
             mPopularRecyclerView.setAdapter(popular);
 
             ProductAdapter rated = new ProductAdapter();
-            rated.setList(ratedList);
+            rated.setList(ratedList, getContext());
             mRatingRecyclerView.setAdapter(rated);
 
             if (categoryAdapter == null) {
-                categoryAdapter = new CategoryAdapter();
+                categoryAdapter = new CategoryAdapter(copyOfCategories, getContext());
                 categoryAdapter.setList(copyOfCategories);
                 mCategoryRecyclerView.setAdapter(categoryAdapter);
             } else {
                 categoryAdapter.setList(copyOfCategories);
                 categoryAdapter.notifyDataSetChanged();
             }
-        }
-    }
-
-    private class ProductViewHolder extends RecyclerView.ViewHolder {
-
-        Response mResponse;
-        ImageView productImage;
-        TextView productName;
-        TextView originalPrice;
-        TextView salePrice;
-
-        public ProductViewHolder(@NonNull View itemView) {
-            super(itemView);
-            productImage = itemView.findViewById(R.id.pro_img);
-            productName = itemView.findViewById(R.id.pro_name);
-            originalPrice = itemView.findViewById(R.id.original_price);
-            salePrice = itemView.findViewById(R.id.sale_price);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = DetailProductActivity.newIntent(getActivity(), mResponse.getId());
-                    startActivity(intent);
-                }
-            });
-        }
-
-        public void bind(Response response){
-            mResponse = response;
-            productName.setText(response.getName());
-            String original = response.getRegularPrice();
-            String sale = response.getSalePrice();
-            originalPrice.setText(original.concat(getString(R.string.Tooman)));
-            if (!sale.equalsIgnoreCase("")){
-                salePrice.setText(sale.concat(getString(R.string.Tooman)));
-                originalPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-            } else {
-                originalPrice.setPaintFlags( originalPrice.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
-                salePrice.setVisibility(View.INVISIBLE);
-                originalPrice.setGravity(Gravity.CENTER_VERTICAL);
-            }
-            ImagesItem src = response.getImages().get(0);
-            Picasso.with(getContext()).load(Uri.parse(src.getSrc())).placeholder(R.drawable.image_loading).error(R.drawable.image_error).into(productImage);
-        }
-    }
-
-    private class ProductAdapter extends RecyclerView.Adapter<ProductViewHolder>{
-
-        private List<Response> mResponseList;
-
-        public void setList(List responseList) {
-            mResponseList = responseList;
-        }
-
-        @NonNull
-        @Override
-        public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.list_items_layout, parent, false);
-            return new ProductViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-            holder.bind(mResponseList.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return mResponseList.size();
-        }
-    }
-
-    private class CategoryViewHolder extends RecyclerView.ViewHolder {
-
-        Button categoryBtn;
-        CategoriesItem mCategoriesItem;
-
-        public CategoryViewHolder(@NonNull View itemView) {
-            super(itemView);
-            categoryBtn = itemView.findViewById(R.id.category_btn);
-
-            categoryBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = SubCategoryActivity.newIntent(getActivity(), mCategoriesItem.getId());
-                    startActivity(intent);
-                }
-            });
-        }
-
-        public void bind(CategoriesItem categoriesItem){
-            mCategoriesItem = categoriesItem;
-            categoryBtn.setText(categoriesItem.getName());
-            categoryBtn.setBackgroundColor(getActivity().getResources().getColor(R.color.categoryButtonColor));
-        }
-    }
-
-    private class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder>{
-
-        private List<CategoriesItem> mCategoriesItems;
-
-        public void setList(List categoriesItems) {
-            mCategoriesItems = categoriesItems;
-        }
-
-        @NonNull
-        @Override
-        public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.category_list_items, parent, false);
-            return new CategoryViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-            holder.bind(mCategoriesItems.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return mCategoriesItems.size();
         }
     }
 
@@ -459,5 +334,4 @@ public class FirstPageFragment extends Fragment {
             Log.e(TAG, "onPostExecute: categories size" + categories.size());
         }
     }
-
 }

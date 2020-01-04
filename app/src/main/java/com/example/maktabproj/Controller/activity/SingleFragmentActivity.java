@@ -1,11 +1,11 @@
-package com.example.maktabproj.Controller;
+package com.example.maktabproj.Controller.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
+import com.example.maktabproj.Controller.activity.NetworkCheckerActivity;
 import com.example.maktabproj.R;
 
 public abstract class SingleFragmentActivity extends NetworkCheckerActivity {

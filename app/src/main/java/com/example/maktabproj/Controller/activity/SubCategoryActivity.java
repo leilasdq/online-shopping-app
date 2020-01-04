@@ -1,10 +1,7 @@
-package com.example.maktabproj.Controller;
+package com.example.maktabproj.Controller.activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
@@ -12,7 +9,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.example.maktabproj.Controller.viewPagerAdapter.CategoryViewPager;
+import com.example.maktabproj.Controller.adapter.recycler.viewPagerAdapter.CategoryViewPager;
 import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;

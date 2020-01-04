@@ -1,16 +1,11 @@
-package com.example.maktabproj.Controller.viewPagerAdapter;
-
-import android.content.Context;
+package com.example.maktabproj.Controller.adapter.recycler.viewPagerAdapter;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.maktabproj.Controller.SubCategoryFragment;
+import com.example.maktabproj.Controller.fragment.SubCategoryFragment;
 import com.example.maktabproj.Model.CategoriesItem;
 
 import java.util.List;

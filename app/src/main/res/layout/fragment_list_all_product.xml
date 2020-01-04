@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layoutDirection="rtl"
-    tools:context=".Controller.ListAllProductFragment">
+    tools:context=".Controller.fragment.ListAllProductFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"

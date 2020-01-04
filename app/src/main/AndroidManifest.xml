@@ -11,14 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controller.ProductPerCategoryActivity"></activity>
-        <activity android:name=".Controller.NetworkCheckerActivity" />
-        <activity android:name=".Controller.SubCategoryActivity" />
-        <activity android:name=".Controller.ListAllProductActivity" />
-        <activity android:name=".Controller.DetailProductActivity" />
-        <activity android:name=".Controller.SingleFragmentActivity" />
-        <activity android:name=".Controller.MainActivity" />
-        <activity android:name=".Controller.SplashScreenActivity">
+        <activity android:name=".Controller.activity.ProductPerCategoryActivity"></activity>
+        <activity android:name=".Controller.activity.NetworkCheckerActivity" />
+        <activity android:name=".Controller.activity.SubCategoryActivity" />
+        <activity android:name=".Controller.activity.ListAllProductActivity" />
+        <activity android:name=".Controller.activity.DetailProductActivity" />
+        <activity android:name=".Controller.activity.SingleFragmentActivity" />
+        <activity android:name=".Controller.activity.MainActivity" />
+        <activity android:name=".Controller.activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

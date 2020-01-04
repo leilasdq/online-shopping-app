@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".Controller.NetCheckerFragment"
+    tools:context=".Controller.fragment.NetCheckerFragment"
     android:background="@android:color/white">
 
     <LinearLayout

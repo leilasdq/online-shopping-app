@@ -1,7 +1,6 @@
-package com.example.maktabproj.Controller;
+package com.example.maktabproj.Controller.fragment;
 
 
-import android.content.Context;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -21,7 +20,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.maktabproj.Controller.viewPagerAdapter.ImageViewAdapter;
+import com.example.maktabproj.Controller.adapter.recycler.viewPagerAdapter.ImageViewAdapter;
 import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;

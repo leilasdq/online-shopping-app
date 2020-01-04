@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller;
+package com.example.maktabproj.Controller.activity;
 
 import androidx.fragment.app.Fragment;
 
@@ -6,9 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.maktabproj.Controller.fragment.ListAllProductFragment;
 import com.example.maktabproj.R;
 
-import static com.example.maktabproj.Controller.FirstPageFragment.EXTRA_SEND_PRODUCT_TYPE;
+import static com.example.maktabproj.Controller.fragment.FirstPageFragment.EXTRA_SEND_PRODUCT_TYPE;
 
 public class ListAllProductActivity extends SingleFragmentActivity {
 

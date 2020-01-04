@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller;
+package com.example.maktabproj.Controller.activity;
 
 import androidx.fragment.app.Fragment;
 
@@ -6,9 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.maktabproj.Controller.fragment.DetailProductFragment;
 import com.example.maktabproj.R;
-
-import static com.example.maktabproj.Controller.FirstPageFragment.RESPONSE_ID_EXTRA;
 
 public class DetailProductActivity extends SingleFragmentActivity {
     public static final String EXTRA_PRODUCT_ID = "com.example.maktabproj.product id";

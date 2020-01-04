@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller;
+package com.example.maktabproj.Controller.adapter.recycler;
 
 
 import androidx.recyclerview.widget.GridLayoutManager;
