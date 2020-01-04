@@ -108,6 +108,7 @@ public class DetailProductFragment extends Fragment {
         realPrice = view.findViewById(R.id.product_real_price);
         salePrice = view.findViewById(R.id.product_sale_price);
         addToCard = view.findViewById(R.id.add_to_cart_btn);
+        addToCard.setBackgroundColor(getActivity().getResources().getColor(R.color.categoryButtonColor));
         mShowItemsProgress = view.findViewById(R.id.show_product_progress);
         mToolbar = view.findViewById(R.id.show_product_toolbar);
         mCollapsingToolbarLayout = view.findViewById(R.id.collapsing);

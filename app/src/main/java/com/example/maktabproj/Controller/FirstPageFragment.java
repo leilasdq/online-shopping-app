@@ -344,6 +344,7 @@ public class FirstPageFragment extends Fragment {
         public void bind(CategoriesItem categoriesItem){
             mCategoriesItem = categoriesItem;
             categoryBtn.setText(categoriesItem.getName());
+            categoryBtn.setBackgroundColor(getActivity().getResources().getColor(R.color.categoryButtonColor));
         }
     }
 

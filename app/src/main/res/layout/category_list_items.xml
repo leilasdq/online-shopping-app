@@ -9,6 +9,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/category_btn"
         style="@style/categoryButton"
+        android:background="@color/categoryButtonColor"
         android:layout_width="wrap_content"
         android:layout_height="44dp"
         android:layout_margin="4dp"

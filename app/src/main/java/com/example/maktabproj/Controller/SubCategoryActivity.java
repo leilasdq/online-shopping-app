@@ -1,9 +1,11 @@
 package com.example.maktabproj.Controller;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +17,7 @@ import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +27,7 @@ public class SubCategoryActivity extends NetworkCheckerActivity {
     public static final String EXTRA_CATEGORY_ID = "com.example.maktabproj.category id";
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
-    private ViewPager mViewPager;
+    private ViewPager2 mViewPager;
 
     private List<CategoriesItem> mCategoriesItems = new ArrayList<>();
     private FetchItems mFetchItems = FetchItems.getInstance();
@@ -53,7 +56,7 @@ public class SubCategoryActivity extends NetworkCheckerActivity {
 
     private void setUpViewPager() {
         mViewPager.setOffscreenPageLimit(1);
-        mTabLayout.setupWithViewPager(mViewPager);
+//        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void initUi() {
@@ -88,12 +91,19 @@ public class SubCategoryActivity extends NetworkCheckerActivity {
 
     private void setPagerAdapter(){
         if (mPagerAdapter==null){
-            mPagerAdapter = new CategoryViewPager(getSupportFragmentManager(), mCategoriesItems);
+            mPagerAdapter = new CategoryViewPager(this, mCategoriesItems);
+
             mViewPager.setAdapter(mPagerAdapter);
-            mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
-        } else {
-            mPagerAdapter.setCategoriesItems(mCategoriesItems);
-            mPagerAdapter.notifyDataSetChanged();
+            TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(
+                    mTabLayout, mViewPager, new TabLayoutMediator.TabConfigurationStrategy() {
+                @Override
+                public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                    for (int i = 0; i < mCategoriesItems.size() ; i++) {
+                        tab.setText(mCategoriesItems.get(position).getName());
+                    }
+                }
+            });
+            tabLayoutMediator.attach();
         }
     }
 
