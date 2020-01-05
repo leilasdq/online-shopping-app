@@ -64,12 +64,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             originalPrice = itemView.findViewById(R.id.original_price);
             salePrice = itemView.findViewById(R.id.sale_price);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = DetailProductActivity.newIntent(mContext, mResponse.getId());
-                    mContext.startActivity(intent);
-                }
+            itemView.setOnClickListener(v -> {
+                Intent intent = DetailProductActivity.newIntent(mContext, mResponse.getId());
+                mContext.startActivity(intent);
             });
         }
 

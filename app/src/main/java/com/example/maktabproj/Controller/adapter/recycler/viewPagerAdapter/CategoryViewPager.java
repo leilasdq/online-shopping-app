@@ -34,28 +34,4 @@ public class CategoryViewPager extends FragmentStateAdapter {
         return mCategoriesItems.size();
     }
 
-//    public CategoryViewPager(FragmentManager fm, List<CategoriesItem> categoriesItems) {
-//        super(fm);
-//        mCategoriesItems = categoriesItems;
-//    }
-//    public void setCategoriesItems(List<CategoriesItem> categoriesItems) {
-//        mCategoriesItems = categoriesItems;
-//    }
-//
-//    @Override
-//    public Fragment getItem(int position) {
-//        return SubCategoryFragment.newInstance(mCategoriesItems.get(position).getId());
-//    }
-//
-//    @Override
-//    public int getCount() {
-//        return mCategoriesItems.size();
-//    }
-//
-//    @Nullable
-//    @Override
-//    public CharSequence getPageTitle(int position) {
-//        return mCategoriesItems.get(position).getName();
-//    }
-
 }

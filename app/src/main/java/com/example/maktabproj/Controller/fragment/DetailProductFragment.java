@@ -67,20 +67,6 @@ public class DetailProductFragment extends Fragment {
         return fragment;
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof ProductId){
-//            productId = (ProductId) context;
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        productId = null;
-//    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,9 +120,6 @@ public class DetailProductFragment extends Fragment {
             addToCard.setVisibility(View.VISIBLE);
             mShowItemsProgress.setVisibility(View.INVISIBLE);
 
-//            mToolbar.setTitle(product.getName());
-//            mCollapsingToolbarLayout.setTitle(product.getName());
-
             mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
                 boolean isShow = true;
                 int scrollRange = -1;
@@ -182,9 +165,5 @@ public class DetailProductFragment extends Fragment {
             }
         }
     }
-//
-//    public interface ProductId{
-//        int getProductId();
-//    }
 
 }

@@ -90,14 +90,11 @@ public class SubCategoryActivity extends NetworkCheckerActivity {
 
             mViewPager.setAdapter(mPagerAdapter);
             TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(
-                    mTabLayout, mViewPager, new TabLayoutMediator.TabConfigurationStrategy() {
-                @Override
-                public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                    for (int i = 0; i < mCategoriesItems.size() ; i++) {
-                        tab.setText(mCategoriesItems.get(position).getName());
-                    }
-                }
-            });
+                    mTabLayout, mViewPager, (tab, position) -> {
+                        for (int i = 0; i < mCategoriesItems.size() ; i++) {
+                            tab.setText(mCategoriesItems.get(position).getName());
+                        }
+                    });
             tabLayoutMediator.attach();
         }
     }

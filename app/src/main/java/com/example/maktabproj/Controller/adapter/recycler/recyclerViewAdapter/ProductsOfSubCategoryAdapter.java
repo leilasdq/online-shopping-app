@@ -60,12 +60,9 @@ public class ProductsOfSubCategoryAdapter extends RecyclerView.Adapter<ProductsO
             categoryImage = itemView.findViewById(R.id.category_image);
             categoryName = itemView.findViewById(R.id.category_name);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = DetailProductActivity.newIntent(mContext, mResponse.getId());
-                    mContext.startActivity(intent);
-                }
+            itemView.setOnClickListener(v -> {
+                Intent intent = DetailProductActivity.newIntent(mContext, mResponse.getId());
+                mContext.startActivity(intent);
             });
         }
 

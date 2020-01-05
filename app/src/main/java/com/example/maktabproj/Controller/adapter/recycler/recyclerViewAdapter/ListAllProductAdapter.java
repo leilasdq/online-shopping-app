@@ -73,12 +73,9 @@ public class ListAllProductAdapter extends RecyclerView.Adapter<ListAllProductAd
             realPrice = itemView.findViewById(R.id.all_list_product_real_price);
             salePrice = itemView.findViewById(R.id.all_list_product_sale_price);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = DetailProductActivity.newIntent(mContext, mResponse.getId());
-                    mContext.startActivity(intent);
-                }
+            itemView.setOnClickListener(v -> {
+                Intent intent = DetailProductActivity.newIntent(mContext, mResponse.getId());
+                mContext.startActivity(intent);
             });
         }
 

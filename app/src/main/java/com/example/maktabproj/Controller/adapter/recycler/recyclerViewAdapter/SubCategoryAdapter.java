@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maktabproj.Controller.activity.ProductPerCategoryActivity;
-import com.example.maktabproj.Controller.fragment.SubCategoryFragment;
 import com.example.maktabproj.Model.Category;
 import com.example.maktabproj.R;
 import com.squareup.picasso.Picasso;
@@ -62,12 +61,9 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
             categoryImage = itemView.findViewById(R.id.category_image);
             categoryName = itemView.findViewById(R.id.category_name);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = ProductPerCategoryActivity.newIntent(mContext, mCategoriesItem.getId());
-                    mContext.startActivity(intent);
-                }
+            itemView.setOnClickListener(v -> {
+                Intent intent = ProductPerCategoryActivity.newIntent(mContext, mCategoriesItem.getId());
+                mContext.startActivity(intent);
             });
         }
 

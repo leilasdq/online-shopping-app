@@ -56,12 +56,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             super(itemView);
             categoryBtn = itemView.findViewById(R.id.category_btn);
 
-            categoryBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = SubCategoryActivity.newIntent(mContext, mCategoriesItem.getId());
-                    mContext.startActivity(intent);
-                }
+            categoryBtn.setOnClickListener(v -> {
+                Intent intent = SubCategoryActivity.newIntent(mContext, mCategoriesItem.getId());
+                mContext.startActivity(intent);
             });
         }
 

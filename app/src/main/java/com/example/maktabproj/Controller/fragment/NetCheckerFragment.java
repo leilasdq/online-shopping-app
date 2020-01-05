@@ -72,28 +72,22 @@ public class NetCheckerFragment extends Fragment {
     }
 
     private void initListeners() {
-        mRetryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mLoadingIndicatorView.setVisibility(View.VISIBLE);
-                mLoadingIndicatorView.smoothToShow();
+        mRetryButton.setOnClickListener(v -> {
+            mLoadingIndicatorView.setVisibility(View.VISIBLE);
+            mLoadingIndicatorView.smoothToShow();
 
-                if (mMerlinsBeard.isConnected()){
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .remove(NetCheckerFragment.this)
-                            .commit();
-                    Toast.makeText(getContext().getApplicationContext(), "CONNECTED", Toast.LENGTH_LONG).show();
+            if (mMerlinsBeard.isConnected()){
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .remove(NetCheckerFragment.this)
+                        .commit();
+                Toast.makeText(getContext().getApplicationContext(), "CONNECTED", Toast.LENGTH_LONG).show();
+                mLoadingIndicatorView.setVisibility(View.GONE);
+
+            } else {
+                new Handler().postDelayed(() -> {
+                    Snackbar.make(getView(), getActivity().getString(R.string.no_net_again), Snackbar.LENGTH_LONG).show();
                     mLoadingIndicatorView.setVisibility(View.GONE);
-
-                } else {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Snackbar.make(getView(), getActivity().getString(R.string.no_net_again), Snackbar.LENGTH_LONG).show();
-                            mLoadingIndicatorView.setVisibility(View.GONE);
-                        }
-                    }, 3000);
-                }
+                }, 3000);
             }
         });
     }

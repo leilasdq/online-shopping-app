@@ -139,26 +139,17 @@ public class FirstPageFragment extends Fragment {
             }
         };
 
-        newAllLists.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = ListAllProductActivity.newIntent(getActivity(), "date");
-                startActivity(intent);
-            }
+        newAllLists.setOnClickListener(v -> {
+            Intent intent = ListAllProductActivity.newIntent(getActivity(), "date");
+            startActivity(intent);
         });
-        popularAllLists.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = ListAllProductActivity.newIntent(getActivity(), "popular");
-                startActivity(intent);
-            }
+        popularAllLists.setOnClickListener(v -> {
+            Intent intent = ListAllProductActivity.newIntent(getActivity(), "popular");
+            startActivity(intent);
         });
-        ratedAllLists.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = ListAllProductActivity.newIntent(getActivity(), "rated");
-                startActivity(intent);
-            }
+        ratedAllLists.setOnClickListener(v -> {
+            Intent intent = ListAllProductActivity.newIntent(getActivity(), "rated");
+            startActivity(intent);
         });
 
     }
