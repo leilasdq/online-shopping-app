@@ -5,9 +5,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +17,7 @@ import com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter.Su
 import com.example.maktabproj.Model.Category;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
+import com.example.maktabproj.databinding.FragmentSubCategoryBinding;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,8 +32,7 @@ public class SubCategoryFragment extends Fragment {
     public static final String ARGS_CATEGORY_ID = "category id";
     private int mCategoryId;
     private List<Category> mList = new ArrayList<>();
-
-    private RecyclerView mRecyclerView;
+    private FragmentSubCategoryBinding mBinding;
 
     public SubCategoryFragment() {
         // Required empty public constructor
@@ -61,17 +61,14 @@ public class SubCategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_sub_category, container, false);
-
-        mRecyclerView = view.findViewById(R.id.show_category_recycler);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        return view;
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_sub_category, container, false);
+        mBinding.showCategoryRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        return mBinding.getRoot();
     }
 
     private void setUpAdapter(){
             SubCategoryAdapter adapter = new SubCategoryAdapter(mList, getContext());
-            mRecyclerView.setAdapter(adapter);
+            mBinding.showCategoryRecycler.setAdapter(adapter);
     }
 
     private class GetSubCategories extends AsyncTask<Void, Void, Void>{

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,9 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -29,6 +27,7 @@ import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
+import com.example.maktabproj.databinding.FragmentNewItemBinding;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,23 +44,6 @@ public class FirstPageFragment extends Fragment {
     private EndlessRecyclerView scrollListener;
     private int pageNumber = 1;
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView mCategoryRecyclerView;
-    private RecyclerView mPopularRecyclerView;
-    private RecyclerView mRatingRecyclerView;
-    private TextView newText;
-    private TextView popularText;
-    private TextView ratingText;
-    private ImageView newIcon;
-    private ImageView popularIcon;
-    private ImageView ratedIcon;
-    private TextView newAllLists;
-    private TextView popularAllLists;
-    private TextView ratedAllLists;
-    private ProgressBar newProgress;
-    private ProgressBar popularProgress;
-    private ProgressBar ratedProgress;
-
     private List<Response> items;
     private List<Response> popularList;
     private List<Response> ratedList;
@@ -69,11 +51,11 @@ public class FirstPageFragment extends Fragment {
     private List<CategoriesItem> copyOfCategories = new ArrayList<>();
 
     private FetchItems fetchItems;
-    private SliderLayout sliderLayout;
 
     private static final String TAG = "FirstPageFragment";
     private LinearLayoutManager manager;
     private CategoryAdapter categoryAdapter;
+    private FragmentNewItemBinding mBinding;
 
     public FirstPageFragment() {
         // Required empty public constructor
@@ -118,15 +100,15 @@ public class FirstPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_new_item, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_new_item, container, false);
 
-        initViews(view);
+        manager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         initListeners();
         sliderSetup();
         setUpRecycles();
         setupAdapter();
 
-        return view;
+        return mBinding.getRoot();
     }
 
     private void initListeners() {
@@ -139,15 +121,15 @@ public class FirstPageFragment extends Fragment {
             }
         };
 
-        newAllLists.setOnClickListener(v -> {
+        mBinding.newProductAllLists.setOnClickListener(v -> {
             Intent intent = ListAllProductActivity.newIntent(getActivity(), "date");
             startActivity(intent);
         });
-        popularAllLists.setOnClickListener(v -> {
+        mBinding.popularProductAllLists.setOnClickListener(v -> {
             Intent intent = ListAllProductActivity.newIntent(getActivity(), "popular");
             startActivity(intent);
         });
-        ratedAllLists.setOnClickListener(v -> {
+        mBinding.ratedProductAllLists.setOnClickListener(v -> {
             Intent intent = ListAllProductActivity.newIntent(getActivity(), "rated");
             startActivity(intent);
         });
@@ -155,38 +137,12 @@ public class FirstPageFragment extends Fragment {
     }
 
     private void setUpRecycles() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-        mPopularRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-        mRatingRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        mBinding.recycle.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        mBinding.popularRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
+        mBinding.rateRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
 
-        mCategoryRecyclerView.setLayoutManager(manager);
-        mCategoryRecyclerView.addOnScrollListener(scrollListener);
-    }
-
-    private void initViews(View view) {
-        manager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
-
-        newText = view.findViewById(R.id.new_product_text);
-        popularText = view.findViewById(R.id.popular_product_text);
-        ratingText = view.findViewById(R.id.most_rate_product_text);
-
-        newIcon = view.findViewById(R.id.new_icon);
-        popularIcon = view.findViewById(R.id.popular_icon);
-        ratedIcon = view.findViewById(R.id.rated_icon);
-
-        newProgress = view.findViewById(R.id.new_progress);
-        popularProgress = view.findViewById(R.id.popular_progress);
-        ratedProgress = view.findViewById(R.id.rated_progress);
-
-        newAllLists = view.findViewById(R.id.new_product_all_lists);
-        popularAllLists = view.findViewById(R.id.popular_product_all_lists);
-        ratedAllLists = view.findViewById(R.id.rated_product_all_lists);
-
-        sliderLayout = view.findViewById(R.id.slider);
-        mRecyclerView = view.findViewById(R.id.recycle);
-        mCategoryRecyclerView = view.findViewById(R.id.category_recycle);
-        mPopularRecyclerView = view.findViewById(R.id.popular_recycle);
-        mRatingRecyclerView = view.findViewById(R.id.rate_recycle);
+        mBinding.categoryRecycle.setLayoutManager(manager);
+        mBinding.categoryRecycle.addOnScrollListener(scrollListener);
     }
 
     private void sliderSetup() {
@@ -202,31 +158,31 @@ public class FirstPageFragment extends Fragment {
                     .description(name)
                     .image(pics.get(name))
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop);
-            sliderLayout.addSlider(textSliderView);
+            mBinding.slider.addSlider(textSliderView);
         }
-        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        sliderLayout.setDuration(5000);
+        mBinding.slider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mBinding.slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mBinding.slider.setDuration(5000);
     }
 
     private void setupAdapter() {
         if (isAdded()) {
             ProductAdapter adapter = new ProductAdapter();
             adapter.setList(items, getContext());
-            mRecyclerView.setAdapter(adapter);
+            mBinding.recycle.setAdapter(adapter);
 
             ProductAdapter popular = new ProductAdapter();
             popular.setList(popularList, getContext());
-            mPopularRecyclerView.setAdapter(popular);
+            mBinding.popularRecycle.setAdapter(popular);
 
             ProductAdapter rated = new ProductAdapter();
             rated.setList(ratedList, getContext());
-            mRatingRecyclerView.setAdapter(rated);
+            mBinding.rateRecycle.setAdapter(rated);
 
             if (categoryAdapter == null) {
                 categoryAdapter = new CategoryAdapter(copyOfCategories, getContext());
                 categoryAdapter.setList(copyOfCategories);
-                mCategoryRecyclerView.setAdapter(categoryAdapter);
+                mBinding.categoryRecycle.setAdapter(categoryAdapter);
             } else {
                 categoryAdapter.setList(copyOfCategories);
                 categoryAdapter.notifyDataSetChanged();
@@ -249,10 +205,10 @@ public class FirstPageFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Response> responses) {
             super.onPostExecute(responses);
-            newText.setVisibility(View.VISIBLE);
-            newIcon.setVisibility(View.VISIBLE);
-            newAllLists.setVisibility(View.VISIBLE);
-            newProgress.setVisibility(View.GONE);
+            mBinding.newProductText.setVisibility(View.VISIBLE);
+            mBinding.newIcon.setVisibility(View.VISIBLE);
+            mBinding.newProductAllLists.setVisibility(View.VISIBLE);
+            mBinding.newProgress.setVisibility(View.GONE);
             setupAdapter();
             Log.e(TAG, "onPostExecute: items size" + items.size());
         }
@@ -273,10 +229,10 @@ public class FirstPageFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Response> responses) {
             super.onPostExecute(responses);
-            popularText.setVisibility(View.VISIBLE);
-            popularIcon.setVisibility(View.VISIBLE);
-            popularAllLists.setVisibility(View.VISIBLE);
-            popularProgress.setVisibility(View.GONE);
+            mBinding.popularProductText.setVisibility(View.VISIBLE);
+            mBinding.popularIcon.setVisibility(View.VISIBLE);
+            mBinding.popularProductAllLists.setVisibility(View.VISIBLE);
+            mBinding.popularProgress.setVisibility(View.GONE);
             setupAdapter();
         }
     }
@@ -296,10 +252,10 @@ public class FirstPageFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Response> responses) {
             super.onPostExecute(responses);
-            ratingText.setVisibility(View.VISIBLE);
-            ratedIcon.setVisibility(View.VISIBLE);
-            ratedAllLists.setVisibility(View.VISIBLE);
-            ratedProgress.setVisibility(View.GONE);
+            mBinding.mostRateProductText.setVisibility(View.VISIBLE);
+            mBinding.ratedIcon.setVisibility(View.VISIBLE);
+            mBinding.ratedProductAllLists.setVisibility(View.VISIBLE);
+            mBinding.ratedProgress.setVisibility(View.GONE);
             setupAdapter();
         }
     }

@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +18,7 @@ import com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter.Li
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
+import com.example.maktabproj.databinding.FragmentListAllProductBinding;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,11 +36,10 @@ public class ListAllProductFragment extends Fragment {
     private EndlessRecyclerView scrollListener;
     private LinearLayoutManager manager;
 
-    private RecyclerView allProductsRecycle;
-    private Toolbar mToolbar;
     private List<Response> mList;
     private List<Response> getAllList = new ArrayList<>();
     private ListAllProductAdapter adapter;
+    private FragmentListAllProductBinding mBinding;
 
     public static ListAllProductFragment newInstance(String productType) {
 
@@ -69,9 +69,8 @@ public class ListAllProductFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_list_all_product, container, false);
-
-        initViews(view);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_list_all_product, container, false);
+        setupRecycle();
         setupToolbar();
 
         scrollListener = new EndlessRecyclerView(manager) {
@@ -80,27 +79,23 @@ public class ListAllProductFragment extends Fragment {
                 pageNumber++;
                 GetAllListAsync getLists = new GetAllListAsync();
                 getLists.execute();
-
-//                scrollListener.resetState();
             }
         };
-        allProductsRecycle.addOnScrollListener(scrollListener);
+        mBinding.allProductRecycler.addOnScrollListener(scrollListener);
 
-        return view;
+        return mBinding.getRoot();
     }
 
-    private void initViews(View view) {
-        allProductsRecycle = view.findViewById(R.id.all_product_recycler);
+    private void setupRecycle() {
         manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        mToolbar = view.findViewById(R.id.all_lists_toolbar);
-        allProductsRecycle.setLayoutManager(manager);
+        mBinding.allProductRecycler.setLayoutManager(manager);
     }
 
     private void setupAdapter() {
         if (isAdded()) {
             if (adapter==null) {
                 adapter = new ListAllProductAdapter(getAllList, getContext());
-                allProductsRecycle.setAdapter(adapter);
+                mBinding.allProductRecycler.setAdapter(adapter);
             }
             else {
                 adapter.setAllProductList(getAllList);
@@ -111,11 +106,11 @@ public class ListAllProductFragment extends Fragment {
 
     private void setupToolbar() {
         if (type.equalsIgnoreCase("date")) {
-            mToolbar.setTitle(getString(R.string.all_products));
+            mBinding.allListsToolbar.setTitle(getString(R.string.all_products));
         } else if (type.equalsIgnoreCase("popular")) {
-            mToolbar.setTitle(getString(R.string.all_popular));
+            mBinding.allListsToolbar.setTitle(getString(R.string.all_popular));
         } else if (type.equalsIgnoreCase("rated")) {
-            mToolbar.setTitle(getString(R.string.all_rated));
+            mBinding.allListsToolbar.setTitle(getString(R.string.all_rated));
         }
     }
 

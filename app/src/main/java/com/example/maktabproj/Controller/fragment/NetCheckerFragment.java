@@ -5,21 +5,20 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.maktabproj.R;
+import com.example.maktabproj.databinding.FragmentConnectionCheckerBinding;
 import com.google.android.material.snackbar.Snackbar;
-import com.novoda.merlin.Disconnectable;
 import com.novoda.merlin.Merlin;
 import com.novoda.merlin.MerlinsBeard;
-import com.wang.avi.AVLoadingIndicatorView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,8 +26,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 public class NetCheckerFragment extends Fragment {
     private Merlin mMerlin;
     private MerlinsBeard mMerlinsBeard;
-    private Button mRetryButton;
-    private AVLoadingIndicatorView mLoadingIndicatorView;
+    private FragmentConnectionCheckerBinding mBinding;
 
     public static NetCheckerFragment newInstance() {
 
@@ -50,12 +48,7 @@ public class NetCheckerFragment extends Fragment {
         mMerlin = new Merlin.Builder().withDisconnectableCallbacks().build(getContext().getApplicationContext());
         mMerlinsBeard = MerlinsBeard.from(getContext().getApplicationContext());
 
-        mMerlin.registerDisconnectable(new Disconnectable() {
-            @Override
-            public void onDisconnect() {
-                Toast.makeText(getContext().getApplicationContext(), "DISCONNECTED", Toast.LENGTH_LONG).show();
-            }
-        });
+        mMerlin.registerDisconnectable(() -> Toast.makeText(getContext().getApplicationContext(), "DISCONNECTED", Toast.LENGTH_LONG).show());
     }
 
 
@@ -63,38 +56,30 @@ public class NetCheckerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_connection_checker, container, false);
-
-        initUi(view);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_connection_checker, container, false);
         initListeners();
-
-        return view;
+        return mBinding.getRoot();
     }
 
     private void initListeners() {
-        mRetryButton.setOnClickListener(v -> {
-            mLoadingIndicatorView.setVisibility(View.VISIBLE);
-            mLoadingIndicatorView.smoothToShow();
+        mBinding.noConnectionBtn.setOnClickListener(v -> {
+            mBinding.loading.setVisibility(View.VISIBLE);
+            mBinding.loading.smoothToShow();
 
             if (mMerlinsBeard.isConnected()){
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .remove(NetCheckerFragment.this)
                         .commit();
                 Toast.makeText(getContext().getApplicationContext(), "CONNECTED", Toast.LENGTH_LONG).show();
-                mLoadingIndicatorView.setVisibility(View.GONE);
+                mBinding.loading.setVisibility(View.GONE);
 
             } else {
                 new Handler().postDelayed(() -> {
                     Snackbar.make(getView(), getActivity().getString(R.string.no_net_again), Snackbar.LENGTH_LONG).show();
-                    mLoadingIndicatorView.setVisibility(View.GONE);
+                    mBinding.loading.setVisibility(View.GONE);
                 }, 3000);
             }
         });
-    }
-
-    private void initUi(View view) {
-        mRetryButton = view.findViewById(R.id.no_connection_btn);
-        mLoadingIndicatorView = view.findViewById(R.id.loading);
     }
 
     @Override

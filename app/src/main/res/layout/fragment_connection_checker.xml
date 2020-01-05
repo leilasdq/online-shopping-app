@@ -1,56 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context=".Controller.fragment.NetCheckerFragment"
-    android:background="@android:color/white">
+<layout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
         android:orientation="vertical"
-        android:layout_centerInParent="true">
+        tools:context=".Controller.fragment.NetCheckerFragment">
 
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_no_internet" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/check_connection"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/no_connection_btn"
-            android:layoutDirection="rtl"
-            android:layout_marginTop="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:backgroundTint="#F44444"
-            android:text="@string/reconnect"
-            android:textSize="18sp"
-            app:icon="@drawable/ic_retry_icon"
-            android:layout_gravity="center"/>
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_no_internet" />
 
-        <com.wang.avi.AVLoadingIndicatorView
-            android:id="@+id/loading"
-            android:layout_marginTop="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:indicatorName="BallPulseIndicator"
-            app:indicatorColor="@color/red"
-            style="@style/AVLoadingIndicatorView"
-            android:visibility="gone"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/check_connection"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
 
-    </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/no_connection_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layoutDirection="rtl"
+                android:text="@string/reconnect"
+                android:textSize="18sp"
+                app:backgroundTint="#F44444"
+                app:icon="@drawable/ic_retry_icon" />
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/loading"
+                style="@style/AVLoadingIndicatorView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:visibility="gone"
+                app:indicatorColor="@color/red"
+                app:indicatorName="BallPulseIndicator" />
+
+        </LinearLayout>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</layout>
