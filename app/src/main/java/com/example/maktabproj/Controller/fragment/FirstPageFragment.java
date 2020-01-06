@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,7 +22,6 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.maktabproj.Controller.activity.ListAllProductActivity;
-import com.example.maktabproj.Controller.adapter.recycler.EndlessRecyclerView;
 import com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter.CategoryAdapter;
 import com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter.ProductAdapter;
 import com.example.maktabproj.Model.CategoriesItem;
@@ -28,6 +29,7 @@ import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentNewItemBinding;
+import com.example.maktabproj.viewmodel.FirstPageViewModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,22 +42,12 @@ import java.util.List;
 public class FirstPageFragment extends Fragment {
 
     public static final String EXTRA_SEND_PRODUCT_TYPE = "send type";
-
-    private EndlessRecyclerView scrollListener;
-    private int pageNumber = 1;
-
-    private List<Response> items;
-    private List<Response> popularList;
-    private List<Response> ratedList;
-    private List<CategoriesItem> categories;
-    private List<CategoriesItem> copyOfCategories = new ArrayList<>();
-
-    private FetchItems fetchItems;
-
-    private static final String TAG = "FirstPageFragment";
-    private LinearLayoutManager manager;
     private CategoryAdapter categoryAdapter;
     private FragmentNewItemBinding mBinding;
+    private FirstPageViewModel mViewModel;
+    private ProductAdapter mAdapter;
+    private ProductAdapter mPopularAdapter;
+    private ProductAdapter mRatedAdapter;
 
     public FirstPageFragment() {
         // Required empty public constructor
@@ -74,26 +66,7 @@ public class FirstPageFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        callAsyncs();
-    }
-
-    private void callAsyncs() {
-        fetchItems = FetchItems.getInstance();
-        items = new ArrayList<>();
-        popularList = new ArrayList<>();
-        ratedList = new ArrayList<>();
-
-        CategoriesAsync categoriesAsync = new CategoriesAsync();
-        categoriesAsync.execute();
-
-        NewProductsAsync async = new NewProductsAsync();
-        async.execute();
-
-        PopularAsync popularAsync = new PopularAsync();
-        popularAsync.execute();
-
-        RatedAsync ratedAsync = new RatedAsync();
-        ratedAsync.execute();
+        setupViewModel();
     }
 
     @Override
@@ -102,31 +75,20 @@ public class FirstPageFragment extends Fragment {
         // Inflate the layout for this fragment
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_new_item, container, false);
 
-        manager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         initListeners();
         sliderSetup();
         setUpRecycles();
-        setupAdapter();
 
         return mBinding.getRoot();
     }
 
     private void initListeners() {
-        scrollListener = new EndlessRecyclerView(manager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                pageNumber++;
-                CategoriesAsync async = new CategoriesAsync();
-                async.execute();
-            }
-        };
-
         mBinding.newProductAllLists.setOnClickListener(v -> {
             Intent intent = ListAllProductActivity.newIntent(getActivity(), "date");
             startActivity(intent);
         });
         mBinding.popularProductAllLists.setOnClickListener(v -> {
-            Intent intent = ListAllProductActivity.newIntent(getActivity(), "popular");
+            Intent intent = ListAllProductActivity.newIntent(getActivity(), "Popular");
             startActivity(intent);
         });
         mBinding.ratedProductAllLists.setOnClickListener(v -> {
@@ -140,9 +102,7 @@ public class FirstPageFragment extends Fragment {
         mBinding.recycle.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
         mBinding.popularRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
         mBinding.rateRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
-
-        mBinding.categoryRecycle.setLayoutManager(manager);
-        mBinding.categoryRecycle.addOnScrollListener(scrollListener);
+        mBinding.categoryRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
     }
 
     private void sliderSetup() {
@@ -165,120 +125,69 @@ public class FirstPageFragment extends Fragment {
         mBinding.slider.setDuration(5000);
     }
 
-    private void setupAdapter() {
-        if (isAdded()) {
-            ProductAdapter adapter = new ProductAdapter();
-            adapter.setList(items, getContext());
-            mBinding.recycle.setAdapter(adapter);
-
-            ProductAdapter popular = new ProductAdapter();
-            popular.setList(popularList, getContext());
-            mBinding.popularRecycle.setAdapter(popular);
-
-            ProductAdapter rated = new ProductAdapter();
-            rated.setList(ratedList, getContext());
-            mBinding.rateRecycle.setAdapter(rated);
-
-            if (categoryAdapter == null) {
-                categoryAdapter = new CategoryAdapter(copyOfCategories, getContext());
-                categoryAdapter.setList(copyOfCategories);
-                mBinding.categoryRecycle.setAdapter(categoryAdapter);
-            } else {
-                categoryAdapter.setList(copyOfCategories);
-                categoryAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-    private class NewProductsAsync extends AsyncTask<Void, Void, List<Response>>{
-
-        @Override
-        protected List<Response> doInBackground(Void... voids) {
-            try {
-                items = fetchItems.getAllProducts();
-            } catch (IOException e) {
-                Log.e(TAG, "doInBackground: " + e.getMessage() );
-            }
-            return items;
-        }
-
-        @Override
-        protected void onPostExecute(List<Response> responses) {
-            super.onPostExecute(responses);
+    private void setupViewModel() {
+        mViewModel = ViewModelProviders.of(this).get(FirstPageViewModel.class);
+        mViewModel.getAllProductsLiveData().observe(this, responses -> {
             mBinding.newProductText.setVisibility(View.VISIBLE);
             mBinding.newIcon.setVisibility(View.VISIBLE);
             mBinding.newProductAllLists.setVisibility(View.VISIBLE);
             mBinding.newProgress.setVisibility(View.GONE);
-            setupAdapter();
-            Log.e(TAG, "onPostExecute: items size" + items.size());
-        }
-    }
-
-    private class PopularAsync extends AsyncTask<Void, Void, List<Response>>{
-
-        @Override
-        protected List<Response> doInBackground(Void... voids) {
-            try {
-                popularList = fetchItems.getPopularProducts();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return popularList;
-        }
-
-        @Override
-        protected void onPostExecute(List<Response> responses) {
-            super.onPostExecute(responses);
+            setupNewListAdapter(responses);
+        });
+        mViewModel.getPopularProductsLiveData().observe(this, responses -> {
             mBinding.popularProductText.setVisibility(View.VISIBLE);
             mBinding.popularIcon.setVisibility(View.VISIBLE);
             mBinding.popularProductAllLists.setVisibility(View.VISIBLE);
             mBinding.popularProgress.setVisibility(View.GONE);
-            setupAdapter();
-        }
-    }
-
-    private class RatedAsync extends AsyncTask<Void, Void, List<Response>>{
-
-        @Override
-        protected List<Response> doInBackground(Void... voids) {
-            try {
-                ratedList = fetchItems.getRatedProducts();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return ratedList;
-        }
-
-        @Override
-        protected void onPostExecute(List<Response> responses) {
-            super.onPostExecute(responses);
+            setupPopularListAdapter(responses);
+        });
+        mViewModel.getRatedProductsLiveData().observe(this, responses -> {
             mBinding.mostRateProductText.setVisibility(View.VISIBLE);
             mBinding.ratedIcon.setVisibility(View.VISIBLE);
             mBinding.ratedProductAllLists.setVisibility(View.VISIBLE);
             mBinding.ratedProgress.setVisibility(View.GONE);
-            setupAdapter();
+            setupRatedListAdapter(responses);
+        });
+        mViewModel.getCategoryLiveData().observe(this, this::setupCategoryAdapter);
+    }
+
+    private void setupNewListAdapter(List<Response> items) {
+        if (mAdapter == null) {
+            mAdapter = new ProductAdapter(items, getContext());
+            mBinding.recycle.setAdapter(mAdapter);
+        } else {
+            mAdapter.setList(items);
+            mAdapter.notifyDataSetChanged();
         }
     }
 
-    private class CategoriesAsync extends AsyncTask<Void, Void, List<CategoriesItem>>{
-
-        @Override
-        protected List<CategoriesItem> doInBackground(Void... voids) {
-            categories = new ArrayList<>();
-            try {
-                categories = fetchItems.getParentCategories(pageNumber);
-                copyOfCategories.addAll(categories);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return copyOfCategories;
+    private void setupPopularListAdapter(List<Response> items) {
+        if (mPopularAdapter == null) {
+            mPopularAdapter = new ProductAdapter(items, getContext());
+            mBinding.popularRecycle.setAdapter(mPopularAdapter);
+        } else {
+            mPopularAdapter.setList(items);
+            mPopularAdapter.notifyDataSetChanged();
         }
+    }
 
-        @Override
-        protected void onPostExecute(List<CategoriesItem> items) {
-            super.onPostExecute(items);
-            setupAdapter();
-            Log.e(TAG, "onPostExecute: categories size" + categories.size());
+    private void setupRatedListAdapter(List<Response> items) {
+        if (mRatedAdapter == null) {
+            mRatedAdapter = new ProductAdapter(items, getContext());
+            mBinding.rateRecycle.setAdapter(mRatedAdapter);
+        } else {
+            mRatedAdapter.setList(items);
+            mRatedAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void setupCategoryAdapter(List<CategoriesItem> items){
+        if (categoryAdapter == null) {
+            categoryAdapter = new CategoryAdapter(items, getContext());
+            mBinding.categoryRecycle.setAdapter(categoryAdapter);
+        } else {
+            categoryAdapter.setList(items);
+            categoryAdapter.notifyDataSetChanged();
         }
     }
 }

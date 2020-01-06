@@ -1,6 +1,8 @@
 package com.example.maktabproj.Network;
 
-import android.content.Context;
+import android.util.Log;
+
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Model.Category;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -19,6 +22,7 @@ public class FetchItems {
     public static final String CONSUMER_KEY_VALUE = "ck_7276cad9e036d1139227ac59adff235d4215fd2f";
     public static final String CONSUMER_SECRET_VALUE = "cs_7c867db7cd424fe32614b92804eb4ffbe5c9c05f";
     public static final String BASE_URL = "https://woocommerce.maktabsharif.ir/wp-json/wc/v3/";
+    private static final String TAG = "FetchItems";
     public static final String ORDERBY = "orderby";
 
     private Retrofit mRetrofit;
@@ -47,49 +51,98 @@ public class FetchItems {
         mApiInterfaces = mRetrofit.create(ApiInterfaces.class);
     }
 
-    public List<Response> getAllProducts() throws IOException {
+    public MutableLiveData<List<Response>> getAllProducts() {
         Call<List<Response>> call = mApiInterfaces.getProducts(mQueries);
+        MutableLiveData<List<Response>> responceMutableLiveData = new MutableLiveData<>();
 
-        return call.execute().body();
+        call.enqueue(new Callback<List<Response>>() {
+            @Override
+            public void onResponse(Call<List<Response>> call, retrofit2.Response<List<Response>> response) {
+                if (response.isSuccessful()){
+                    List<Response> responseList = response.body();
+                    responceMutableLiveData.setValue(responseList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+        return responceMutableLiveData;
     }
 
-    public List<CategoriesItem> getCategories(int pageNumber) throws IOException {
+    public MutableLiveData<List<CategoriesItem>> getParentCategories() {
         Map<String, String> copy = new HashMap<>();
         copy.putAll(mQueries);
-        copy.put("page", String.valueOf(pageNumber));
-        copy.put("display", "subcategories");
-        Call<List<CategoriesItem>> call = mApiInterfaces.getProductCategory(copy);
-
-        return call.execute().body();
-    }
-
-    public List<CategoriesItem> getParentCategories(int pageNumber) throws IOException {
-        Map<String, String> copy = new HashMap<>();
-        copy.putAll(mQueries);
-        copy.put("page", String.valueOf(pageNumber));
         copy.put("parent", String.valueOf(0));
         copy.put("display", "default");
         Call<List<CategoriesItem>> call = mApiInterfaces.getProductCategory(copy);
+        MutableLiveData<List<CategoriesItem>> categoryMutableLiveData = new MutableLiveData<>();
 
-        return call.execute().body();
+        call.enqueue(new Callback<List<CategoriesItem>>() {
+            @Override
+            public void onResponse(Call<List<CategoriesItem>> call, retrofit2.Response<List<CategoriesItem>> response) {
+                if (response.isSuccessful()){
+                    List<CategoriesItem> responseList = response.body();
+                    categoryMutableLiveData.setValue(responseList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CategoriesItem>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+        return categoryMutableLiveData;
     }
 
-    public List<Response> getPopularProducts() throws IOException {
+    public MutableLiveData<List<Response>> getPopularProducts() {
         Map<String, String> copy = new HashMap<>();
         copy.putAll(mQueries);
         copy.put(ORDERBY, "popularity");
         Call<List<Response>> call = mApiInterfaces.getOrderedProducts(copy);
+        MutableLiveData<List<Response>> responseMutableLiveData = new MutableLiveData<>();
 
-        return call.execute().body();
+        call.enqueue(new Callback<List<Response>>() {
+            @Override
+            public void onResponse(Call<List<Response>> call, retrofit2.Response<List<Response>> response) {
+                if (response.isSuccessful()){
+                    List<Response> responseList = response.body();
+                    responseMutableLiveData.setValue(responseList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+        return responseMutableLiveData;
     }
 
-    public List<Response> getRatedProducts() throws IOException {
+    public MutableLiveData<List<Response>> getRatedProducts() {
         Map<String, String> copy = new HashMap<>();
         copy.putAll(mQueries);
         copy.put(ORDERBY, "rating");
         Call<List<Response>> call = mApiInterfaces.getOrderedProducts(copy);
+        MutableLiveData<List<Response>> responseMutableLiveData = new MutableLiveData<>();
 
-        return call.execute().body();
+        call.enqueue(new Callback<List<Response>>() {
+            @Override
+            public void onResponse(Call<List<Response>> call, retrofit2.Response<List<Response>> response) {
+                if (response.isSuccessful()){
+                    List<Response> responseList = response.body();
+                    responseMutableLiveData.setValue(responseList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+        return responseMutableLiveData;
     }
 
     public Response getSpecificProduct(int id) throws IOException {

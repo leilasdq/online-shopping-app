@@ -17,7 +17,7 @@ public class NetworkCheckerActivity extends AppCompatActivity {
     Context mContext;
     private BroadcastReceiver netReceiver;
     private IntentFilter filter;
-    private String mNetworkPermision = "check.network.available";
+    private String mNetworkPermission = "check.network.available";
 
     public static Intent newIntent(Context context){
         return new Intent(context, NetworkCheckerActivity.class);
@@ -62,7 +62,7 @@ public class NetworkCheckerActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        registerReceiver(netReceiver, filter, mNetworkPermision, null);
+        registerReceiver(netReceiver, filter, mNetworkPermission, null);
     }
 
     @Override

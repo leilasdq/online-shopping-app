@@ -8,8 +8,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,9 +26,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private List<Response> mResponseList;
     private Context mContext;
 
-    public void setList(List<Response> responseList, Context context) {
+    public ProductAdapter(List<Response> responseList, Context context) {
         mResponseList = responseList;
         mContext = context;
+    }
+
+    public void setList(List<Response> responseList) {
+        mResponseList = responseList;
     }
 
     @NonNull

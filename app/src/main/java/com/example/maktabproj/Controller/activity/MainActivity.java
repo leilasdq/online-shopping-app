@@ -5,6 +5,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +20,7 @@ import com.example.maktabproj.Controller.fragment.FirstPageFragment;
 import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
+import com.example.maktabproj.viewmodel.FirstPageViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.IOException;
@@ -28,7 +32,7 @@ public class MainActivity extends SingleFragmentActivity {
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
 
-    private List<CategoriesItem> categories;
+    private FirstPageViewModel mViewModel;
 
     @Override
     public Fragment createFragment() {
@@ -44,27 +48,25 @@ public class MainActivity extends SingleFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_layout);
 
+        mViewModel = ViewModelProviders.of(this).get(FirstPageViewModel.class);
+        mViewModel.getCategoryLiveData().observe(this, this::createDrawerMenu);
+
         initViews();
         toolbarSetup();
-        CategoriesAsync async = new CategoriesAsync();
-        async.execute();
     }
 
-    private void createDrawerMenu() {
+    private void createDrawerMenu(List<CategoriesItem> items) {
 
         final Menu menu = mNavigationView.getMenu();
         final Menu submenu = menu.addSubMenu("دسته بندی محصولات");
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (categories != null)
-                for (int i = 0; i < categories.size() ; i++) {
-                    submenu.add(categories.get(i).getName());
-                }
-
-                mNavigationView.invalidate();
+        new Handler().postDelayed(() -> {
+            for (int i = 0; i < items.size() ; i++) {
+                if (items.get(i).getName().equalsIgnoreCase("فروش ویژه")) continue;
+                submenu.add(items.get(i).getName());
             }
+
+            mNavigationView.invalidate();
         }, 2000);
     }
 
@@ -79,40 +81,12 @@ public class MainActivity extends SingleFragmentActivity {
         mToolbar = findViewById(R.id.toolbar);
         mDrawerLayout = findViewById(R.id.nav_draw);
         mNavigationView = findViewById(R.id.nav_view);
-
-        categories = new ArrayList<>();
     }
 
     @Override
     public void onBackPressed() {
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START))  mDrawerLayout.closeDrawer(GravityCompat.START);
         else super.onBackPressed();
-    }
-
-    public void setCategories(List<CategoriesItem> list) {
-        categories = list;
-    }
-
-    private class CategoriesAsync extends AsyncTask<Void, Void, List<CategoriesItem>> {
-        FetchItems fetchItems = FetchItems.getInstance();
-
-        @Override
-        protected List<CategoriesItem> doInBackground(Void... voids) {
-            categories = new ArrayList<>();
-            try {
-                categories = fetchItems.getParentCategories(1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return categories;
-        }
-
-        @Override
-        protected void onPostExecute(List<CategoriesItem> items) {
-            super.onPostExecute(items);
-
-            createDrawerMenu();
-        }
     }
 
 }
