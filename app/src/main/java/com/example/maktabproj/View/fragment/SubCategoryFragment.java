@@ -1,12 +1,12 @@
 package com.example.maktabproj.View.fragment;
 
-
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -15,12 +15,10 @@ import android.view.ViewGroup;
 
 import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.SubCategoryAdapter;
 import com.example.maktabproj.Model.Category;
-import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentSubCategoryBinding;
+import com.example.maktabproj.viewmodel.SubCategoryViewModel;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,18 +29,19 @@ public class SubCategoryFragment extends Fragment {
 
     public static final String ARGS_CATEGORY_ID = "category id";
     private int mCategoryId;
-    private List<Category> mList = new ArrayList<>();
     private FragmentSubCategoryBinding mBinding;
+    private SubCategoryViewModel mViewModel;
+    private SubCategoryAdapter mAdapter;
 
     public SubCategoryFragment() {
         // Required empty public constructor
     }
 
     public static SubCategoryFragment newInstance(int categoryId) {
-        
+
         Bundle args = new Bundle();
         args.putInt(ARGS_CATEGORY_ID, categoryId);
-        
+
         SubCategoryFragment fragment = new SubCategoryFragment();
         fragment.setArguments(args);
         return fragment;
@@ -53,8 +52,13 @@ public class SubCategoryFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mCategoryId = getArguments().getInt(ARGS_CATEGORY_ID);
 
-        GetSubCategories async = new GetSubCategories();
-        async.execute();
+        mViewModel = ViewModelProviders.of(this).get(SubCategoryViewModel.class);
+        mViewModel.getCategoryLiveData(mCategoryId).observe(this, new Observer<List<Category>>() {
+            @Override
+            public void onChanged(List<Category> categories) {
+                setUpAdapter(categories);
+            }
+        });
     }
 
     @Override
@@ -66,28 +70,13 @@ public class SubCategoryFragment extends Fragment {
         return mBinding.getRoot();
     }
 
-    private void setUpAdapter(){
-            SubCategoryAdapter adapter = new SubCategoryAdapter(mList, getContext());
-            mBinding.showCategoryRecycler.setAdapter(adapter);
-    }
-
-    private class GetSubCategories extends AsyncTask<Void, Void, Void>{
-        private FetchItems mFetchItems = FetchItems.getInstance();
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                mList = mFetchItems.getSubCategory(mCategoryId);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            setUpAdapter();
+    private void setUpAdapter(List<Category> categories) {
+        if (mAdapter==null) {
+            mAdapter = new SubCategoryAdapter(categories, getContext());
+            mBinding.showCategoryRecycler.setAdapter(mAdapter);
+        } else {
+            mAdapter.setCategoriesItems(categories);
+            mAdapter.notifyDataSetChanged();
         }
     }
 

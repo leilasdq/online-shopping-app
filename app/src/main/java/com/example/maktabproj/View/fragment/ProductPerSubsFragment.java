@@ -1,12 +1,12 @@
 package com.example.maktabproj.View.fragment;
 
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -15,11 +15,10 @@ import android.view.ViewGroup;
 
 import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.ProductsOfSubCategoryAdapter;
 import com.example.maktabproj.Model.Response;
-import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentProductPerSubsBinding;
+import com.example.maktabproj.viewmodel.ProductsPerSubsViewModel;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -28,8 +27,9 @@ import java.util.List;
 public class ProductPerSubsFragment extends Fragment {
     public static final String ARGS_CATEGORY_ID = "category id";
     private int mCategoryId;
-    private List<Response> mList;
     private FragmentProductPerSubsBinding mBinding;
+    private ProductsOfSubCategoryAdapter mAdapter;
+    private ProductsPerSubsViewModel mViewModel;
 
 
     public ProductPerSubsFragment() {
@@ -52,8 +52,8 @@ public class ProductPerSubsFragment extends Fragment {
 
         mCategoryId = getArguments().getInt(ARGS_CATEGORY_ID);
 
-        GetSubCategories async = new GetSubCategories();
-        async.execute();
+        mViewModel = ViewModelProviders.of(this).get(ProductsPerSubsViewModel.class);
+        mViewModel.getResponseLiveData(mCategoryId).observe(this, this::setUpAdapter);
     }
 
     @Override
@@ -75,29 +75,14 @@ public class ProductPerSubsFragment extends Fragment {
         mBinding.proPerCategory.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    private class GetSubCategories extends AsyncTask<Void, Void, Void> {
-        private FetchItems mFetchItems = FetchItems.getInstance();
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                mList = mFetchItems.getProductPerCategory(mCategoryId);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
+    private void setUpAdapter(List<Response> items){
+        if (mAdapter==null) {
+            mAdapter = new ProductsOfSubCategoryAdapter(items, getContext());
+            mBinding.proPerCategory.setAdapter(mAdapter);
+        } else {
+            mAdapter.setCategoriesItems(items);
+            mAdapter.notifyDataSetChanged();
         }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            setUpAdapter();
-        }
-    }
-
-    private void setUpAdapter(){
-        ProductsOfSubCategoryAdapter adapter = new ProductsOfSubCategoryAdapter(mList, getContext());
-        mBinding.proPerCategory.setAdapter(adapter);
     }
 
 }

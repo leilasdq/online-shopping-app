@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.airbnb.lottie.L;
 import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Model.Category;
 import com.example.maktabproj.Model.Response;
@@ -145,10 +146,25 @@ public class FetchItems {
         return responseMutableLiveData;
     }
 
-    public Response getSpecificProduct(int id) throws IOException {
+    public MutableLiveData<Response> getSpecificProduct(int id) {
         Call<Response> call = mApiInterfaces.getSpecificProduct(String.valueOf(id), mQueries);
+        MutableLiveData<Response> responseMutableLiveData = new MutableLiveData<>();
 
-        return call.execute().body();
+        call.enqueue(new Callback<Response>() {
+            @Override
+            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+                if (response.isSuccessful()){
+                    Response responseModel = response.body();
+                    responseMutableLiveData.setValue(responseModel);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+        return responseMutableLiveData;
     }
 
     public List<Response> getAllProductsPerPage(int pageNumber) throws IOException {
@@ -180,23 +196,53 @@ public class FetchItems {
         return call.execute().body();
     }
 
-    public List<Category> getSubCategory(int id) throws IOException {
+    public MutableLiveData<List<Category>> getSubCategory(int id) {
         Map<String, String> copy = new HashMap<>();
         copy.putAll(mQueries);
         copy.put("display", "subcategories");
 
         Call<List<Category>> call = mApiInterfaces.getSubCategories(copy, String.valueOf(id));
+        MutableLiveData<List<Category>> categoryLiveData = new MutableLiveData<>();
 
-        return call.execute().body();
+        call.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, retrofit2.Response<List<Category>> response) {
+                if (response.isSuccessful()){
+                    List<Category> categoryList = response.body();
+                    categoryLiveData.setValue(categoryList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+        return categoryLiveData;
     }
 
-    public List<Response> getProductPerCategory(int id) throws IOException {
+    public MutableLiveData<List<Response>> getProductPerCategory(int id) {
         Map<String, String> copy = new HashMap<>();
         copy.putAll(mQueries);
         copy.put("category", String.valueOf(id));
 
         Call<List<Response>> call = mApiInterfaces.getProductsPerCategories(copy);
+        MutableLiveData<List<Response>> responseLiveData = new MutableLiveData<>();
 
-        return call.execute().body();
+        call.enqueue(new Callback<List<Response>>() {
+            @Override
+            public void onResponse(Call<List<Response>> call, retrofit2.Response<List<Response>> response) {
+                if (response.isSuccessful()){
+                    List<Response> responseList = response.body();
+                    responseLiveData.setValue(responseList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+        return responseLiveData;
     }
 }
