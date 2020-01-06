@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maktabproj.Controller.activity.SubCategoryActivity;
 import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.R;
+import com.example.maktabproj.databinding.CategoryListItemsBinding;
 
 import java.util.List;
 
@@ -33,8 +34,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.category_list_items, parent, false);
-        return new CategoryViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        CategoryListItemsBinding binding = CategoryListItemsBinding.inflate(inflater, parent, false);
+        return new CategoryViewHolder(binding);
     }
 
     @Override
@@ -48,15 +50,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     class CategoryViewHolder extends RecyclerView.ViewHolder {
+        private CategoryListItemsBinding mBinding;
+        private CategoriesItem mCategoriesItem;
 
-        Button categoryBtn;
-        CategoriesItem mCategoriesItem;
+        public CategoryViewHolder(@NonNull CategoryListItemsBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
 
-        public CategoryViewHolder(@NonNull View itemView) {
-            super(itemView);
-            categoryBtn = itemView.findViewById(R.id.category_btn);
-
-            categoryBtn.setOnClickListener(v -> {
+            mBinding.categoryBtn.setOnClickListener(v -> {
                 Intent intent = SubCategoryActivity.newIntent(mContext, mCategoriesItem.getId());
                 mContext.startActivity(intent);
             });
@@ -64,8 +65,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
         public void bind(CategoriesItem categoriesItem){
             mCategoriesItem = categoriesItem;
-            categoryBtn.setText(categoriesItem.getName());
-            categoryBtn.setBackgroundColor(mContext.getResources().getColor(R.color.categoryButtonColor));
+            mBinding.categoryBtn.setText(categoriesItem.getName());
+            mBinding.categoryBtn.setBackgroundColor(mContext.getResources().getColor(R.color.categoryButtonColor));
         }
     }
 }

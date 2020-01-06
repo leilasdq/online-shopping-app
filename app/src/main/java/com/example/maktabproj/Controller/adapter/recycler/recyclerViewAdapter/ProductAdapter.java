@@ -18,6 +18,7 @@ import com.example.maktabproj.Controller.activity.DetailProductActivity;
 import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.R;
+import com.example.maktabproj.databinding.ListItemsLayoutBinding;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -35,8 +36,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.list_items_layout, parent, false);
-        return new ProductViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        ListItemsLayoutBinding binding = ListItemsLayoutBinding.inflate(inflater, parent, false);
+        return new ProductViewHolder(binding);
     }
 
     @Override
@@ -51,18 +53,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        Response mResponse;
-        ImageView productImage;
-        TextView productName;
-        TextView originalPrice;
-        TextView salePrice;
+        private Response mResponse;
+        private ListItemsLayoutBinding mBinding;
 
-        public ProductViewHolder(@NonNull View itemView) {
-            super(itemView);
-            productImage = itemView.findViewById(R.id.pro_img);
-            productName = itemView.findViewById(R.id.pro_name);
-            originalPrice = itemView.findViewById(R.id.original_price);
-            salePrice = itemView.findViewById(R.id.sale_price);
+        public ProductViewHolder(@NonNull ListItemsLayoutBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
 
             itemView.setOnClickListener(v -> {
                 Intent intent = DetailProductActivity.newIntent(mContext, mResponse.getId());
@@ -72,20 +68,22 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         public void bind(Response response){
             mResponse = response;
-            productName.setText(response.getName());
+            mBinding.proName.setText(response.getName());
             String original = response.getRegularPrice();
             String sale = response.getSalePrice();
-            originalPrice.setText(original.concat(mContext.getString(R.string.Tooman)));
+            mBinding.originalPrice.setText(original.concat(mContext.getString(R.string.Tooman)));
             if (!sale.equalsIgnoreCase("")){
-                salePrice.setText(sale.concat(mContext.getString(R.string.Tooman)));
-                originalPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                mBinding.salePrice.setText(sale.concat(mContext.getString(R.string.Tooman)));
+                mBinding.originalPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
-                originalPrice.setPaintFlags( originalPrice.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
-                salePrice.setVisibility(View.INVISIBLE);
-                originalPrice.setGravity(Gravity.CENTER_VERTICAL);
+                mBinding.originalPrice.setPaintFlags( mBinding.originalPrice.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                mBinding.salePrice.setVisibility(View.INVISIBLE);
+                mBinding.originalPrice.setGravity(Gravity.CENTER_VERTICAL);
             }
             ImagesItem src = response.getImages().get(0);
-            Picasso.with(mContext).load(Uri.parse(src.getSrc())).placeholder(R.drawable.image_loading).error(R.drawable.image_error).into(productImage);
+            Picasso.with(mContext).load(Uri.parse(src.getSrc()))
+                    .placeholder(R.drawable.image_loading).error(R.drawable.image_error)
+                    .into(mBinding.proImg);
         }
     }
 }

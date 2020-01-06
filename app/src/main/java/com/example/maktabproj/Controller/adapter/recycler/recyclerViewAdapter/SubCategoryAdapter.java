@@ -2,12 +2,8 @@ package com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.maktabproj.Controller.activity.ProductPerCategoryActivity;
 import com.example.maktabproj.Model.Category;
 import com.example.maktabproj.R;
+import com.example.maktabproj.databinding.SubCategoryListItemBinding;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -36,8 +33,9 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     @NonNull
     @Override
     public SubCategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.sub_category_list_item, parent, false);
-        return new SubCategoryViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        SubCategoryListItemBinding binding = SubCategoryListItemBinding.inflate(inflater, parent, false);
+        return new SubCategoryViewHolder(binding);
     }
 
     @Override
@@ -51,15 +49,12 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
     }
 
     class SubCategoryViewHolder extends RecyclerView.ViewHolder{
-        private ImageView categoryImage;
-        private TextView categoryName;
-        Category mCategoriesItem;
+        private Category mCategoriesItem;
+        private SubCategoryListItemBinding mBinding;
 
-        public SubCategoryViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            categoryImage = itemView.findViewById(R.id.category_image);
-            categoryName = itemView.findViewById(R.id.category_name);
+        public SubCategoryViewHolder(@NonNull SubCategoryListItemBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
 
             itemView.setOnClickListener(v -> {
                 Intent intent = ProductPerCategoryActivity.newIntent(mContext, mCategoriesItem.getId());
@@ -69,8 +64,10 @@ public class SubCategoryAdapter extends RecyclerView.Adapter<SubCategoryAdapter.
 
         private void bind(Category categoriesItem){
             mCategoriesItem = categoriesItem;
-            categoryName.setText(mCategoriesItem.getName());
-            Picasso.with(mContext).load(mCategoriesItem.getImage().getSrc()).into(categoryImage);
+            mBinding.categoryName.setText(mCategoriesItem.getName());
+            Picasso.with(mContext).load(mCategoriesItem.getImage().getSrc())
+                    .placeholder(R.drawable.image_loading)
+                    .into(mBinding.categoryImage);
         }
     }
 }

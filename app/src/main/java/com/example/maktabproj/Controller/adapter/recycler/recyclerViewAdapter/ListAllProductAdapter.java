@@ -10,8 +10,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +18,7 @@ import com.example.maktabproj.Controller.activity.DetailProductActivity;
 import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.R;
+import com.example.maktabproj.databinding.AllListItemsBinding;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,8 +41,9 @@ public class ListAllProductAdapter extends RecyclerView.Adapter<ListAllProductAd
     @NonNull
     @Override
     public ListAllProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.all_list_items, parent, false);
-        return new ListAllProductViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        AllListItemsBinding binding = AllListItemsBinding.inflate(inflater, parent, false);
+        return new ListAllProductViewHolder(binding);
     }
 
     @Override
@@ -58,20 +58,11 @@ public class ListAllProductAdapter extends RecyclerView.Adapter<ListAllProductAd
 
     class ListAllProductViewHolder extends RecyclerView.ViewHolder {
         private Response mResponse;
-        private ImageView proImage;
-        private TextView name;
-        private TextView shortDes;
-        private TextView realPrice;
-        private TextView salePrice;
+        private AllListItemsBinding mBinding;
 
-        public ListAllProductViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            proImage = itemView.findViewById(R.id.all_list_product_image);
-            name = itemView.findViewById(R.id.all_list_product_name);
-            shortDes = itemView.findViewById(R.id.all_list_product_short_des);
-            realPrice = itemView.findViewById(R.id.all_list_product_real_price);
-            salePrice = itemView.findViewById(R.id.all_list_product_sale_price);
+        public ListAllProductViewHolder(@NonNull AllListItemsBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
 
             itemView.setOnClickListener(v -> {
                 Intent intent = DetailProductActivity.newIntent(mContext, mResponse.getId());
@@ -82,24 +73,27 @@ public class ListAllProductAdapter extends RecyclerView.Adapter<ListAllProductAd
         private void bind(Response response) {
             mResponse = response;
 
-            name.setText(mResponse.getName());
+            mBinding.allListProductName.setText(mResponse.getName());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                shortDes.setText(Html.fromHtml(mResponse.getShortDescription(), Html.FROM_HTML_MODE_LEGACY));
-            } else  shortDes.setText(Html.fromHtml(mResponse.getShortDescription()));
+                mBinding.allListProductShortDes.setText(Html.fromHtml(mResponse.getShortDescription(), Html.FROM_HTML_MODE_LEGACY));
+            } else
+                mBinding.allListProductShortDes.setText(Html.fromHtml(mResponse.getShortDescription()));
             String original = response.getRegularPrice();
             String sale = response.getSalePrice();
-            realPrice.setText(original.concat(mContext.getString(R.string.Tooman)));
+            mBinding.allListProductRealPrice.setText(original.concat(mContext.getString(R.string.Tooman)));
             if (!sale.equalsIgnoreCase("")) {
-                salePrice.setText(sale.concat(mContext.getString(R.string.Tooman)));
-                salePrice.setVisibility(View.VISIBLE);
-                realPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                mBinding.allListProductSalePrice.setText(sale.concat(mContext.getString(R.string.Tooman)));
+                mBinding.allListProductSalePrice.setVisibility(View.VISIBLE);
+                mBinding.allListProductRealPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
-                realPrice.setPaintFlags(realPrice.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                salePrice.setVisibility(View.INVISIBLE);
-                realPrice.setGravity(Gravity.CENTER_VERTICAL);
+                mBinding.allListProductRealPrice.setPaintFlags(mBinding.allListProductRealPrice.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                mBinding.allListProductSalePrice.setVisibility(View.INVISIBLE);
+                mBinding.allListProductRealPrice.setGravity(Gravity.CENTER_VERTICAL);
             }
             ImagesItem src = response.getImages().get(0);
-            Picasso.with(mContext).load(Uri.parse(src.getSrc())).placeholder(R.drawable.image_loading).error(R.drawable.image_error).into(proImage);
+            Picasso.with(mContext).load(Uri.parse(src.getSrc()))
+                    .placeholder(R.drawable.image_loading).error(R.drawable.image_error)
+                    .into(mBinding.allListProductImage);
 
         }
     }

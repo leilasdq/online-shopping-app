@@ -61,8 +61,18 @@ public class ProductPerSubsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_per_subs, container, false);
-        mBinding.proPerCategory.setLayoutManager(new LinearLayoutManager(getContext()));
+        setupRecycle();
+        setupToolbar();
         return mBinding.getRoot();
+    }
+
+    private void setupToolbar() {
+        mBinding.productPerSub.setTitle("محصولات");
+        mBinding.productPerSub.setTitleTextColor(getActivity().getResources().getColor(android.R.color.white));
+    }
+
+    private void setupRecycle() {
+        mBinding.proPerCategory.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     private class GetSubCategories extends AsyncTask<Void, Void, Void> {

@@ -112,6 +112,7 @@ public class ListAllProductFragment extends Fragment {
         } else if (type.equalsIgnoreCase("rated")) {
             mBinding.allListsToolbar.setTitle(getString(R.string.all_rated));
         }
+        mBinding.allListsToolbar.setTitleTextColor(getActivity().getResources().getColor(android.R.color.white));
     }
 
     private class GetAllListAsync extends AsyncTask<Void, Void, List<Response>> {
