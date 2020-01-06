@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.activity;
+package com.example.maktabproj.View.activity;
 
 import androidx.fragment.app.Fragment;
 
@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.maktabproj.Controller.fragment.ProductPerSubsFragment;
+import com.example.maktabproj.View.fragment.ProductPerSubsFragment;
 import com.example.maktabproj.R;
 
 public class ProductPerCategoryActivity extends SingleFragmentActivity {

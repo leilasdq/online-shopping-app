@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.activity;
+package com.example.maktabproj.View.activity;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.maktabproj.Controller.adapter.recycler.viewPagerAdapter.CategoryViewPager;
+import com.example.maktabproj.View.adapter.recycler.viewPagerAdapter.CategoryViewPager;
 import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.R;
 import com.example.maktabproj.viewmodel.FirstPageViewModel;

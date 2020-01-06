@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter;
+package com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.maktabproj.Controller.activity.DetailProductActivity;
+import com.example.maktabproj.View.activity.DetailProductActivity;
 import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.R;
@@ -29,13 +29,22 @@ public class ListAllProductAdapter extends RecyclerView.Adapter<ListAllProductAd
     private List<Response> allProductList = new ArrayList<>();
     private Context mContext;
 
-    public ListAllProductAdapter(List<Response> allProductList, Context context) {
-        this.allProductList = allProductList;
+    public ListAllProductAdapter(List<Response> list, Context context) {
+        allProductList = listChecker(list);
         mContext = context;
     }
 
-    public void setAllProductList(List<Response> allProductList) {
-        this.allProductList = allProductList;
+    public void setAllProductList(List<Response> list) {
+        allProductList = listChecker(list);
+    }
+
+    private List<Response> listChecker (List<Response> responses){
+        List<Response> original = new ArrayList<>();
+        for (int i = 0; i < responses.size() ; i++) {
+            if (responses.get(i).getName().equalsIgnoreCase("تخفیفات")) continue;
+            original.add(responses.get(i));
+        }
+        return original;
     }
 
     @NonNull

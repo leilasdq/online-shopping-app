@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter;
+package com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.maktabproj.Controller.activity.ProductPerCategoryActivity;
+import com.example.maktabproj.View.activity.ProductPerCategoryActivity;
 import com.example.maktabproj.Model.Category;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.SubCategoryListItemBinding;

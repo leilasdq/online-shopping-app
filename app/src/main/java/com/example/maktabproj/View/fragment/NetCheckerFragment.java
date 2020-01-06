@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.fragment;
+package com.example.maktabproj.View.fragment;
 
 
 import android.os.Bundle;

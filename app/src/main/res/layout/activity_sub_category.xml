@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layoutDirection="rtl"
-    tools:context=".Controller.activity.SubCategoryActivity">
+    tools:context=".View.activity.SubCategoryActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/sub_category_toolbar"

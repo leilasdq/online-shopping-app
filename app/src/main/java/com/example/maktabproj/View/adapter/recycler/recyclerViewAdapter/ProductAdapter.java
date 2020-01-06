@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter;
+package com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.maktabproj.Controller.activity.DetailProductActivity;
+import com.example.maktabproj.View.activity.DetailProductActivity;
 import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.R;

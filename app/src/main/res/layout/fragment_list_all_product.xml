@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:layoutDirection="rtl"
         android:orientation="vertical"
-        tools:context=".Controller.fragment.ListAllProductFragment">
+        tools:context=".View.fragment.ListAllProductFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/all_lists_toolbar"

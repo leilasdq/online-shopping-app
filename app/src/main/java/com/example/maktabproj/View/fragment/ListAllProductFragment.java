@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.fragment;
+package com.example.maktabproj.View.fragment;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,8 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.maktabproj.Controller.adapter.recycler.EndlessRecyclerView;
-import com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter.ListAllProductAdapter;
+import com.example.maktabproj.View.adapter.recycler.EndlessRecyclerView;
+import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.ListAllProductAdapter;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;

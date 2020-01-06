@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter;
+package com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +9,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.maktabproj.Controller.activity.DetailProductActivity;
+import com.example.maktabproj.View.activity.DetailProductActivity;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.AllListItemsBinding;

@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.adapter.recycler.viewPagerAdapter;
+package com.example.maktabproj.View.adapter.recycler.viewPagerAdapter;
 
 import android.content.Context;
 import android.view.View;

@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.activity;
+package com.example.maktabproj.View.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
-import com.example.maktabproj.Controller.fragment.NetCheckerFragment;
+import com.example.maktabproj.View.fragment.NetCheckerFragment;
 import com.example.maktabproj.R;
 
 public class NetworkCheckerActivity extends AppCompatActivity {

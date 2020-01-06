@@ -1,20 +1,20 @@
-package com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter;
+package com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.maktabproj.Controller.activity.SubCategoryActivity;
+import com.example.maktabproj.Model.Response;
+import com.example.maktabproj.View.activity.SubCategoryActivity;
 import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.CategoryListItemsBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>{
@@ -23,12 +23,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     private Context mContext;
 
     public CategoryAdapter(List<CategoriesItem> categoriesItems, Context context) {
-        mCategoriesItems = categoriesItems;
+        mCategoriesItems = listChecker(categoriesItems);
         mContext = context;
     }
 
     public void setList(List<CategoriesItem> categoriesItems) {
-        mCategoriesItems = categoriesItems;
+        mCategoriesItems = listChecker(categoriesItems);
+    }
+
+    private List<CategoriesItem> listChecker (List<CategoriesItem> responses){
+        List<CategoriesItem> original = new ArrayList<>();
+        for (int i = 0; i < responses.size() ; i++) {
+            if (responses.get(i).getName().equalsIgnoreCase("فروش ویژه")) continue;
+            original.add(responses.get(i));
+        }
+        return original;
     }
 
     @NonNull

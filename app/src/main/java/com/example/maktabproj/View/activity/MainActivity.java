@@ -1,30 +1,24 @@
-package com.example.maktabproj.Controller.activity;
+package com.example.maktabproj.View.activity;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 
-import com.example.maktabproj.Controller.fragment.FirstPageFragment;
+import com.example.maktabproj.View.fragment.FirstPageFragment;
 import com.example.maktabproj.Model.CategoriesItem;
-import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
 import com.example.maktabproj.viewmodel.FirstPageViewModel;
 import com.google.android.material.navigation.NavigationView;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends SingleFragmentActivity {

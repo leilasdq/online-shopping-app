@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.fragment;
+package com.example.maktabproj.View.fragment;
 
 
 import android.os.AsyncTask;
@@ -13,35 +13,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter.ProductsOfSubCategoryAdapter;
-import com.example.maktabproj.Model.Response;
+import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.SubCategoryAdapter;
+import com.example.maktabproj.Model.Category;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
-import com.example.maktabproj.databinding.FragmentProductPerSubsBinding;
+import com.example.maktabproj.databinding.FragmentSubCategoryBinding;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProductPerSubsFragment extends Fragment {
+public class SubCategoryFragment extends Fragment {
+
+
     public static final String ARGS_CATEGORY_ID = "category id";
     private int mCategoryId;
-    private List<Response> mList;
-    private FragmentProductPerSubsBinding mBinding;
+    private List<Category> mList = new ArrayList<>();
+    private FragmentSubCategoryBinding mBinding;
 
-
-    public ProductPerSubsFragment() {
+    public SubCategoryFragment() {
         // Required empty public constructor
     }
 
-    public static ProductPerSubsFragment newInstance(int id) {
-
+    public static SubCategoryFragment newInstance(int categoryId) {
+        
         Bundle args = new Bundle();
-        args.putInt(ARGS_CATEGORY_ID, id);
-
-        ProductPerSubsFragment fragment = new ProductPerSubsFragment();
+        args.putInt(ARGS_CATEGORY_ID, categoryId);
+        
+        SubCategoryFragment fragment = new SubCategoryFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,7 +51,6 @@ public class ProductPerSubsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mCategoryId = getArguments().getInt(ARGS_CATEGORY_ID);
 
         GetSubCategories async = new GetSubCategories();
@@ -60,28 +61,23 @@ public class ProductPerSubsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_product_per_subs, container, false);
-        setupRecycle();
-        setupToolbar();
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_sub_category, container, false);
+        mBinding.showCategoryRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         return mBinding.getRoot();
     }
 
-    private void setupToolbar() {
-        mBinding.productPerSub.setTitle("محصولات");
-        mBinding.productPerSub.setTitleTextColor(getActivity().getResources().getColor(android.R.color.white));
+    private void setUpAdapter(){
+            SubCategoryAdapter adapter = new SubCategoryAdapter(mList, getContext());
+            mBinding.showCategoryRecycler.setAdapter(adapter);
     }
 
-    private void setupRecycle() {
-        mBinding.proPerCategory.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-    private class GetSubCategories extends AsyncTask<Void, Void, Void> {
+    private class GetSubCategories extends AsyncTask<Void, Void, Void>{
         private FetchItems mFetchItems = FetchItems.getInstance();
 
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                mList = mFetchItems.getProductPerCategory(mCategoryId);
+                mList = mFetchItems.getSubCategory(mCategoryId);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -93,11 +89,6 @@ public class ProductPerSubsFragment extends Fragment {
             super.onPostExecute(aVoid);
             setUpAdapter();
         }
-    }
-
-    private void setUpAdapter(){
-        ProductsOfSubCategoryAdapter adapter = new ProductsOfSubCategoryAdapter(mList, getContext());
-        mBinding.proPerCategory.setAdapter(adapter);
     }
 
 }

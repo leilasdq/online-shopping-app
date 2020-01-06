@@ -1,19 +1,16 @@
-package com.example.maktabproj.Controller.fragment;
+package com.example.maktabproj.View.fragment;
 
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,18 +18,15 @@ import android.view.ViewGroup;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.example.maktabproj.Controller.activity.ListAllProductActivity;
-import com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter.CategoryAdapter;
-import com.example.maktabproj.Controller.adapter.recycler.recyclerViewAdapter.ProductAdapter;
+import com.example.maktabproj.View.activity.ListAllProductActivity;
+import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.CategoryAdapter;
+import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.ProductAdapter;
 import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Model.Response;
-import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentNewItemBinding;
 import com.example.maktabproj.viewmodel.FirstPageViewModel;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 

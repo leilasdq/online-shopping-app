@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:background="@color/background"
         android:layoutDirection="rtl"
-        tools:context=".Controller.fragment.FirstPageFragment">
+        tools:context=".View.fragment.FirstPageFragment">
 
         <LinearLayout
             android:layout_width="match_parent"

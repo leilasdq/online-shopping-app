@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.fragment;
+package com.example.maktabproj.View.fragment;
 
 
 import android.graphics.Paint;
@@ -7,28 +7,22 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.example.maktabproj.Controller.adapter.recycler.viewPagerAdapter.ImageViewAdapter;
+import com.example.maktabproj.View.adapter.recycler.viewPagerAdapter.ImageViewAdapter;
 import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentDetailProductBinding;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;

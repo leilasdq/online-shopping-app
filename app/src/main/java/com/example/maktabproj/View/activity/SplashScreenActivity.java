@@ -1,4 +1,4 @@
-package com.example.maktabproj.Controller.activity;
+package com.example.maktabproj.View.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
