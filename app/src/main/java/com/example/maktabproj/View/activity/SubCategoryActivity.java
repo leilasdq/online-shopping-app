@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubCategoryActivity extends NetworkCheckerActivity {
-    public static final String EXTRA_CATEGORY_ID = "com.example.maktabproj.category id";
+//    public static final String EXTRA_CATEGORY_ID = "com.example.maktabproj.category id";
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager2 mViewPager;
@@ -27,9 +27,9 @@ public class SubCategoryActivity extends NetworkCheckerActivity {
     private FirstPageViewModel mViewModel;
     private CategoryViewPager mPagerAdapter;
 
-    public static Intent newIntent(Context context, int categoryId){
+    public static Intent newIntent(Context context){
         Intent intent = new Intent(context, SubCategoryActivity.class);
-        intent.putExtra(EXTRA_CATEGORY_ID, categoryId);
+//        intent.putExtra(EXTRA_CATEGORY_ID, categoryId);
         return intent;
     }
 

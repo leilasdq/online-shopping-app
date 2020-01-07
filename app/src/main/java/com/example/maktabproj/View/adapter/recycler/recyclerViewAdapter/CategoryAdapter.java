@@ -67,7 +67,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             mBinding = binding;
 
             mBinding.categoryBtn.setOnClickListener(v -> {
-                Intent intent = SubCategoryActivity.newIntent(mContext, mCategoriesItem.getId());
+                Intent intent = SubCategoryActivity.newIntent(mContext);
                 mContext.startActivity(intent);
             });
         }
