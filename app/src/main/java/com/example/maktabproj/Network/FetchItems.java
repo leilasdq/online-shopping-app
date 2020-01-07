@@ -10,6 +10,7 @@ import com.example.maktabproj.Model.Category;
 import com.example.maktabproj.Model.Response;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,13 @@ public class FetchItems {
     private Retrofit mRetrofit;
     private ApiInterfaces mApiInterfaces;
     private Map<String, String> mQueries;
+
+    private List<Response> mAllProducts = new ArrayList<>();
+    private List<Response> mAllPopulars = new ArrayList<>();
+    private List<Response> mAllRateds = new ArrayList<>();
+    private MutableLiveData<List<Response>> allProLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Response>> allPopLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<Response>> allRateLiveData = new MutableLiveData<>();
 
     private static FetchItems ourInstance = null;
 
@@ -167,33 +175,78 @@ public class FetchItems {
         return responseMutableLiveData;
     }
 
-    public List<Response> getAllProductsPerPage(int pageNumber) throws IOException {
+    public MutableLiveData<List<Response>> getAllProductsPerPage(int pageNumber) {
         Map<String, String> copy = new HashMap<>();
         copy.putAll(mQueries);
         copy.put("page", String.valueOf(pageNumber));
         Call<List<Response>> call = mApiInterfaces.getProducts(copy);
 
-        return call.execute().body();
+        call.enqueue(new Callback<List<Response>>() {
+            @Override
+            public void onResponse(Call<List<Response>> call, retrofit2.Response<List<Response>> response) {
+                if (response.isSuccessful()){
+                    List<Response> responseList = response.body();
+                    mAllProducts.addAll(responseList);
+                    allProLiveData.setValue(mAllProducts);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+        return allProLiveData;
     }
 
-    public List<Response> getPopularProductsPerPage(int pageNumber) throws IOException {
+    public MutableLiveData<List<Response>> getPopularProductsPerPage(int pageNumber) {
         Map<String, String> copy = new HashMap<>();
         copy.putAll(mQueries);
         copy.put(ORDERBY, "popularity");
         copy.put("page", String.valueOf(pageNumber));
         Call<List<Response>> call = mApiInterfaces.getOrderedProducts(copy);
 
-        return call.execute().body();
+        call.enqueue(new Callback<List<Response>>() {
+            @Override
+            public void onResponse(Call<List<Response>> call, retrofit2.Response<List<Response>> response) {
+                if (response.isSuccessful()){
+                    List<Response> responseList = response.body();
+                    mAllPopulars.addAll(responseList);
+                    allPopLiveData.setValue(mAllPopulars);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+        return allPopLiveData;
     }
 
-    public List<Response> getRatedProductsPerPage(int pageNumber) throws IOException {
+    public MutableLiveData<List<Response>> getRatedProductsPerPage(int pageNumber) {
         Map<String, String> copy = new HashMap<>();
         copy.putAll(mQueries);
         copy.put(ORDERBY, "rating");
         copy.put("page", String.valueOf(pageNumber));
         Call<List<Response>> call = mApiInterfaces.getOrderedProducts(copy);
 
-        return call.execute().body();
+        call.enqueue(new Callback<List<Response>>() {
+            @Override
+            public void onResponse(Call<List<Response>> call, retrofit2.Response<List<Response>> response) {
+                if (response.isSuccessful()){
+                    List<Response> responseList = response.body();
+                    mAllRateds.addAll(responseList);
+                    allRateLiveData.setValue(mAllRateds);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+        return allRateLiveData;
     }
 
     public MutableLiveData<List<Category>> getSubCategory(int id) {

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +21,7 @@ import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentListAllProductBinding;
+import com.example.maktabproj.viewmodel.ListAllProductsViewModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,10 +39,9 @@ public class ListAllProductFragment extends Fragment {
     private EndlessRecyclerView scrollListener;
     private LinearLayoutManager manager;
 
-    private List<Response> mList;
-    private List<Response> getAllList = new ArrayList<>();
     private ListAllProductAdapter adapter;
     private FragmentListAllProductBinding mBinding;
+    private ListAllProductsViewModel mViewModel;
 
     public static ListAllProductFragment newInstance(String productType) {
 
@@ -61,8 +63,10 @@ public class ListAllProductFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         type = getArguments().getString(GET_PRODUCT_TYPE_ARGS);
-        GetAllListAsync getLists = new GetAllListAsync();
-        getLists.execute();
+
+        mViewModel = ViewModelProviders.of(this).get(ListAllProductsViewModel.class);
+        mViewModel.sendRequest(pageNumber, type);
+        mViewModel.getAllProductsLiveData().observe(this, responses -> setupAdapter(responses));
     }
 
     @Override
@@ -77,8 +81,7 @@ public class ListAllProductFragment extends Fragment {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 pageNumber++;
-                GetAllListAsync getLists = new GetAllListAsync();
-                getLists.execute();
+                mViewModel.sendRequest(pageNumber, type);
             }
         };
         mBinding.allProductRecycler.addOnScrollListener(scrollListener);
@@ -91,14 +94,14 @@ public class ListAllProductFragment extends Fragment {
         mBinding.allProductRecycler.setLayoutManager(manager);
     }
 
-    private void setupAdapter() {
+    private void setupAdapter(List<Response> items) {
         if (isAdded()) {
             if (adapter==null) {
-                adapter = new ListAllProductAdapter(getAllList, getContext());
+                adapter = new ListAllProductAdapter(items, getContext());
                 mBinding.allProductRecycler.setAdapter(adapter);
             }
             else {
-                adapter.setAllProductList(getAllList);
+                adapter.setAllProductList(items);
                 adapter.notifyDataSetChanged();
             }
         }
@@ -115,33 +118,33 @@ public class ListAllProductFragment extends Fragment {
         mBinding.allListsToolbar.setTitleTextColor(getActivity().getResources().getColor(android.R.color.white));
     }
 
-    private class GetAllListAsync extends AsyncTask<Void, Void, List<Response>> {
-        private FetchItems mFetchItems = FetchItems.getInstance();
-
-        @Override
-        protected List<Response> doInBackground(Void... voids) {
-
-           mList = new ArrayList<>();
-            try {
-                if (type.equalsIgnoreCase("date")) {
-                    mList = mFetchItems.getAllProductsPerPage(pageNumber);
-                } else if (type.equalsIgnoreCase("popular")) {
-                    mList = mFetchItems.getPopularProductsPerPage(pageNumber);
-                } else if (type.equalsIgnoreCase("rated")) {
-                    mList = mFetchItems.getRatedProductsPerPage(pageNumber);
-                }
-                getAllList.addAll(mList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return getAllList;
-        }
-
-        @Override
-        protected void onPostExecute(List<Response> responses) {
-            super.onPostExecute(responses);
-            setupAdapter();
-        }
-    }
+//    private class GetAllListAsync extends AsyncTask<Void, Void, List<Response>> {
+//        private FetchItems mFetchItems = FetchItems.getInstance();
+//
+//        @Override
+//        protected List<Response> doInBackground(Void... voids) {
+//
+//           mList = new ArrayList<>();
+//            try {
+//                if (type.equalsIgnoreCase("date")) {
+//                    mList = mFetchItems.getAllProductsPerPage(pageNumber);
+//                } else if (type.equalsIgnoreCase("popular")) {
+//                    mList = mFetchItems.getPopularProductsPerPage(pageNumber);
+//                } else if (type.equalsIgnoreCase("rated")) {
+//                    mList = mFetchItems.getRatedProductsPerPage(pageNumber);
+//                }
+//                getAllList.addAll(mList);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return getAllList;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(List<Response> responses) {
+//            super.onPostExecute(responses);
+//            setupAdapter();
+//        }
+//    }
 
 }
