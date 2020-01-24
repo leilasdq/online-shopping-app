@@ -27,7 +27,7 @@ public class ListAllProductsViewModel extends AndroidViewModel {
             case "date":
                 mAllProductsLiveData = FetchItems.getInstance().getAllProductsPerPage(pageNumber);
                 break;
-            case "popular":
+            case "Popular":
                 mAllProductsLiveData = FetchItems.getInstance().getPopularProductsPerPage(pageNumber);
                 break;
             case "rated":
