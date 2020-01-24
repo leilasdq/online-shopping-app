@@ -1,12 +1,10 @@
 package com.example.maktabproj.View.fragment;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,13 +16,10 @@ import android.view.ViewGroup;
 import com.example.maktabproj.View.adapter.recycler.EndlessRecyclerView;
 import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.ListAllProductAdapter;
 import com.example.maktabproj.Model.Response;
-import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentListAllProductBinding;
 import com.example.maktabproj.viewmodel.ListAllProductsViewModel;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -117,34 +112,4 @@ public class ListAllProductFragment extends Fragment {
         }
         mBinding.allListsToolbar.setTitleTextColor(getActivity().getResources().getColor(android.R.color.white));
     }
-
-//    private class GetAllListAsync extends AsyncTask<Void, Void, List<Response>> {
-//        private FetchItems mFetchItems = FetchItems.getInstance();
-//
-//        @Override
-//        protected List<Response> doInBackground(Void... voids) {
-//
-//           mList = new ArrayList<>();
-//            try {
-//                if (type.equalsIgnoreCase("date")) {
-//                    mList = mFetchItems.getAllProductsPerPage(pageNumber);
-//                } else if (type.equalsIgnoreCase("popular")) {
-//                    mList = mFetchItems.getPopularProductsPerPage(pageNumber);
-//                } else if (type.equalsIgnoreCase("rated")) {
-//                    mList = mFetchItems.getRatedProductsPerPage(pageNumber);
-//                }
-//                getAllList.addAll(mList);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return getAllList;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<Response> responses) {
-//            super.onPostExecute(responses);
-//            setupAdapter();
-//        }
-//    }
-
 }

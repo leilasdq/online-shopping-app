@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,7 @@ import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentNewItemBinding;
+import com.example.maktabproj.viewmodel.DetailViewModel;
 import com.example.maktabproj.viewmodel.FirstPageViewModel;
 
 import java.util.HashMap;
@@ -39,6 +41,7 @@ public class FirstPageFragment extends Fragment {
     private CategoryAdapter categoryAdapter;
     private FragmentNewItemBinding mBinding;
     private FirstPageViewModel mViewModel;
+    private DetailViewModel mDetailViewModel;
     private ProductAdapter mAdapter;
     private ProductAdapter mPopularAdapter;
     private ProductAdapter mRatedAdapter;
@@ -70,7 +73,6 @@ public class FirstPageFragment extends Fragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_new_item, container, false);
 
         initListeners();
-        sliderSetup();
         setUpRecycles();
 
         return mBinding.getRoot();
@@ -99,17 +101,15 @@ public class FirstPageFragment extends Fragment {
         mBinding.categoryRecycle.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
     }
 
-    private void sliderSetup() {
-        HashMap<String, Integer> pics = new HashMap<>();
-        pics.put("First Pic", R.drawable.one);
-        pics.put("Second Pic", R.drawable.two);
-        pics.put("Third Pic", R.drawable.three);
-        pics.put("Fourth Pic", R.drawable.four);
+    private void sliderSetup(Response response) {
+        HashMap<String, String> pics = new HashMap<>();
+        for (int i = 0; i < response.getImages().size() ; i++) {
+            pics.put("pic " + i, response.getImages().get(i).getSrc());
+        }
         for (String name :
                 pics.keySet()) {
             TextSliderView textSliderView = new TextSliderView(getContext());
             textSliderView
-                    .description(name)
                     .image(pics.get(name))
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop);
             mBinding.slider.addSlider(textSliderView);
@@ -120,6 +120,13 @@ public class FirstPageFragment extends Fragment {
     }
 
     private void setupViewModel() {
+        mDetailViewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
+        mDetailViewModel.getResponseLiveData(608).observe(this, new Observer<Response>() {
+            @Override
+            public void onChanged(Response response) {
+                sliderSetup(response);
+            }
+        });
         mViewModel = ViewModelProviders.of(this).get(FirstPageViewModel.class);
         mViewModel.getAllProductsLiveData().observe(this, responses -> {
             mBinding.newProductText.setVisibility(View.VISIBLE);

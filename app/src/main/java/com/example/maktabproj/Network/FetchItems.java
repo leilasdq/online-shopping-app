@@ -4,12 +4,10 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.airbnb.lottie.L;
 import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Model.Category;
 import com.example.maktabproj.Model.Response;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
