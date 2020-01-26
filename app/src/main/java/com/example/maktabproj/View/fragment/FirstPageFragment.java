@@ -4,22 +4,30 @@ package com.example.maktabproj.View.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.maktabproj.View.activity.ListAllProductActivity;
+import com.example.maktabproj.View.activity.SearchResultActivity;
 import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.CategoryAdapter;
 import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.ProductAdapter;
 import com.example.maktabproj.Model.CategoriesItem;
@@ -63,6 +71,7 @@ public class FirstPageFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
         setupViewModel();
     }
 
@@ -76,6 +85,35 @@ public class FirstPageFragment extends Fragment {
         setUpRecycles();
 
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.tab_menu, menu);
+
+        MenuItem searchMenuItem = menu.findItem(R.id.app_bar_search);
+        final SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+//                searchView.setIconified(true);
+                Toast.makeText(getContext(), query, Toast.LENGTH_SHORT).show();
+                Intent intent = SearchResultActivity.newIntent(getActivity(), query);
+                startActivity(intent);
+                searchView.onActionViewCollapsed();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        searchView.setOnSearchClickListener(v -> {
+
+        });
     }
 
     private void initListeners() {

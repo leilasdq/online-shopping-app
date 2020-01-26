@@ -296,4 +296,29 @@ public class FetchItems {
         });
         return responseLiveData;
     }
+
+    public MutableLiveData<List<Response>> getSearchedProducrs(String query){
+        Map<String, String> copy = new HashMap<>();
+        copy.putAll(mQueries);
+        copy.put("search", query);
+
+        Call<List<Response>> call = mApiInterfaces.getSearchedProducts(copy);
+        MutableLiveData<List<Response>> responseLiveData = new MutableLiveData<>();
+
+        call.enqueue(new Callback<List<Response>>() {
+            @Override
+            public void onResponse(Call<List<Response>> call, retrofit2.Response<List<Response>> response) {
+                if (response.isSuccessful()){
+                    List<Response> responseList = response.body();
+                    responseLiveData.setValue(responseList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response>> call, Throwable t) {
+                Log.e(TAG, t.getMessage(), t);
+            }
+        });
+        return responseLiveData;
+    }
 }

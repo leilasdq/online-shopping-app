@@ -34,4 +34,7 @@ public interface ApiInterfaces {
 
     @GET("products/")
     Call<List<Response>> getProductsPerCategories(@QueryMap Map<String, String> queries);
+
+    @GET("products/")
+    Call<List<Response>> getSearchedProducts(@QueryMap Map<String, String> queries);
 }
