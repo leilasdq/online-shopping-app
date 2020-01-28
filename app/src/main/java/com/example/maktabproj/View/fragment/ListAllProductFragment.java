@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.maktabproj.View.activity.BuyCardActivity;
 import com.example.maktabproj.View.activity.SearchResultActivity;
 import com.example.maktabproj.View.adapter.recycler.EndlessRecyclerView;
 import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.ListAllProductAdapter;
@@ -144,12 +146,14 @@ public class ListAllProductFragment extends Fragment {
             }
         });
 
-        mBinding.allListsToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
-            }
-        }); }
+        final MenuItem menuItem = menu.findItem(R.id.app_bar_buy);
+        View actionView = MenuItemCompat.getActionView(menuItem);
+        actionView.setOnClickListener(v -> {
+            Intent intent = BuyCardActivity.newIntent(getActivity());
+            startActivity(intent);
+        });
+
+    }
 
 
 }
