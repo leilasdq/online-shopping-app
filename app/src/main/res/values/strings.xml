@@ -57,6 +57,7 @@
     <string name="tv_title_name_saller">فروش توسط موبی شاپ</string>
     <string name="no_net_again">اتصال خود را بررسی کنید.</string>
     <string name="search_hint">سرچ در موبی شاپ...</string>
+    <string name="empty_card_txt">سبد خرید شما خالی است!</string>
 
 
     <string-array name="text">

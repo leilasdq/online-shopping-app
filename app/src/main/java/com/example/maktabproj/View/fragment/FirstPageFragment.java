@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.example.maktabproj.View.activity.BuyCardActivity;
 import com.example.maktabproj.View.activity.ListAllProductActivity;
 import com.example.maktabproj.View.activity.SearchResultActivity;
 import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.CategoryAdapter;
@@ -112,8 +114,11 @@ public class FirstPageFragment extends Fragment {
             }
         });
 
-        searchView.setOnSearchClickListener(v -> {
-
+        final MenuItem menuItem = menu.findItem(R.id.app_bar_buy);
+        View actionView = MenuItemCompat.getActionView(menuItem);
+        actionView.setOnClickListener(v -> {
+            Intent intent = BuyCardActivity.newIntent(getActivity());
+            startActivity(intent);
         });
     }
 
