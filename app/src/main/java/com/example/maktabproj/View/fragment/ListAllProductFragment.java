@@ -126,6 +126,7 @@ public class ListAllProductFragment extends Fragment {
         Menu menu = mBinding.allListsToolbar.getMenu();
         MenuItem searchMenuItem = menu.findItem(R.id.app_bar_search);
         searchView = (SearchView) searchMenuItem.getActionView();
+        searchView.setQueryHint(getString(R.string.search_hint));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
