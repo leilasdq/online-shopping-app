@@ -3,13 +3,16 @@ package com.example.maktabproj.View.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -54,6 +57,8 @@ public class ProductPerSubsFragment extends Fragment {
 
         mViewModel = ViewModelProviders.of(this).get(ProductsPerSubsViewModel.class);
         mViewModel.getResponseLiveData(mCategoryId).observe(this, this::setUpAdapter);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -68,7 +73,19 @@ public class ProductPerSubsFragment extends Fragment {
 
     private void setupToolbar() {
         mBinding.productPerSub.setTitle("محصولات");
-        mBinding.productPerSub.setTitleTextColor(getActivity().getResources().getColor(android.R.color.white));
+        mBinding.productPerSub.setTitleTextColor(getActivity().getResources().getColor(android.R.color.black));
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mBinding.productPerSub);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            getActivity().finish();
+            return true;
+        } else return super.onOptionsItemSelected(item);
     }
 
     private void setupRecycle() {

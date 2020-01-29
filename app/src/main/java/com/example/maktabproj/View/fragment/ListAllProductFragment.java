@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
@@ -74,6 +75,8 @@ public class ListAllProductFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(ListAllProductsViewModel.class);
         mViewModel.sendRequest(pageNumber, type);
         mViewModel.getAllProductsLiveData().observe(this, responses -> setupAdapter(responses));
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -124,16 +127,25 @@ public class ListAllProductFragment extends Fragment {
         }
         mBinding.allListsToolbar.setTitleTextColor(getActivity().getResources().getColor(android.R.color.black));
 
-        mBinding.allListsToolbar.inflateMenu(R.menu.tab_menu);
-        Menu menu = mBinding.allListsToolbar.getMenu();
-        MenuItem searchMenuItem = menu.findItem(R.id.app_bar_search);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mBinding.allListsToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.tab_menu, menu);
+        Menu menuBar = mBinding.allListsToolbar.getMenu();
+        MenuItem searchMenuItem = menuBar.findItem(R.id.app_bar_search);
         searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setQueryHint(getString(R.string.search_hint));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
 //                searchView.setIconified(true);
-                Toast.makeText(getContext(), query, Toast.LENGTH_SHORT).show();
                 Intent intent = SearchResultActivity.newIntent(getActivity(), query);
                 startActivity(intent);
                 searchView.onActionViewCollapsed();
@@ -146,14 +158,19 @@ public class ListAllProductFragment extends Fragment {
             }
         });
 
-        final MenuItem menuItem = menu.findItem(R.id.app_bar_buy);
+        final MenuItem menuItem = menuBar.findItem(R.id.app_bar_buy);
         View actionView = MenuItemCompat.getActionView(menuItem);
         actionView.setOnClickListener(v -> {
             Intent intent = BuyCardActivity.newIntent(getActivity());
             startActivity(intent);
         });
-
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            getActivity().finish();
+            return true;
+        } else return super.onOptionsItemSelected(item);
+    }
 }

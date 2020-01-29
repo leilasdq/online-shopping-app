@@ -39,10 +39,11 @@
                 tools:src="@drawable/one" />
 
             <androidx.appcompat.widget.Toolbar
+                app:layout_collapseMode="pin"
                 android:id="@+id/show_product_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+                android:theme="@style/ThemeOverlay.AppCompat.Light" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

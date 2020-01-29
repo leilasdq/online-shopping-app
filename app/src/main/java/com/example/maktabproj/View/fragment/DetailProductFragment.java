@@ -6,7 +6,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -15,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -62,6 +65,8 @@ public class DetailProductFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
+
         product = new Response();
         productId = getArguments().getInt(ARGS_PRODUCT_ID);
 
@@ -89,6 +94,7 @@ public class DetailProductFragment extends Fragment {
                         }
                         if (scrollRange + verticalOffset == 0) {
                             mBinding.collapsing.setTitle(product.getName());
+                            mBinding.collapsing.setCollapsedTitleTextColor(getResources().getColor(android.R.color.black));
                             isShow = true;
                         } else if(isShow) {
                             mBinding.collapsing.setTitle(" ");//careful there should a space between double quote otherwise it wont work
@@ -133,6 +139,20 @@ public class DetailProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_detail_product, container, false );
+
+        mBinding.showProductToolbar.setTitleTextColor(getResources().getColor(android.R.color.transparent));
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mBinding.showProductToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         return mBinding.getRoot();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            getActivity().finish();
+            return true;
+        } else return super.onOptionsItemSelected(item);
     }
 }

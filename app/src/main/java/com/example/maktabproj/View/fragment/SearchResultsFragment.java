@@ -3,7 +3,9 @@ package com.example.maktabproj.View.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -11,6 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -53,6 +56,8 @@ public class SearchResultsFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
         mSearchText = getArguments().getString(ARGS_SEARCH_TEXT);
         mViewModel.getSearchList(mSearchText).observe(this, responses -> setUpAdapter(responses));
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -62,9 +67,17 @@ public class SearchResultsFragment extends Fragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_results, container, false);
 
         mBinding.searchRecycle.setLayoutManager(new LinearLayoutManager(getContext()));
-        mBinding.searchToolbar.setTitle(mSearchText);
+        setupToolbar();
 
         return mBinding.getRoot();
+    }
+
+    private void setupToolbar() {
+        mBinding.searchToolbar.setTitle(mSearchText);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mBinding.searchToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setUpAdapter(List<Response> items){
@@ -75,6 +88,14 @@ public class SearchResultsFragment extends Fragment {
             mAdapter = new ListAllProductAdapter(items, getContext());
             mBinding.searchRecycle.setAdapter(mAdapter);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            getActivity().finish();
+            return true;
+        } else return super.onOptionsItemSelected(item);
     }
 
 }

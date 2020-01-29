@@ -101,7 +101,6 @@ public class FirstPageFragment extends Fragment {
             @Override
             public boolean onQueryTextSubmit(String query) {
 //                searchView.setIconified(true);
-                Toast.makeText(getContext(), query, Toast.LENGTH_SHORT).show();
                 Intent intent = SearchResultActivity.newIntent(getActivity(), query);
                 startActivity(intent);
                 searchView.onActionViewCollapsed();
