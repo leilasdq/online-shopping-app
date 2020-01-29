@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.ProductsOfSubCategoryAdapter;
+import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.ListAllProductAdapter;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentProductPerSubsBinding;
@@ -28,7 +28,7 @@ public class ProductPerSubsFragment extends Fragment {
     public static final String ARGS_CATEGORY_ID = "category id";
     private int mCategoryId;
     private FragmentProductPerSubsBinding mBinding;
-    private ProductsOfSubCategoryAdapter mAdapter;
+    private ListAllProductAdapter mAdapter;
     private ProductsPerSubsViewModel mViewModel;
 
 
@@ -77,10 +77,10 @@ public class ProductPerSubsFragment extends Fragment {
 
     private void setUpAdapter(List<Response> items){
         if (mAdapter==null) {
-            mAdapter = new ProductsOfSubCategoryAdapter(items, getContext());
+            mAdapter = new ListAllProductAdapter(items, getContext());
             mBinding.proPerCategory.setAdapter(mAdapter);
         } else {
-            mAdapter.setCategoriesItems(items);
+            mAdapter.setAllProductList(items);
             mAdapter.notifyDataSetChanged();
         }
     }

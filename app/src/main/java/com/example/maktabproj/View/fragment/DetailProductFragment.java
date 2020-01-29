@@ -28,6 +28,8 @@ import com.example.maktabproj.viewmodel.DetailViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,11 +110,14 @@ public class DetailProductFragment extends Fragment {
                 mViewAdapter = new ImageViewAdapter(getActivity(), urls);
                 mBinding.productImages.setAdapter(mViewAdapter);
 
+                NumberFormat formatter = new DecimalFormat("#,###");
                 String original = product.getRegularPrice();
                 String sale = product.getSalePrice();
-                mBinding.productRealPrice.setText(original.concat(getString(R.string.Tooman)));
+                String formattedOriginal = formatter.format(Long.parseLong(original));
+                mBinding.productRealPrice.setText(formattedOriginal.concat(getString(R.string.Tooman)));
                 if (!sale.equalsIgnoreCase("")){
-                    mBinding.productSalePrice.setText(sale.concat(getString(R.string.Tooman)));
+                    String formattedSale = formatter.format(Long.parseLong(sale));
+                    mBinding.productSalePrice.setText(formattedSale.concat(getString(R.string.Tooman)));
                     mBinding.productRealPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
                 } else {
                     mBinding.productRealPrice.setPaintFlags( mBinding.productRealPrice.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));

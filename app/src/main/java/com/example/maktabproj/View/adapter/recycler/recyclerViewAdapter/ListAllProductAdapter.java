@@ -21,6 +21,8 @@ import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.AllListItemsBinding;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +83,7 @@ public class ListAllProductAdapter extends RecyclerView.Adapter<ListAllProductAd
 
         private void bind(Response response) {
             mResponse = response;
+            NumberFormat formatter = new DecimalFormat("#,###");
 
             mBinding.allListProductName.setText(mResponse.getName());
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -89,9 +92,11 @@ public class ListAllProductAdapter extends RecyclerView.Adapter<ListAllProductAd
                 mBinding.allListProductShortDes.setText(Html.fromHtml(mResponse.getShortDescription()));
             String original = response.getRegularPrice();
             String sale = response.getSalePrice();
-            mBinding.allListProductRealPrice.setText(original.concat(mContext.getString(R.string.Tooman)));
+            String formattedOriginal = formatter.format(Long.parseLong(original));
+            mBinding.allListProductRealPrice.setText(formattedOriginal.concat(mContext.getString(R.string.Tooman)));
             if (!sale.equalsIgnoreCase("")) {
-                mBinding.allListProductSalePrice.setText(sale.concat(mContext.getString(R.string.Tooman)));
+                String formattedSale = formatter.format(Long.parseLong(sale));
+                mBinding.allListProductSalePrice.setText(formattedSale.concat(mContext.getString(R.string.Tooman)));
                 mBinding.allListProductSalePrice.setVisibility(View.VISIBLE);
                 mBinding.allListProductRealPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             } else {

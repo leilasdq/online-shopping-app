@@ -19,6 +19,8 @@ import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.ListItemsLayoutBinding;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder>{
@@ -70,12 +72,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         public void bind(Response response){
             mResponse = response;
+            NumberFormat formatter = new DecimalFormat("#,###");
+
             mBinding.proName.setText(response.getName());
             String original = response.getRegularPrice();
             String sale = response.getSalePrice();
-            mBinding.originalPrice.setText(original.concat(mContext.getString(R.string.Tooman)));
+            String formattedOriginal = formatter.format(Long.parseLong(original));
+            mBinding.originalPrice.setText(formattedOriginal.concat(mContext.getString(R.string.Tooman)));
             if (!sale.equalsIgnoreCase("")){
-                mBinding.salePrice.setText(sale.concat(mContext.getString(R.string.Tooman)));
+                String formattedSale = formatter.format(Long.parseLong(sale));
+                mBinding.salePrice.setText(formattedSale.concat(mContext.getString(R.string.Tooman)));
                 mBinding.originalPrice.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
                 mBinding.originalPrice.setPaintFlags( mBinding.originalPrice.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
