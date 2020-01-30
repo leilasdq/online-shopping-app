@@ -22,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
@@ -36,6 +37,7 @@ import com.example.maktabproj.Model.CategoriesItem;
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentNewItemBinding;
+import com.example.maktabproj.sharedprefs.BadgePrefs;
 import com.example.maktabproj.viewmodel.DetailViewModel;
 import com.example.maktabproj.viewmodel.FirstPageViewModel;
 
@@ -55,6 +57,8 @@ public class FirstPageFragment extends Fragment {
     private ProductAdapter mAdapter;
     private ProductAdapter mPopularAdapter;
     private ProductAdapter mRatedAdapter;
+
+    private TextView badgeCount;
 
     public FirstPageFragment() {
         // Required empty public constructor
@@ -115,6 +119,9 @@ public class FirstPageFragment extends Fragment {
 
         final MenuItem menuItem = menu.findItem(R.id.app_bar_buy);
         View actionView = MenuItemCompat.getActionView(menuItem);
+        badgeCount = actionView.findViewById(R.id.notification_badge);
+        setupBadge();
+
         actionView.setOnClickListener(v -> {
             Intent intent = BuyCardActivity.newIntent(getActivity());
             startActivity(intent);
@@ -232,6 +239,17 @@ public class FirstPageFragment extends Fragment {
         } else {
             categoryAdapter.setList(items);
             categoryAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void setupBadge() {
+        if (BadgePrefs.getBadgeCount(getContext()) == 0){
+            if (badgeCount.getVisibility() != View.GONE) {
+                badgeCount.setVisibility(View.GONE);
+            }
+        } else {
+            badgeCount.setVisibility(View.VISIBLE);
+            badgeCount.setText(String.valueOf(BadgePrefs.getBadgeCount(getContext())));
         }
     }
 }

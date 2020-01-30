@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -21,7 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.maktabproj.View.activity.BuyCardActivity;
 import com.example.maktabproj.View.activity.SearchResultActivity;
@@ -30,6 +29,7 @@ import com.example.maktabproj.View.adapter.recycler.recyclerViewAdapter.ListAllP
 import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentListAllProductBinding;
+import com.example.maktabproj.sharedprefs.BadgePrefs;
 import com.example.maktabproj.viewmodel.ListAllProductsViewModel;
 
 import java.util.List;
@@ -50,6 +50,8 @@ public class ListAllProductFragment extends Fragment {
     private FragmentListAllProductBinding mBinding;
     private ListAllProductsViewModel mViewModel;
     private SearchView searchView;
+
+    private TextView badgeCount;
 
     public static ListAllProductFragment newInstance(String productType) {
 
@@ -160,6 +162,9 @@ public class ListAllProductFragment extends Fragment {
 
         final MenuItem menuItem = menuBar.findItem(R.id.app_bar_buy);
         View actionView = MenuItemCompat.getActionView(menuItem);
+        badgeCount = actionView.findViewById(R.id.notification_badge);
+        setupBadge();
+
         actionView.setOnClickListener(v -> {
             Intent intent = BuyCardActivity.newIntent(getActivity());
             startActivity(intent);
@@ -172,5 +177,16 @@ public class ListAllProductFragment extends Fragment {
             getActivity().finish();
             return true;
         } else return super.onOptionsItemSelected(item);
+    }
+
+    private void setupBadge() {
+        if (BadgePrefs.getBadgeCount(getContext()) == 0){
+            if (badgeCount.getVisibility() != View.GONE) {
+                badgeCount.setVisibility(View.GONE);
+            }
+        } else {
+            badgeCount.setVisibility(View.VISIBLE);
+            badgeCount.setText(String.valueOf(BadgePrefs.getBadgeCount(getContext())));
+        }
     }
 }
