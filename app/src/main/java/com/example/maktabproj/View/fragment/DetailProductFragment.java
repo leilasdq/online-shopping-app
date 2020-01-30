@@ -27,6 +27,7 @@ import com.example.maktabproj.Model.Response;
 import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentDetailProductBinding;
+import com.example.maktabproj.sharedprefs.BadgePrefs;
 import com.example.maktabproj.viewmodel.DetailViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 
@@ -144,6 +145,13 @@ public class DetailProductFragment extends Fragment {
         ((AppCompatActivity)getActivity()).setSupportActionBar(mBinding.showProductToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mBinding.addToCartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BadgePrefs.setBadgeCount(getContext(), BadgePrefs.getBadgeCount(getContext())+1);
+            }
+        });
 
         return mBinding.getRoot();
     }
