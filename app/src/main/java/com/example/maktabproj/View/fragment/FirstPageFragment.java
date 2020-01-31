@@ -251,6 +251,12 @@ public class FirstPageFragment extends Fragment {
             badgeCount.setVisibility(View.VISIBLE);
             badgeCount.setText(String.valueOf(BadgePrefs.getBadgeCount(getContext())));
         }
+//        getActivity().invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getActivity().invalidateOptionsMenu();
     }
 }

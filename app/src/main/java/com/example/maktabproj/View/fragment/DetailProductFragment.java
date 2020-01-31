@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.maktabproj.View.adapter.recycler.viewPagerAdapter.ImageViewAdapter;
 import com.example.maktabproj.Model.ImagesItem;
@@ -150,6 +151,7 @@ public class DetailProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 BadgePrefs.setBadgeCount(getContext(), BadgePrefs.getBadgeCount(getContext())+1);
+                Toast.makeText(getContext(), "محصول به سبد خرید شما اضافه شد.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -159,6 +161,7 @@ public class DetailProductFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home){
+            getActivity().invalidateOptionsMenu();
             getActivity().finish();
             return true;
         } else return super.onOptionsItemSelected(item);
