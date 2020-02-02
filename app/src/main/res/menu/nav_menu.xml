@@ -1,28 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Account details">
+    <item android:title="">
 
         <menu>
-            <item android:title="signup/login"
-                android:icon="@drawable/ic_login"/>
-            <item android:title="account information"
-                android:icon="@drawable/ic_account"/>
+            <item android:title="@string/txt_home"
+                android:icon="@drawable/ic_home_black_24dp"
+                android:id="@+id/nav_home_page"/>
+            <item android:title="@string/categories"
+                android:icon="@drawable/ic_menu_black_24dp"
+                android:id="@+id/nav_categories"/>
         </menu>
 
     </item>
 
-<!--    <item android:title="category">-->
-<!--        <menu>-->
-<!--            <item android:title="T_Shirt"-->
-<!--                android:icon="@drawable/ic_tshirt"/>-->
-<!--            <item android:title="Hoodie"-->
-<!--                android:icon="@drawable/ic_hoodie"/>-->
-<!--            <item android:title="Hat"-->
-<!--                android:icon="@drawable/ic_cap"/>-->
-<!--            <item android:title="accessory"-->
-<!--                android:icon="@drawable/ic_accessory"/>-->
-<!--        </menu>-->
-<!--    </item>-->
+    <item android:title="">
+
+        <menu>
+            <item android:title="ایجاد حساب کاربری"
+                android:icon="@drawable/ic_document"
+                android:id="@+id/nav_signup"/>
+            <item android:title="ورود به حساب"
+                android:icon="@drawable/ic_login"
+                android:id="@+id/nav_login"/>
+        </menu>
+
+    </item>
+
+    <item android:title="">
+        <menu>
+            <item android:title="@string/txt_shoping_card"
+                android:icon="@drawable/ic_shopping_cart_black_24dp"
+                android:id="@+id/nav_shopping_card"/>
+            <item android:title="@string/new_products_list_text"
+                android:icon="@drawable/ic_new_product"
+                android:id="@+id/nav_new"/>
+            <item android:title="@string/popular_products_list_text"
+                android:icon="@drawable/ic_most_rated"
+                android:id="@+id/nav_popular"/>
+            <item android:title="@string/rating_products_list_text"
+                android:icon="@drawable/ic_most_view"
+                android:id="@+id/nav_most_view"/>
+        </menu>
+    </item>
+
+    <item android:title="">
+
+        <menu>
+            <item android:title="تنظیمات"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:id="@+id/nav_setting"
+                />
+            <item android:title="درباره ما"
+                android:icon="@drawable/ic_info"
+                android:id="@+id/nav_about"/>
+        </menu>
+
+    </item>
 
 </menu>

@@ -29,9 +29,6 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
 
-    private FirstPageViewModel mViewModel;
-    private SubMenu submenu;
-
     @Override
     public Fragment createFragment() {
         return FirstPageFragment.newInstance();
@@ -46,28 +43,8 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_layout);
 
-        mViewModel = ViewModelProviders.of(this).get(FirstPageViewModel.class);
-        mViewModel.getCategoryLiveData().observe(this, this::createDrawerMenu);
-
         initViews();
         toolbarSetup();
-    }
-
-    private void createDrawerMenu(List<CategoriesItem> items) {
-
-        final Menu menu = mNavigationView.getMenu();
-        submenu = menu.addSubMenu("دسته بندی محصولات");
-        submenu.setIcon(R.drawable.ic_menu_black_24dp);
-
-
-        new Handler().postDelayed(() -> {
-            for (int i = 0; i < items.size(); i++) {
-                if (items.get(i).getName().equalsIgnoreCase("فروش ویژه")) continue;
-                submenu.add(i, Menu.FIRST + i, Menu.FIRST, items.get(i).getName());
-            }
-
-            mNavigationView.invalidate();
-        }, 2000);
     }
 
     private void toolbarSetup() {
@@ -95,10 +72,43 @@ public class MainActivity extends SingleFragmentActivity implements NavigationVi
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == submenu.getItem(0).getItemId()) {
-            startActivity(SubCategoryActivity.newIntent(MainActivity.this));
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        switch (id) {
+            case R.id.nav_home_page:
+                return true;
+            case R.id.nav_categories:
+                startActivity(SubCategoryActivity.newIntent(this));
+                return true;
+            case R.id.nav_signup:
+                startActivity(CreateUserActivity.newIntent(this));
+                return true;
+            case R.id.nav_login:
+                startActivity(LoginUserActivity.newIntent(this));
+                return true;
+            case R.id.nav_shopping_card:
+                startActivity(BuyCardActivity.newIntent(this));
+                return true;
+            case R.id.nav_new:
+                startActivity(ListAllProductActivity.newIntent(this, "date"));
+                return true;
+            case R.id.nav_popular:
+                startActivity(ListAllProductActivity.newIntent(this, "Popular"));
+                return true;
+            case R.id.nav_most_view:
+                startActivity(ListAllProductActivity.newIntent(this, "rated"));
+                return true;
+            case R.id.nav_setting:
+                return true;
+            case R.id.nav_about:
+                return true;
+            default:
+                return false;
         }
-
-        return false;
+//        if (id == submenu.getItem(0).getItemId()) {
+//            startActivity(SubCategoryActivity.newIntent(MainActivity.this));
+//        }
+//        if (id == R.id.signup){
+//            LoginUserActivity.newIntent(this);
+//        }
     }
 }

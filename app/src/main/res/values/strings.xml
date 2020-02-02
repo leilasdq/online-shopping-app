@@ -59,6 +59,8 @@
     <string name="search_hint">سرچ در موبی شاپ...</string>
     <string name="empty_card_txt">سبد خرید شما خالی است!</string>
     <string name="no_search_result">محصول مورد نظر شما یافت نشد!</string>
+    <string name="txt_home">خانه</string>
+    <string name="txt_shoping_card">سبد خرید</string>
 
 
     <string-array name="text">
