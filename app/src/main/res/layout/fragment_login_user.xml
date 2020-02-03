@@ -35,7 +35,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layoutDirection="rtl"
-        app:startIconDrawable="@drawable/ic_account_circle_black_24dp"
+        app:startIconDrawable="@drawable/ic_email_black_24dp"
         app:layout_constraintTop_toBottomOf="@id/enter_txt"
         app:layout_constraintBottom_toTopOf="@id/text_input_password"
         app:layout_constraintRight_toRightOf="parent"
@@ -44,57 +44,86 @@
         android:layout_marginTop="32dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:id="@+id/text_input_user_name"
+        android:id="@+id/text_input_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:counterEnabled="true"
-        app:counterMaxLength="15"
-        app:counterTextColor="@color/colorUserRed"
-        app:counterTextAppearance="@style/Widget.MaterialComponents.TextView"
-        app:errorEnabled="true"
         android:fontFamily="serif"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
-        app:boxCornerRadiusTopStart="8dp">
+        app:boxCornerRadiusTopStart="8dp"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="نام کاربری"
+            android:hint="ایمیل"
+            android:inputType="textEmailAddress"
             android:textColor="@color/colorUserBlue"
             android:textColorHint="@android:color/secondary_text_light"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_password"
-        app:layout_constraintTop_toBottomOf="@id/text_input_user_name"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_width="match_parent"
+        android:id="@+id/text_input_user_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:errorEnabled="true"
-        app:passwordToggleEnabled="true"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:fontFamily="serif"
+        android:layoutDirection="rtl"
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
-        android:fontFamily="serif"
-        >
+        app:counterEnabled="true"
+        app:counterMaxLength="15"
+        app:counterTextAppearance="@style/Widget.MaterialComponents.TextView"
+        app:counterTextColor="@color/colorUserRed"
+        app:errorEnabled="true"
+        app:layout_constraintLeft_toRightOf="@id/text_input_password"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_input_email"
+        app:startIconDrawable="@drawable/ic_account_circle_black_24dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:textColor="@color/colorUserBlue"
-            android:textColorLink="@android:color/white"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:hint="نام کاربری"
+            android:textColor="@color/colorUserBlue"
+            android:textColorHint="@android:color/secondary_text_light" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:fontFamily="serif"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:errorEnabled="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_input_user_name"
+        app:layout_constraintBottom_toBottomOf="@id/text_input_user_name"
+        app:layout_constraintRight_toLeftOf="@id/text_input_user_name"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:drawableRight="@drawable/ic_lock_black_24dp"
             android:hint="رمز عبور"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:textColor="@color/colorUserBlue"
+            android:textColorLink="@android:color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
