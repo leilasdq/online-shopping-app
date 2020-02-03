@@ -58,14 +58,17 @@
         app:boxCornerRadiusBottomEnd="8dp"
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
-        app:boxCornerRadiusTopStart="8dp">
+        app:boxCornerRadiusTopStart="8dp"
+        app:errorEnabled="true"
+        app:errorTextColor="@color/colorUserRed">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorUserBlue"
-            android:hint="ایمیل"
+            android:hint="*ایمیل"
             android:textColorHint="@android:color/secondary_text_light"
+            android:inputType="textEmailAddress"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -138,7 +141,7 @@
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
         app:counterEnabled="true"
-        app:counterMaxLength="15"
+        app:counterMaxLength="10"
         app:counterTextAppearance="@style/Widget.MaterialComponents.TextView"
         app:counterTextColor="@color/colorUserRed"
         app:errorEnabled="true"
@@ -151,7 +154,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="نام کاربری"
+            android:hint="*نام کاربری"
             android:textColor="@color/colorUserBlue"
             android:textColorHint="@android:color/secondary_text_light" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -178,7 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:drawableRight="@drawable/ic_lock_black_24dp"
-            android:hint="رمز عبور"
+            android:hint="*رمز عبور"
             android:inputType="textPassword"
             android:textColor="@color/colorUserBlue"
             android:textColorLink="@android:color/white" />

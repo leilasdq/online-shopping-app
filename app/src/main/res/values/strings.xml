@@ -61,6 +61,12 @@
     <string name="no_search_result">محصول مورد نظر شما یافت نشد!</string>
     <string name="txt_home">خانه</string>
     <string name="txt_shoping_card">سبد خرید</string>
+    <string name="email_requer_txt">ایمیل نمیتواند خالی باشد!</string>
+    <string name="username_requier_txt">نام کاربری خود را وارد کنبد!</string>
+    <string name="pass_requiere_txt">رمز عبور خود را وارد کنید!</string>
+    <string name="long_user_name_txt">نام کاربری طولانی است!</string>
+    <string name="short_pass_txt">رمز عبور باید حداقل 6کاراکتر باشد!</string>
+    <string name="valid_email_txt">لطفا ایمیل معتبر وارد کنید!</string>
 
 
     <string-array name="text">

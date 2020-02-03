@@ -1,7 +1,6 @@
 package com.example.maktabproj.Model;
 
 import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 
 public class Links{
