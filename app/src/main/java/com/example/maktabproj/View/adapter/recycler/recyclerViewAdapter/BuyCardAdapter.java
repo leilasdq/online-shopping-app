@@ -15,9 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Response;
+import com.example.maktabproj.Model.entities.Products;
 import com.example.maktabproj.R;
 import com.example.maktabproj.View.activity.DetailProductActivity;
 import com.example.maktabproj.databinding.ShopCardListItemBinding;
+import com.example.maktabproj.repository.BuyingCardRepository;
+import com.example.maktabproj.sharedprefs.BadgePrefs;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
@@ -106,6 +109,7 @@ public class BuyCardAdapter extends RecyclerView.Adapter<BuyCardAdapter.BuyCardV
                             BuyCardAdapter.this.notifyDataSetChanged();
                             break;
                     }
+                    BuyingCardRepository.getInstance(mContext).editItem(mResponse.getId(), numberOfProducts);
                 }
 
                 @Override
@@ -149,6 +153,14 @@ public class BuyCardAdapter extends RecyclerView.Adapter<BuyCardAdapter.BuyCardV
                 public void onClick(View v) {
                     mContext.startActivity(DetailProductActivity.newIntent(mContext, mResponse.getId()
                     ));
+                }
+            });
+            mBinding.deleteItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BuyingCardRepository.getInstance(mContext).deleteItem(mResponse.getId());
+                    BadgePrefs.setBadgeCount(mContext, BadgePrefs.getBadgeCount(mContext)-1);
+                    BuyCardAdapter.this.notifyDataSetChanged();
                 }
             });
         }

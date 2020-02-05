@@ -2,7 +2,6 @@ package com.example.maktabproj.View.fragment;
 
 
 import android.graphics.Paint;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -22,17 +21,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.maktabproj.Model.entities.Products;
 import com.example.maktabproj.View.adapter.recycler.viewPagerAdapter.ImageViewAdapter;
 import com.example.maktabproj.Model.ImagesItem;
 import com.example.maktabproj.Model.Response;
-import com.example.maktabproj.Network.FetchItems;
 import com.example.maktabproj.R;
 import com.example.maktabproj.databinding.FragmentDetailProductBinding;
+import com.example.maktabproj.repository.BuyingCardRepository;
 import com.example.maktabproj.sharedprefs.BadgePrefs;
 import com.example.maktabproj.viewmodel.DetailViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -43,9 +42,9 @@ import java.util.List;
  */
 public class DetailProductFragment extends Fragment {
 
-    public static final String ARGS_PRODUCT_ID = "product id";
+    public static final String ARGS_PRODUCT_ID = "mResponse id";
     private int productId;
-    private Response product;
+    private Response mResponse;
     private ImageViewAdapter mViewAdapter;
     private FragmentDetailProductBinding mBinding;
     private DetailViewModel mViewModel;
@@ -69,7 +68,7 @@ public class DetailProductFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        product = new Response();
+        mResponse = new Response();
         productId = getArguments().getInt(ARGS_PRODUCT_ID);
 
         mViewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
@@ -80,7 +79,7 @@ public class DetailProductFragment extends Fragment {
             }
 
             private void updateUI(Response response) {
-                product = response;
+                mResponse = response;
                 mBinding.addToCartBtn.setVisibility(View.VISIBLE);
                 mBinding.showProductProgress.setVisibility(View.INVISIBLE);
                 mBinding.addToCartBtn.setBackgroundColor(getActivity().getResources().getColor(R.color.categoryButtonColor));
@@ -95,7 +94,7 @@ public class DetailProductFragment extends Fragment {
                             scrollRange = appBarLayout.getTotalScrollRange();
                         }
                         if (scrollRange + verticalOffset == 0) {
-                            mBinding.collapsing.setTitle(product.getName());
+                            mBinding.collapsing.setTitle(mResponse.getName());
                             mBinding.collapsing.setCollapsedTitleTextColor(getResources().getColor(android.R.color.black));
                             isShow = true;
                         } else if(isShow) {
@@ -105,12 +104,12 @@ public class DetailProductFragment extends Fragment {
                     }
                 });
 
-                mBinding.productName.setText(product.getName());
+                mBinding.productName.setText(mResponse.getName());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    mBinding.productDetail.setText(Html.fromHtml(product.getDescription(), Html.FROM_HTML_MODE_LEGACY));
-                } else  mBinding.productDetail.setText(Html.fromHtml(product.getDescription()));
+                    mBinding.productDetail.setText(Html.fromHtml(mResponse.getDescription(), Html.FROM_HTML_MODE_LEGACY));
+                } else  mBinding.productDetail.setText(Html.fromHtml(mResponse.getDescription()));
 
-                List<ImagesItem> images = product.getImages();
+                List<ImagesItem> images = mResponse.getImages();
                 List<String> urls = new ArrayList<>();
                 for (int i = 0; i < images.size(); i++) {
                     urls.add(images.get(i).getSrc());
@@ -119,8 +118,8 @@ public class DetailProductFragment extends Fragment {
                 mBinding.productImages.setAdapter(mViewAdapter);
 
                 NumberFormat formatter = new DecimalFormat("#,###");
-                String original = product.getRegularPrice();
-                String sale = product.getSalePrice();
+                String original = mResponse.getRegularPrice();
+                String sale = mResponse.getSalePrice();
                 String formattedOriginal = formatter.format(Long.parseLong(original));
                 mBinding.productRealPrice.setText(formattedOriginal.concat(getString(R.string.Tooman)));
                 if (!sale.equalsIgnoreCase("")){
@@ -151,6 +150,8 @@ public class DetailProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 BadgePrefs.setBadgeCount(getContext(), BadgePrefs.getBadgeCount(getContext())+1);
+                Products products = new Products(mResponse.getId(), 1);
+                BuyingCardRepository.getInstance(getActivity()).addTodoItem(products);
                 Toast.makeText(getContext(), "محصول به سبد خرید شما اضافه شد.", Toast.LENGTH_SHORT).show();
             }
         });

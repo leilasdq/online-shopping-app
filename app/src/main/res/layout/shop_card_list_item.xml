@@ -21,6 +21,7 @@
             >
 
             <ImageView
+                android:layout_margin="8dp"
                 android:id="@+id/pro_img"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -190,6 +191,7 @@
                 android:background="@color/lineBackground"/>
 
             <TextView
+                android:id="@+id/delete_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="حذف"

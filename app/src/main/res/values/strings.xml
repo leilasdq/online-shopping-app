@@ -67,6 +67,7 @@
     <string name="long_user_name_txt">نام کاربری طولانی است!</string>
     <string name="short_pass_txt">رمز عبور باید حداقل 6کاراکتر باشد!</string>
     <string name="valid_email_txt">لطفا ایمیل معتبر وارد کنید!</string>
+    <string name="finilize_shop_txt">خرید خود را نهایی کنید</string>
 
 
     <string-array name="text">

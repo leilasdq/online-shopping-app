@@ -38,11 +38,32 @@ public class BuyingCardRepository {
         return allProducts;
     }
 
-    public static void addTodoItem (Products products) {
+    public void addTodoItem (Products products) {
         mProductsDao.insert(products);
     }
 
-    public static void deleteItem (Products products){
+    public void deleteItem (int id){
+        List<Products> allItems = this.getAllBuyingProducts();
+        Products products = null;
+        for (int i = 0; i < allItems.size(); i++) {
+            if (allItems.get(i).getIdInSite() == id){
+                products = allItems.get(i);
+            }
+        }
+        if (products!=null)
         mProductsDao.delete(products);
+    }
+
+    public void editItem(int id, int number){
+        List<Products> allItems = this.getAllBuyingProducts();
+        Products products = null;
+        for (int i = 0; i < allItems.size(); i++) {
+            if (allItems.get(i).getIdInSite() == id){
+                products = allItems.get(i);
+            }
+        }
+        if (products!=null)
+            products.setCounts(number);
+            mProductsDao.update(products);
     }
 }

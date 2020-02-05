@@ -45,12 +45,13 @@
                 />
 
             <TextView
+                android:id="@+id/all_price_count"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="left"
-                android:text="1500000"
+                tools:text="1500000"
                 android:layout_marginLeft="8dp"
                 android:textColor="@color/digikala_green_light"
                 android:textSize="16sp"
@@ -85,10 +86,27 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@id/card"
+        android:layout_above="@id/add_to_cart_btn"
         android:id="@+id/card_recycle"
         android:background="@color/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_alignParentBottom="true"
+        android:id="@+id/add_to_cart_btn"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_margin="8dp"
+        android:text="@string/finilize_shop_txt"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:cornerRadius="8dp"
+        app:icon="@drawable/ic_arrow_left_24dp"
+        app:iconGravity="textStart"
+        android:layout_gravity="bottom"
+        />
 
 </RelativeLayout>
 </layout>

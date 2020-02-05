@@ -11,17 +11,17 @@ public class Products {
     @Id (autoincrement = true)
     private Long _proId;
     @Property (nameInDb = "site_id")
-    private Long mIdInSite;
+    private int mIdInSite;
     @Property (nameInDb = "number_of_products")
     private int mCounts;
 
-    public Products(Long idInSite, int counts) {
+    public Products(int idInSite, int counts) {
         mIdInSite = idInSite;
         mCounts = counts;
     }
 
-    @Generated(hash = 163754644)
-    public Products(Long _proId, Long mIdInSite, int mCounts) {
+    @Generated(hash = 551746497)
+    public Products(Long _proId, int mIdInSite, int mCounts) {
         this._proId = _proId;
         this.mIdInSite = mIdInSite;
         this.mCounts = mCounts;
@@ -35,11 +35,11 @@ public class Products {
         return _proId;
     }
 
-    public Long getIdInSite() {
+    public int getIdInSite() {
         return mIdInSite;
     }
 
-    public void setIdInSite(Long idInSite) {
+    public void setIdInSite(int idInSite) {
         this.mIdInSite = idInSite;
     }
 
@@ -55,11 +55,11 @@ public class Products {
         this._proId = _proId;
     }
 
-    public Long getMIdInSite() {
+    public int getMIdInSite() {
         return this.mIdInSite;
     }
 
-    public void setMIdInSite(Long mIdInSite) {
+    public void setMIdInSite(int mIdInSite) {
         this.mIdInSite = mIdInSite;
     }
 
