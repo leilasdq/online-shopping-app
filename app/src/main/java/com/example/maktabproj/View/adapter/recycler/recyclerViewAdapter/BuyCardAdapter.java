@@ -30,6 +30,8 @@ public class BuyCardAdapter extends RecyclerView.Adapter<BuyCardAdapter.BuyCardV
     private List<Response> mBuyProducts = new ArrayList<>();
     private Context mContext;
     private int numberOfProducts = 1;
+    String[] count = {"1", "2", "3", "4", "5"};
+    ArrayAdapter<String> adapter;
 
     public BuyCardAdapter(List<Response> buyProducts, Context context) {
         mBuyProducts = buyProducts;
@@ -45,6 +47,7 @@ public class BuyCardAdapter extends RecyclerView.Adapter<BuyCardAdapter.BuyCardV
     public BuyCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         ShopCardListItemBinding binding = ShopCardListItemBinding.inflate(inflater, parent, false);
+        adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, count);
         return new BuyCardViewHolder(binding);
     }
 
@@ -65,16 +68,14 @@ public class BuyCardAdapter extends RecyclerView.Adapter<BuyCardAdapter.BuyCardV
         public BuyCardViewHolder(@NonNull ShopCardListItemBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mBinding.countSpinner.setAdapter(adapter);
         }
 
         private void bind(Response response){
             mResponse = response;
             NumberFormat formatter = new DecimalFormat("#,###");
 
-            String[] count = {"1", "2", "3", "4", "5"};
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, count);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            mBinding.countSpinner.setAdapter(adapter);
             mBinding.countSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
