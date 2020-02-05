@@ -4,18 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.fragment.BuyCardFragment">
+    tools:context=".View.fragment.BuyCardFragment"
+    android:background="@color/background">
 
     <androidx.appcompat.widget.Toolbar
         android:layoutDirection="rtl"
-        app:title="سبد خرید"
+        app:title="سبد خرید شما"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
         android:id="@+id/card_toolbar"/>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_below="@id/card_toolbar"
+        android:elevation="8dp"
+        app:cardElevation="8dp"
+        android:layout_marginBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="جمع کل خرید"
+                android:textStyle="bold"
+                android:layout_marginRight="8dp"
+                android:textColor="@color/digikala_green_light"
+                android:textSize="16sp"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="left"
+                android:text="1500000"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/digikala_green_light"
+                android:textSize="16sp"
+                />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
     <LinearLayout
+        android:id="@+id/image_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -37,11 +83,12 @@
 
     </LinearLayout>
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/card_recycle"-->
-<!--        android:background="@color/background"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"/>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/card"
+        android:id="@+id/card_recycle"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>
 </layout>
